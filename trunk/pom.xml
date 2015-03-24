@@ -1,34 +1,148 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
-	
-	<groupId>by.stark.training</groupId>
+
+
+	<groupId>by.stark.sample</groupId>
 	<artifactId>parent-project</artifactId>
 	<version>1.0.0</version>
-	
+
 	<packaging>pom</packaging>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<common.project.version>1.0</common.project.version>
+		<spring.version>4.0.3.RELEASE</spring.version>
 	</properties>
 
 	<modules>
-		 <module>datamodel</module>
-		 <module>dataaccess</module>
-		 <module>services</module>
-		 <module>webapp</module>
+		<module>datamodel</module>
+		<module>dataaccess</module>
+		<module>services</module>
+		<module>webapp</module>
 	</modules>
 
 	<dependencyManagement>
 		<dependencies>
 			<!-- Project modules -->
-			<!-- <dependency>
-				<groupId>net.siprs.megal</groupId>
-				<artifactId>crm-database</artifactId>
-				<version>${project.version}</version>
-			</dependency> -->
-		
+			<dependency>
+				<groupId>by.stark.sample</groupId>
+				<artifactId>datamodel</artifactId>
+				<version>1.0.0</version>
+			</dependency>
+			<dependency>
+				<groupId>by.stark.sample</groupId>
+				<artifactId>dataaccess</artifactId>
+				<version>1.0.0</version>
+			</dependency>
+			<dependency>
+				<groupId>by.stark.sample</groupId>
+				<artifactId>services</artifactId>
+				<version>1.0.0</version>
+			</dependency>
+			<dependency>
+				<groupId>by.stark.sample</groupId>
+				<artifactId>webapp</artifactId>
+				<version>1.0.0</version>
+			</dependency>
+
+
+			<!-- Spring framework -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context-support</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-orm</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>${spring.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+
+			<dependency>
+				<groupId>javax.inject</groupId>
+				<artifactId>javax.inject</artifactId>
+				<version>1</version>
+			</dependency>
+
+
+			<!-- Logging libraries -->
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-slf4j-impl</artifactId>
+				<version>2.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-api</artifactId>
+				<version>2.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-core</artifactId>
+				<version>2.1</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>org.jboss.logging</groupId>
+				<artifactId>jboss-logging</artifactId>
+				<version>3.2.0.Final</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-jcl</artifactId>
+				<version>2.1</version>
+			</dependency>
+
+
+
+			<dependency>
+				<groupId>javax</groupId>
+				<artifactId>javaee-web-api</artifactId>
+				<version>6.0</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.12</version>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 	<repositories>
@@ -84,7 +198,7 @@
 			</testResource>
 		</testResources>
 		<plugins>
-			
+
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -101,7 +215,7 @@
 						<showDeprecation>true</showDeprecation>
 					</configuration>
 				</plugin>
-				
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-eclipse-plugin</artifactId>
