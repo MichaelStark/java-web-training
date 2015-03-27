@@ -4,7 +4,7 @@
 
 
 	<groupId>by.stark.sample</groupId>
-	<artifactId>parent-project</artifactId>
+	<artifactId>online-libriary</artifactId>
 	<version>1.0.0</version>
 
 	<packaging>pom</packaging>
@@ -16,10 +16,10 @@
 	</properties>
 
 	<modules>
-		<module>datamodel</module>
-		<module>dataaccess</module>
-		<module>services</module>
-		<module>webapp</module>
+		<module>p-datamodel</module>
+		<module>p-dataaccess</module>
+		<module>p-services</module>
+		<module>p-webapp</module>
 	</modules>
 
 	<dependencyManagement>
@@ -27,22 +27,22 @@
 			<!-- Project modules -->
 			<dependency>
 				<groupId>by.stark.sample</groupId>
-				<artifactId>datamodel</artifactId>
+				<artifactId>p-datamodel</artifactId>
 				<version>1.0.0</version>
 			</dependency>
 			<dependency>
 				<groupId>by.stark.sample</groupId>
-				<artifactId>dataaccess</artifactId>
+				<artifactId>p-dataaccess</artifactId>
 				<version>1.0.0</version>
 			</dependency>
 			<dependency>
 				<groupId>by.stark.sample</groupId>
-				<artifactId>services</artifactId>
+				<artifactId>p-services</artifactId>
 				<version>1.0.0</version>
 			</dependency>
 			<dependency>
 				<groupId>by.stark.sample</groupId>
-				<artifactId>webapp</artifactId>
+				<artifactId>p-webapp</artifactId>
 				<version>1.0.0</version>
 			</dependency>
 
@@ -208,8 +208,8 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.0</version>
 					<configuration>
-						<source>1.7</source>
-						<target>1.7</target>
+						<source>1.8</source>
+						<target>1.8</target>
 						<encoding>UTF-8</encoding>
 						<showWarnings>true</showWarnings>
 						<showDeprecation>true</showDeprecation>
