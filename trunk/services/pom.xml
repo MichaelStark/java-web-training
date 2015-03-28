@@ -15,13 +15,22 @@
 			<groupId>by.stark.sample</groupId>
 			<artifactId>p-dataaccess</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 		</dependency>
-
-
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
 		<!-- Logging libraries -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
