@@ -3,7 +3,6 @@ package by.stark.sample.util;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.cfg.ImprovedNamingStrategy;
 
-@SuppressWarnings("serial")
 public class CustomNamingStrategy extends ImprovedNamingStrategy {
 
 	@Override

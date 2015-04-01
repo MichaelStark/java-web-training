@@ -12,7 +12,7 @@
 	<context:property-placeholder
 		ignore-unresolvable="true"
 		location="classpath:application.properties,classpath:testing-application.properties" />
-	<context:component-scan base-package="by.dzhivushko.sample" />
+	<context:component-scan base-package="by.stark.sample" />
 
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
@@ -23,7 +23,7 @@
 
 	<tx:annotation-driven />
 	<bean id="dataSource"
-		class="by.dzhvisuhko.sample.util.SchemaNameAwareBasicDataSource"
+		class="by.stark.sample.util.SchemaNameAwareBasicDataSource"
 		destroy-method="close" p:driverClassName="org.postgresql.Driver"
 		p:url="${jdbc.url}" p:username="${jdbc.username}" p:password="${jdbc.password}"
 		p:schema="${db.schema}" />
