@@ -4,7 +4,7 @@
 
 
 	<groupId>by.stark.sample</groupId>
-	<artifactId>online-libriary</artifactId>
+	<artifactId>online-library</artifactId>
 	<version>1.0.0</version>
 
 	<packaging>pom</packaging>
@@ -17,10 +17,10 @@
 	</properties>
 
 	<modules>
-		<module>p-datamodel</module>
-		<module>p-dataaccess</module>
-		<module>p-services</module>
-		<module>p-webapp</module>
+		<module>data-model</module>
+		<module>data-access</module>
+		<module>services-app</module>
+		<module>web-app</module>
 	</modules>
 
 	<dependencyManagement>
@@ -28,22 +28,22 @@
 			<!-- Project modules -->
 			<dependency>
 				<groupId>by.stark.sample</groupId>
-				<artifactId>p-datamodel</artifactId>
+				<artifactId>data-model</artifactId>
 				<version>1.0.0</version>
 			</dependency>
 			<dependency>
 				<groupId>by.stark.sample</groupId>
-				<artifactId>p-dataaccess</artifactId>
+				<artifactId>data-access</artifactId>
 				<version>1.0.0</version>
 			</dependency>
 			<dependency>
 				<groupId>by.stark.sample</groupId>
-				<artifactId>p-services</artifactId>
+				<artifactId>services-app</artifactId>
 				<version>1.0.0</version>
 			</dependency>
 			<dependency>
 				<groupId>by.stark.sample</groupId>
-				<artifactId>p-webapp</artifactId>
+				<artifactId>web-app</artifactId>
 				<version>1.0.0</version>
 			</dependency>
 
@@ -98,17 +98,12 @@
 				<artifactId>hibernate-core</artifactId>
 				<version>${hibernate.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-entitymanager</artifactId>
-				<version>${hibernate.version}</version>
-			</dependency>
-			<dependency>
+		<!-- 	<dependency>
 				<groupId>org.hibernate.javax.persistence</groupId>
-				<artifactId>hibernate-jpa-2.0-api</artifactId>
+				<artifactId>hibernate-jpa-2.1-api</artifactId>
 				<version>1.0.0.Final</version>
 			</dependency>
-
+ -->
 
 
 			<dependency>
