@@ -1,4 +1,4 @@
-package by.dzhvisuhko.sample.util;
+package by.stark.sample.util;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -19,7 +19,8 @@ public class SchemaNameAwareBasicDataSource extends BasicDataSource {
 	}
 
 	/**
-	 * @param schema the schema to set
+	 * @param schema
+	 *            the schema to set
 	 */
 	public void setSchema(final String schema) {
 		Validate.notEmpty(schema, "Illegal schema name");
@@ -33,11 +34,13 @@ public class SchemaNameAwareBasicDataSource extends BasicDataSource {
 	}
 
 	@Override
-	public Connection getConnection(final String username, final String password) throws SQLException {
+	public Connection getConnection(final String username, final String password)
+			throws SQLException {
 		return switchSchema(super.getConnection(username, password));
 	}
 
-	private Connection switchSchema(final Connection connection) throws SQLException {
+	private Connection switchSchema(final Connection connection)
+			throws SQLException {
 		final Statement stmt = connection.createStatement();
 		try {
 			stmt.execute("SET search_path TO " + schema);

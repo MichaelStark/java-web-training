@@ -1,4 +1,4 @@
-package by.dzhvisuhko.sample.datamodel;
+package by.stark.sample.datamodel;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -6,23 +6,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-
 @Entity
-public class Image {
+public class Publisher {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column
-	private String url;
+	private String name;
 
-	public String getUrl() {
-		return url;
+	public String getName() {
+		return name;
 	}
 
-	public void setUrl(final String url) {
-		this.url = url;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Long getId() {

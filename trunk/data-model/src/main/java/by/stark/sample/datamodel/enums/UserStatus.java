@@ -1,4 +1,4 @@
-package by.dzhvisuhko.sample.datamodel.enums;
+package by.stark.sample.datamodel.enums;
 
 public enum UserStatus {
 	// ORDER CAN'T BE CHANGED
