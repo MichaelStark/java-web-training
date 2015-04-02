@@ -43,12 +43,14 @@ public class User {
 	private String lastName;
 
 	@Column
+	@Enumerated(EnumType.ORDINAL)
 	private UserGender gender;
 
 	@Column
 	private Date birthday;
 
 	@Column
+	@Enumerated(EnumType.ORDINAL)
 	private UserStatus status;
 
 	public Picture getPicture() {
