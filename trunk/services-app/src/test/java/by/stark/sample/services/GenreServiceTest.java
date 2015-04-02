@@ -21,7 +21,7 @@ public class GenreServiceTest extends AbstractServiceTest {
 
 	@Before
 	public void cleanUpData() {
-		LOGGER.info("Instance of ProductService is injected. Class is: {}",
+		LOGGER.info("Instance of GenreService is injected. Class is: {}",
 				genreService.getClass().getName());
 		genreService.deleteAll();
 	}

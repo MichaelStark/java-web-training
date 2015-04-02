@@ -15,7 +15,6 @@ public class Ebook {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Book.class)
 	private Book book;
 

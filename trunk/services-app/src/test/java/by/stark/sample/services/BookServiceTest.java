@@ -21,7 +21,7 @@ public class BookServiceTest extends AbstractServiceTest {
 
 	@Before
 	public void cleanUpData() {
-		LOGGER.info("Instance of ProductService is injected. Class is: {}",
+		LOGGER.info("Instance of BookService is injected. Class is: {}",
 				bookService.getClass().getName());
 		bookService.deleteAll();
 	}
