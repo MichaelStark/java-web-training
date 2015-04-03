@@ -3,17 +3,10 @@ package by.stark.sample.datamodel;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Libriary {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+public class Libriary extends AbstractEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Book.class)
 	private Book book;
@@ -59,7 +52,4 @@ public class Libriary {
 		this.readingRoom = readingRoom;
 	}
 
-	public Long getId() {
-		return id;
-	}
 }

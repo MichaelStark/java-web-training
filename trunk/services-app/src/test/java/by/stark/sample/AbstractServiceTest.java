@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring-context.xml" })
-public class AbstractServiceTest {
+public abstract class AbstractServiceTest {
 
 	private final static Random random = new Random();
 	protected static final RandomData RANDOM_DATA = new RandomDataImpl();
@@ -82,7 +82,8 @@ public class AbstractServiceTest {
 		final int year = randBetween(1900, 2010);
 		final GregorianCalendar gc = new GregorianCalendar();
 		gc.set(Calendar.YEAR, year);
-		final int dayOfYear = randBetween(1, gc.getActualMaximum(Calendar.DAY_OF_YEAR));
+		final int dayOfYear = randBetween(1,
+				gc.getActualMaximum(Calendar.DAY_OF_YEAR));
 		gc.set(Calendar.DAY_OF_YEAR, dayOfYear);
 		return gc.getTime();
 	}
