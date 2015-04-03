@@ -1,23 +1,26 @@
 package by.stark.sample.datamodel;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity
-public class Author {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+public class Author extends AbstractEntity {
 
 	@Column
 	private String firstName;
 
 	@Column
 	private String lastName;
+
+	@JoinTable(name = "book_2_author", joinColumns = { @JoinColumn(name = "author_id") }, inverseJoinColumns = { @JoinColumn(name = "book_id") })
+	@ManyToMany(targetEntity = Author.class, fetch = FetchType.LAZY)
+	private Set<Book> book;
 
 	public String getFirstName() {
 		return firstName;
@@ -34,9 +37,4 @@ public class Author {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-
-	public Long getId() {
-		return id;
-	}
-
 }

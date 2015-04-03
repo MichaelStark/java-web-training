@@ -5,19 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import by.stark.sample.datamodel.enums.CommentRating;
 
 @Entity
-public class Comment {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+public class Comment extends AbstractEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Book.class)
 	private Book book;
@@ -64,7 +57,4 @@ public class Comment {
 		this.description = description;
 	}
 
-	public Long getId() {
-		return id;
-	}
 }

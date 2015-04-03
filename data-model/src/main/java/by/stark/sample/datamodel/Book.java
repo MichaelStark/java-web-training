@@ -5,20 +5,13 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Book {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+public class Book extends AbstractEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Picture.class)
 	private Picture picture;
@@ -125,9 +118,5 @@ public class Book {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public Long getId() {
-		return id;
 	}
 }

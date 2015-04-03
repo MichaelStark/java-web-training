@@ -8,11 +8,16 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 
 import org.apache.commons.lang3.Validate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import by.stark.sample.dataaccess.AbstractDao;
 
 public abstract class AbstractDaoImpl<ID, Entity> implements
 		AbstractDao<ID, Entity> {
+
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(AbstractDaoImpl.class);
 
 	private EntityManager em;
 	private final Class<Entity> entityClass;
@@ -49,8 +54,8 @@ public abstract class AbstractDaoImpl<ID, Entity> implements
 	public void delete(List<ID> ids) {
 		em.createQuery(
 				String.format("delete from %s e where e.id in (:ids)",
-						entityClass.getSimpleName())).setParameter("ids", ids)
-				.executeUpdate();
+						getEntityClass().getSimpleName()))
+				.setParameter("ids", ids).executeUpdate();
 	}
 
 	@Override
@@ -72,6 +77,8 @@ public abstract class AbstractDaoImpl<ID, Entity> implements
 
 	@PersistenceContext
 	protected void setEntityManager(final EntityManager em) {
+		LOGGER.info("Set EM {} to class {}", em.hashCode(), getClass()
+				.getName());
 		this.em = em;
 	}
 
