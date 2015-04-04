@@ -25,10 +25,10 @@ public class Record4Hands extends AbstractEntity {
 	private RecordStatus status;
 
 	@Column
-	private Date date_take;
+	private Date dateTake;
 
 	@Column
-	private Date date_return;
+	private Date dateReturn;
 
 	@Column
 	private String description;
@@ -57,20 +57,20 @@ public class Record4Hands extends AbstractEntity {
 		this.status = status;
 	}
 
-	public Date getDate_take() {
-		return date_take;
+	public Date getDateTake() {
+		return dateTake;
 	}
 
-	public void setDate_take(Date date_take) {
-		this.date_take = date_take;
+	public void setDateTake(Date dateTake) {
+		this.dateTake = dateTake;
 	}
 
-	public Date getDate_return() {
-		return date_return;
+	public Date getDateReturn() {
+		return dateReturn;
 	}
 
-	public void setDate_return(Date date_return) {
-		this.date_return = date_return;
+	public void setDateReturn(Date dateReturn) {
+		this.dateReturn = dateReturn;
 	}
 
 	public String getDescription() {

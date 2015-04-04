@@ -25,10 +25,10 @@ public class Record4Room extends AbstractEntity {
 	private RecordStatus status;
 
 	@Column
-	private Date time_take;
+	private Date timeTake;
 
 	@Column
-	private Date time_return;
+	private Date timeReturn;
 
 	@Column
 	private String description;
@@ -57,20 +57,20 @@ public class Record4Room extends AbstractEntity {
 		this.status = status;
 	}
 
-	public Date getTime_take() {
-		return time_take;
+	public Date getTimeTake() {
+		return timeTake;
 	}
 
-	public void setTime_take(Date time_take) {
-		this.time_take = time_take;
+	public void setTimeTake(Date timeTake) {
+		this.timeTake = timeTake;
 	}
 
-	public Date getTime_return() {
-		return time_return;
+	public Date getTimeReturn() {
+		return timeReturn;
 	}
 
-	public void setTime_return(Date time_return) {
-		this.time_return = time_return;
+	public void setTimeReturn(Date timeReturn) {
+		this.timeReturn = timeReturn;
 	}
 
 	public String getDescription() {

@@ -1,4 +1,4 @@
-package by.stark.sample.services.impl;
+/*package by.stark.sample.services.impl;
 
 import javax.inject.Inject;
 
@@ -46,4 +46,4 @@ public abstract class AbstractServiceImpl<ID, Entity> implements
 		LOGGER.debug("Remove all");
 		dao.deleteAll();
 	}
-}
+}*/
