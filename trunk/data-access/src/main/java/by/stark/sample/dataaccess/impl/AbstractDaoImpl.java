@@ -85,4 +85,8 @@ public abstract class AbstractDaoImpl<ID, Entity> implements
 	private Class<Entity> getEntityClass() {
 		return entityClass;
 	}
+
+	public EntityManager getEm() {
+		return em;
+	}
 }
