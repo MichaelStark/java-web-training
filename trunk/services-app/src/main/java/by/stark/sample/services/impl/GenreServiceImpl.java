@@ -21,10 +21,9 @@ public class GenreServiceImpl implements GenreService {
 	private GenreDao dao;
 
 	@PostConstruct
-	private void init() {/*this method will be called by Spring after bean
-						 instantiation. Can be used for any initialization
-						 process.*/
-						 
+	private void init() {
+		// this method will be called by Spring after bean instantiation. Can be
+		// used for any initialization process.
 		LOGGER.info("Instance of GenreService is created. Class is: {}",
 				getClass().getName());
 	}
