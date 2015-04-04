@@ -4,7 +4,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface AbstractService<ID, Entity> {
 
-	@Transactional
 	Entity get(ID id);
 
 	@Transactional
