@@ -23,7 +23,7 @@ public class User extends AbstractEntity {
 	@Enumerated(EnumType.ORDINAL)
 	private UserRole role;
 
-	@Column(updatable = true)
+	@Column(updatable = false)
 	private String email;
 
 	@Column
