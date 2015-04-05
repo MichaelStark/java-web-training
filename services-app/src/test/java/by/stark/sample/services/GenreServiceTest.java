@@ -45,10 +45,4 @@ public class GenreServiceTest extends AbstractServiceTest {
 		Assert.assertNull(genreService.get(genre.getId()));
 	}
 
-	private Genre createGenre() {
-		Genre genre = new Genre();
-		genre.setName(randomString("name-"));
-		return genre;
-	}
-
 }
