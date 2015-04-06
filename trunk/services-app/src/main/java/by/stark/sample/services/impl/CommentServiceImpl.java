@@ -65,4 +65,9 @@ public class CommentServiceImpl implements CommentService {
 		return dao.getAllCommentsByBook(book);
 	}
 
+	@Override
+	public List<Comment> getAll() {
+		return dao.getAll();
+	}
+
 }

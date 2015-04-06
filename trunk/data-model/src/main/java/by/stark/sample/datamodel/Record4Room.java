@@ -15,9 +15,9 @@ import by.stark.sample.datamodel.enums.RecordStatus;
 public class Record4Room extends AbstractEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Book.class)
-	private User user;
+	private Userprofile userprofile;
 
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Userprofile.class)
 	private Libriary libriary;
 
 	@Column
@@ -33,12 +33,12 @@ public class Record4Room extends AbstractEntity {
 	@Column
 	private String description;
 
-	public User getUser() {
-		return user;
+	public Userprofile getUser() {
+		return userprofile;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUser(Userprofile userprofile) {
+		this.userprofile = userprofile;
 	}
 
 	public Libriary getLibriary() {

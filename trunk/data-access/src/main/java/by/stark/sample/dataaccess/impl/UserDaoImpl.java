@@ -10,47 +10,50 @@ import javax.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
 import by.stark.sample.dataaccess.UserDao;
-import by.stark.sample.datamodel.User;
-import by.stark.sample.datamodel.User_;
+import by.stark.sample.datamodel.Userprofile;
+import by.stark.sample.datamodel.Userprofile_;
 import by.stark.sample.datamodel.enums.UserRole;
 import by.stark.sample.datamodel.enums.UserStatus;
 
 @Repository
-public class UserDaoImpl extends AbstractDaoImpl<Long, User> implements UserDao {
+public class UserDaoImpl extends AbstractDaoImpl<Long, Userprofile> implements
+		UserDao {
 
 	protected UserDaoImpl() {
-		super(User.class);
+		super(Userprofile.class);
 	}
 
 	@Override
-	public List<User> getAllUsersByRole(UserRole role) {
+	public List<Userprofile> getAllUsersByRole(UserRole role) {
 		CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
 
-		CriteriaQuery<User> root = cBuilder.createQuery(User.class);
-		Root<User> criteria = root.from(User.class);
+		CriteriaQuery<Userprofile> root = cBuilder
+				.createQuery(Userprofile.class);
+		Root<Userprofile> criteria = root.from(Userprofile.class);
 
 		root.select(criteria);
 
-		root.where(cBuilder.equal(criteria.get(User_.role), role));
+		root.where(cBuilder.equal(criteria.get(Userprofile_.role), role));
 
-		TypedQuery<User> query = getEm().createQuery(root);
-		List<User> results = query.getResultList();
+		TypedQuery<Userprofile> query = getEm().createQuery(root);
+		List<Userprofile> results = query.getResultList();
 		return results;
 	}
 
 	@Override
-	public List<User> getAllUsersByStatus(UserStatus status) {
+	public List<Userprofile> getAllUsersByStatus(UserStatus status) {
 		CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
 
-		CriteriaQuery<User> root = cBuilder.createQuery(User.class);
-		Root<User> criteria = root.from(User.class);
+		CriteriaQuery<Userprofile> root = cBuilder
+				.createQuery(Userprofile.class);
+		Root<Userprofile> criteria = root.from(Userprofile.class);
 
 		root.select(criteria);
 
-		root.where(cBuilder.equal(criteria.get(User_.status), status));
+		root.where(cBuilder.equal(criteria.get(Userprofile_.status), status));
 
-		TypedQuery<User> query = getEm().createQuery(root);
-		List<User> results = query.getResultList();
+		TypedQuery<Userprofile> query = getEm().createQuery(root);
+		List<Userprofile> results = query.getResultList();
 		return results;
 	}
 }

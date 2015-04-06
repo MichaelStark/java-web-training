@@ -5,12 +5,12 @@ import java.util.List;
 
 import by.stark.sample.datamodel.Libriary;
 import by.stark.sample.datamodel.Record4Room;
-import by.stark.sample.datamodel.User;
+import by.stark.sample.datamodel.Userprofile;
 import by.stark.sample.datamodel.enums.RecordStatus;
 
 public interface Record4RoomDao extends AbstractDao<Long, Record4Room> {
 
-	List<Record4Room> getAllRecordsByUser(User user);
+	List<Record4Room> getAllRecordsByUser(Userprofile userprofile);
 
 	List<Record4Room> getAllRecordsByLibriary(Libriary libriary);
 

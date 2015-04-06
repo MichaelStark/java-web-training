@@ -8,6 +8,8 @@ import by.stark.sample.datamodel.Genre;
 
 public interface BookService extends AbstractService<Long, Book> {
 
+	List<Book> getAll();
+
 	List<Book> getAllBooksByTitle(String title);
 
 	List<Book> getAllBooksByAuthor(Author author);

@@ -36,32 +36,26 @@ public class Book extends AbstractEntity {
 
 	@JoinTable(name = "book_2_author", joinColumns = { @JoinColumn(name = "book_id") }, inverseJoinColumns = { @JoinColumn(name = "author_id") })
 	@ManyToMany(targetEntity = Author.class, fetch = FetchType.LAZY)
-	private Set<Author> author;
+	private Set<Author> authors;
 
 	@JoinTable(name = "book_2_genre", joinColumns = { @JoinColumn(name = "book_id") }, inverseJoinColumns = { @JoinColumn(name = "genre_id") })
 	@ManyToMany(targetEntity = Genre.class, fetch = FetchType.LAZY)
-	private Set<Genre> genre;
+	private Set<Genre> genres;
 
-	public Set<Genre> getGenre() {
-		if (genre == null) {
-		}
-
-		return genre;
+	public Set<Author> getAuthors() {
+		return authors;
 	}
 
-	public void setGenre(Set<Genre> genre) {
-		this.genre = genre;
+	public void setAuthors(Set<Author> authors) {
+		this.authors = authors;
 	}
 
-	public Set<Author> getAuthor() {
-		if (author == null) {
-		}
-
-		return author;
+	public Set<Genre> getGenres() {
+		return genres;
 	}
 
-	public void setAuthor(Set<Author> author) {
-		this.author = author;
+	public void setGenres(Set<Genre> genres) {
+		this.genres = genres;
 	}
 
 	public Picture getPicture() {

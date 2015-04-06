@@ -14,7 +14,7 @@ import by.stark.sample.datamodel.enums.UserRole;
 import by.stark.sample.datamodel.enums.UserStatus;
 
 @Entity
-public class User extends AbstractEntity {
+public class Userprofile extends AbstractEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Picture.class)
 	private Picture picture;
@@ -23,7 +23,7 @@ public class User extends AbstractEntity {
 	@Enumerated(EnumType.ORDINAL)
 	private UserRole role;
 
-	@Column(updatable = false)
+	@Column(updatable = true)
 	private String email;
 
 	@Column

@@ -20,10 +20,10 @@ import by.stark.sample.datamodel.Author;
 import by.stark.sample.datamodel.Book;
 import by.stark.sample.datamodel.Genre;
 
-public class BookServiceTest extends AbstractServiceTest {
+public class Record4RoomServiceTest extends AbstractServiceTest {
 
 	private static final Logger LOGGER = LoggerFactory
-			.getLogger(BookServiceTest.class);
+			.getLogger(Record4RoomServiceTest.class);
 
 	@Inject
 	private BookService bookService;
@@ -59,8 +59,6 @@ public class BookServiceTest extends AbstractServiceTest {
 		Assert.assertEquals(bookFromDb.getDescription(), book.getDescription());
 		Assert.assertEquals(bookFromDb.getPages(), book.getPages());
 		Assert.assertEquals(bookFromDb.getYear(), book.getYear());
-		// Assert.assertEquals(bookFromDb.getPicture(), book.getPicture());
-		// Assert.assertEquals(bookFromDb.getPublisher(), book.getPublisher());
 
 		bookFromDb.setTitle("newTitle");
 		bookService.saveOrUpdate(bookFromDb);

@@ -7,9 +7,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.math3.random.RandomData;
@@ -28,7 +26,7 @@ import by.stark.sample.datamodel.Picture;
 import by.stark.sample.datamodel.Publisher;
 import by.stark.sample.datamodel.Record4Hands;
 import by.stark.sample.datamodel.Record4Room;
-import by.stark.sample.datamodel.User;
+import by.stark.sample.datamodel.Userprofile;
 import by.stark.sample.datamodel.enums.CommentRating;
 import by.stark.sample.datamodel.enums.RecordStatus;
 import by.stark.sample.datamodel.enums.UserGender;
@@ -140,14 +138,7 @@ public abstract class AbstractServiceTest {
 	}
 
 	protected Book createBook() {
-		Set<Author> author = new HashSet<Author>();
-		author.add(createAuthor());
-		Set<Genre> genre = new HashSet<Genre>();
-		genre.add(createGenre());
-
 		Book book = new Book();
-		book.setAuthor(author);
-		book.setGenre(genre);
 		book.setDescription(randomString("description-"));
 		book.setIsbn(randomString("isbn-"));
 		book.setPages(randomLong());
@@ -174,18 +165,21 @@ public abstract class AbstractServiceTest {
 		return libriary;
 	}
 
-	protected User createUser() {
-		User user = new User();
-		user.setBirthday(randomDate());
-		user.setEmail(randomString("email-"));
-		user.setFirstName(randomString("firstName-"));
-		user.setGender(randomFromCollection(Arrays.asList(UserGender.values())));
-		user.setLastName(randomString("lastName-"));
-		user.setPassword(randomString("password-"));
-		user.setPicture(createPicture());
-		user.setRole(randomFromCollection(Arrays.asList(UserRole.values())));
-		user.setStatus(randomFromCollection(Arrays.asList(UserStatus.values())));
-		return user;
+	protected Userprofile createUser() {
+		Userprofile userprofile = new Userprofile();
+		userprofile.setBirthday(randomDate());
+		userprofile.setEmail(randomString("email-"));
+		userprofile.setFirstName(randomString("firstName-"));
+		userprofile.setGender(randomFromCollection(Arrays.asList(UserGender
+				.values())));
+		userprofile.setLastName(randomString("lastName-"));
+		userprofile.setPassword(randomString("password-"));
+		userprofile.setPicture(createPicture());
+		userprofile.setRole(randomFromCollection(Arrays.asList(UserRole
+				.values())));
+		userprofile.setStatus(randomFromCollection(Arrays.asList(UserStatus
+				.values())));
+		return userprofile;
 	}
 
 	protected Comment createComment() {

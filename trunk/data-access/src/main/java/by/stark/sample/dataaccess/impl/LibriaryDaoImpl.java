@@ -39,7 +39,8 @@ public class LibriaryDaoImpl extends AbstractDaoImpl<Long, Libriary> implements
 	}
 
 	@Override
-	public List<Libriary> getAllAvailableLibriarys4HandsByBook(Book book) {
+	public List<Libriary> getAllLibriarysByBook(Book book,
+			Boolean availability, Boolean room) {
 		CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
 
 		CriteriaQuery<Libriary> root = cBuilder.createQuery(Libriary.class);
@@ -47,29 +48,11 @@ public class LibriaryDaoImpl extends AbstractDaoImpl<Long, Libriary> implements
 
 		root.select(criteria);
 
-		root.where(cBuilder.and(
-				cBuilder.equal(criteria.get(Libriary_.book), book),
-				cBuilder.equal(criteria.get(Libriary_.readingRoom), false),
-				cBuilder.equal(criteria.get(Libriary_.availability), true)));
-
-		TypedQuery<Libriary> query = getEm().createQuery(root);
-		List<Libriary> results = query.getResultList();
-		return results;
-	}
-
-	@Override
-	public List<Libriary> getAllAvailableLibriarys4RoomByBook(Book book) {
-		CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
-
-		CriteriaQuery<Libriary> root = cBuilder.createQuery(Libriary.class);
-		Root<Libriary> criteria = root.from(Libriary.class);
-
-		root.select(criteria);
-
-		root.where(cBuilder.and(
-				cBuilder.equal(criteria.get(Libriary_.book), book),
-				cBuilder.equal(criteria.get(Libriary_.readingRoom), true),
-				cBuilder.equal(criteria.get(Libriary_.availability), true)));
+		root.where(cBuilder.and(cBuilder.equal(criteria.get(Libriary_.book),
+				book),
+				cBuilder.equal(criteria.get(Libriary_.readingRoom), room),
+				cBuilder.equal(criteria.get(Libriary_.availability),
+						availability)));
 
 		TypedQuery<Libriary> query = getEm().createQuery(root);
 		List<Libriary> results = query.getResultList();

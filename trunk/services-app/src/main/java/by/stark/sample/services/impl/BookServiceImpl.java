@@ -76,4 +76,8 @@ public class BookServiceImpl implements BookService {
 		return dao.getAllBooksByGenre(genre);
 	}
 
+	@Override
+	public List<Book> getAll() {
+		return dao.getAll();
+	}
 }
