@@ -1,5 +1,7 @@
 package by.stark.sample.services.impl;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
@@ -55,6 +57,11 @@ public class PictureServiceImpl implements PictureService {
 	public void deleteAll() {
 		LOGGER.debug("Remove all pictures");
 		dao.deleteAll();
+	}
+
+	@Override
+	public List<Picture> getAll() {
+		return dao.getAll();
 	}
 
 }

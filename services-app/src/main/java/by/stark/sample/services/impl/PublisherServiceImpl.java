@@ -1,5 +1,7 @@
 package by.stark.sample.services.impl;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
@@ -55,6 +57,11 @@ public class PublisherServiceImpl implements PublisherService {
 	public void deleteAll() {
 		LOGGER.debug("Remove all publishers");
 		dao.deleteAll();
+	}
+
+	@Override
+	public List<Publisher> getAll() {
+		return dao.getAll();
 	}
 
 }

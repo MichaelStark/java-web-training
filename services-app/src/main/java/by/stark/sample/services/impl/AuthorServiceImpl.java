@@ -69,4 +69,9 @@ public class AuthorServiceImpl implements AuthorService {
 		return dao.getAllAuthorsByLastName(lastName);
 	}
 
+	@Override
+	public List<Author> getAll() {
+		return dao.getAll();
+	}
+
 }

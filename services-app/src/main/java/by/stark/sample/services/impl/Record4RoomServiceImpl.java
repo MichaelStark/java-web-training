@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import by.stark.sample.dataaccess.Record4RoomDao;
 import by.stark.sample.datamodel.Libriary;
 import by.stark.sample.datamodel.Record4Room;
-import by.stark.sample.datamodel.User;
+import by.stark.sample.datamodel.Userprofile;
 import by.stark.sample.datamodel.enums.RecordStatus;
 import by.stark.sample.services.Record4RoomService;
 
@@ -64,8 +64,8 @@ public class Record4RoomServiceImpl implements Record4RoomService {
 	}
 
 	@Override
-	public List<Record4Room> getAllRecordsByUser(User user) {
-		return dao.getAllRecordsByUser(user);
+	public List<Record4Room> getAllRecordsByUser(Userprofile userprofile) {
+		return dao.getAllRecordsByUser(userprofile);
 	}
 
 	@Override
@@ -86,6 +86,11 @@ public class Record4RoomServiceImpl implements Record4RoomService {
 	@Override
 	public List<Record4Room> getAllRecordsByTimeReturn(Date timeReturn) {
 		return dao.getAllRecordsByTimeReturn(timeReturn);
+	}
+
+	@Override
+	public List<Record4Room> getAll() {
+		return dao.getAll();
 	}
 
 }

@@ -66,13 +66,14 @@ public class LibriaryServiceImpl implements LibriaryService {
 	}
 
 	@Override
-	public List<Libriary> getAllAvailableLibriarys4HandsByBook(Book book) {
-		return dao.getAllAvailableLibriarys4HandsByBook(book);
+	public List<Libriary> getAllLibriarysByBook(Book book,
+			Boolean availability, Boolean room) {
+		return dao.getAllLibriarysByBook(book, availability, room);
 	}
 
 	@Override
-	public List<Libriary> getAllAvailableLibriarys4RoomByBook(Book book) {
-		return dao.getAllAvailableLibriarys4RoomByBook(book);
+	public List<Libriary> getAll() {
+		return dao.getAll();
 	}
 
 }

@@ -15,8 +15,8 @@ public class Comment extends AbstractEntity {
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Book.class)
 	private Book book;
 
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
-	private User user;
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Userprofile.class)
+	private Userprofile userprofile;
 
 	@Column
 	@Enumerated(EnumType.ORDINAL)
@@ -33,12 +33,12 @@ public class Comment extends AbstractEntity {
 		this.book = book;
 	}
 
-	public User getUser() {
-		return user;
+	public Userprofile getUser() {
+		return userprofile;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUser(Userprofile userprofile) {
+		this.userprofile = userprofile;
 	}
 
 	public CommentRating getRating() {

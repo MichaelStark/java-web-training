@@ -47,7 +47,7 @@ public class BookDaoImpl extends AbstractDaoImpl<Long, Book> implements BookDao 
 
 		root.select(criteria);
 
-		root.where(cBuilder.equal(criteria.get(Book_.author), author));
+		root.where(cBuilder.equal(criteria.get(Book_.authors), author));
 
 		TypedQuery<Book> query = getEm().createQuery(root);
 		List<Book> results = query.getResultList();
@@ -63,7 +63,7 @@ public class BookDaoImpl extends AbstractDaoImpl<Long, Book> implements BookDao 
 
 		root.select(criteria);
 
-		root.where(cBuilder.equal(criteria.get(Book_.genre), genre));
+		root.where(cBuilder.equal(criteria.get(Book_.genres), genre));
 
 		TypedQuery<Book> query = getEm().createQuery(root);
 		List<Book> results = query.getResultList();

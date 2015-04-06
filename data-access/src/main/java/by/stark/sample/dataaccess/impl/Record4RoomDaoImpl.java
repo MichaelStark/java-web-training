@@ -14,7 +14,7 @@ import by.stark.sample.dataaccess.Record4RoomDao;
 import by.stark.sample.datamodel.Libriary;
 import by.stark.sample.datamodel.Record4Room;
 import by.stark.sample.datamodel.Record4Room_;
-import by.stark.sample.datamodel.User;
+import by.stark.sample.datamodel.Userprofile;
 import by.stark.sample.datamodel.enums.RecordStatus;
 
 @Repository
@@ -26,7 +26,7 @@ public class Record4RoomDaoImpl extends AbstractDaoImpl<Long, Record4Room>
 	}
 
 	@Override
-	public List<Record4Room> getAllRecordsByUser(User user) {
+	public List<Record4Room> getAllRecordsByUser(Userprofile userprofile) {
 		CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
 
 		CriteriaQuery<Record4Room> root = cBuilder
@@ -35,7 +35,8 @@ public class Record4RoomDaoImpl extends AbstractDaoImpl<Long, Record4Room>
 
 		root.select(criteria);
 
-		root.where(cBuilder.equal(criteria.get(Record4Room_.user), user));
+		root.where(cBuilder.equal(criteria.get(Record4Room_.userprofile),
+				userprofile));
 
 		TypedQuery<Record4Room> query = getEm().createQuery(root);
 		List<Record4Room> results = query.getResultList();

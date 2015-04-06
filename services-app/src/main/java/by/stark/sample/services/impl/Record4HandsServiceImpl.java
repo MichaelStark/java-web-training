@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import by.stark.sample.dataaccess.Record4HandsDao;
 import by.stark.sample.datamodel.Libriary;
 import by.stark.sample.datamodel.Record4Hands;
-import by.stark.sample.datamodel.User;
+import by.stark.sample.datamodel.Userprofile;
 import by.stark.sample.datamodel.enums.RecordStatus;
 import by.stark.sample.services.Record4HandsService;
 
@@ -64,8 +64,8 @@ public class Record4HandsServiceImpl implements Record4HandsService {
 	}
 
 	@Override
-	public List<Record4Hands> getAllRecordsByUser(User user) {
-		return dao.getAllRecordsByUser(user);
+	public List<Record4Hands> getAllRecordsByUser(Userprofile userprofile) {
+		return dao.getAllRecordsByUser(userprofile);
 	}
 
 	@Override
@@ -86,6 +86,11 @@ public class Record4HandsServiceImpl implements Record4HandsService {
 	@Override
 	public List<Record4Hands> getAllRecordsByDateReturn(Date dateReturn) {
 		return dao.getAllRecordsByDateReturn(dateReturn);
+	}
+
+	@Override
+	public List<Record4Hands> getAll() {
+		return dao.getAll();
 	}
 
 }

@@ -1,5 +1,7 @@
 package by.stark.sample.services.impl;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
@@ -55,6 +57,11 @@ public class GenreServiceImpl implements GenreService {
 	public void deleteAll() {
 		LOGGER.debug("Remove all genres");
 		dao.deleteAll();
+	}
+
+	@Override
+	public List<Genre> getAll() {
+		return dao.getAll();
 	}
 
 }

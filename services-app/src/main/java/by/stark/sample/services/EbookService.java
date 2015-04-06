@@ -7,6 +7,8 @@ import by.stark.sample.datamodel.Ebook;
 
 public interface EbookService extends AbstractService<Long, Ebook> {
 
+	List<Ebook> getAll();
+
 	List<Ebook> getAllEbooksByBook(Book book);
 
 }

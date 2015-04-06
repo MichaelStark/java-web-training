@@ -14,7 +14,7 @@ import by.stark.sample.dataaccess.Record4HandsDao;
 import by.stark.sample.datamodel.Libriary;
 import by.stark.sample.datamodel.Record4Hands;
 import by.stark.sample.datamodel.Record4Hands_;
-import by.stark.sample.datamodel.User;
+import by.stark.sample.datamodel.Userprofile;
 import by.stark.sample.datamodel.enums.RecordStatus;
 
 @Repository
@@ -26,7 +26,7 @@ public class Record4HandsDaoImpl extends AbstractDaoImpl<Long, Record4Hands>
 	}
 
 	@Override
-	public List<Record4Hands> getAllRecordsByUser(User user) {
+	public List<Record4Hands> getAllRecordsByUser(Userprofile userprofile) {
 		CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
 
 		CriteriaQuery<Record4Hands> root = cBuilder
@@ -35,7 +35,8 @@ public class Record4HandsDaoImpl extends AbstractDaoImpl<Long, Record4Hands>
 
 		root.select(criteria);
 
-		root.where(cBuilder.equal(criteria.get(Record4Hands_.user), user));
+		root.where(cBuilder.equal(criteria.get(Record4Hands_.userprofile),
+				userprofile));
 
 		TypedQuery<Record4Hands> query = getEm().createQuery(root);
 		List<Record4Hands> results = query.getResultList();

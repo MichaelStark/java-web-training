@@ -65,4 +65,9 @@ public class EbookServiceImpl implements EbookService {
 		return dao.getAllEbooksByBook(book);
 	}
 
+	@Override
+	public List<Ebook> getAll() {
+		return dao.getAll();
+	}
+
 }

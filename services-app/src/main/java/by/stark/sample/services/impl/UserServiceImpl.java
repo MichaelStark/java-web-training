@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import by.stark.sample.dataaccess.UserDao;
-import by.stark.sample.datamodel.User;
+import by.stark.sample.datamodel.Userprofile;
 import by.stark.sample.datamodel.enums.UserRole;
 import by.stark.sample.datamodel.enums.UserStatus;
 import by.stark.sample.services.UserService;
@@ -33,26 +33,26 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User get(Long id) {
-		User entity = dao.getById(id);
+	public Userprofile get(Long id) {
+		Userprofile entity = dao.getById(id);
 		return entity;
 	}
 
 	@Override
-	public void saveOrUpdate(User user) {
-		if (user.getId() == null) {
-			LOGGER.debug("Save new: {}", user);
-			dao.insert(user);
+	public void saveOrUpdate(Userprofile userprofile) {
+		if (userprofile.getId() == null) {
+			LOGGER.debug("Save new: {}", userprofile);
+			dao.insert(userprofile);
 		} else {
-			LOGGER.debug("Update: {}", user);
-			dao.update(user);
+			LOGGER.debug("Update: {}", userprofile);
+			dao.update(userprofile);
 		}
 	}
 
 	@Override
-	public void delete(User user) {
-		LOGGER.debug("Remove: {}", user);
-		dao.delete(user.getId());
+	public void delete(Userprofile userprofile) {
+		LOGGER.debug("Remove: {}", userprofile);
+		dao.delete(userprofile.getId());
 	}
 
 	@Override
@@ -62,13 +62,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> getAllUsersByRole(UserRole role) {
+	public List<Userprofile> getAllUsersByRole(UserRole role) {
 		return dao.getAllUsersByRole(role);
 	}
 
 	@Override
-	public List<User> getAllUsersByStatus(UserStatus status) {
+	public List<Userprofile> getAllUsersByStatus(UserStatus status) {
 		return dao.getAllUsersByStatus(status);
+	}
+
+	@Override
+	public List<Userprofile> getAll() {
+		return dao.getAll();
 	}
 
 }

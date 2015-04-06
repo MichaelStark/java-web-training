@@ -1,6 +1,7 @@
 package by.stark.sample.services;
 
 import javax.inject.Inject;
+import javax.persistence.PersistenceException;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -46,11 +47,29 @@ public class GenreServiceTest extends AbstractServiceTest {
 		Assert.assertNull(genreService.get(genre.getId()));
 	}
 
+	@Test
+	public void uniqueConstraintsTest() {
+		Genre genre = createGenre();
+		genreService.saveOrUpdate(genre);
+
+		Genre duplicateGenre = createGenre();
+		duplicateGenre.setName(genre.getName());
+		try {
+			genreService.saveOrUpdate(duplicateGenre);
+			Assert.fail("Not unique name can't be saved.");
+		} catch (PersistenceException e) {
+			// expected
+		}
+
+		// should be saved now
+		duplicateGenre.setName(randomString("name-"));
+		genreService.saveOrUpdate(duplicateGenre);
+	}
+
 	@After
 	public void finishTest() {
 		genreService.deleteAll();
-		LOGGER.info("Finish GenreServiceTest.  Class is: {}", this.getClass()
-				.getName());
+		Assert.assertEquals(genreService.getAll().size(), 0);
 	}
 
 }
