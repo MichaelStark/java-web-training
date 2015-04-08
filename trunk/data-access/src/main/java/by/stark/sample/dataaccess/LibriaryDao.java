@@ -7,8 +7,6 @@ import by.stark.sample.datamodel.Libriary;
 
 public interface LibriaryDao extends AbstractDao<Long, Libriary> {
 
-	List<Libriary> getAllLibriarysByBook(Book book);
-
 	List<Libriary> getAllLibriarysByBook(Book book, Boolean availability,
 			Boolean room);
 

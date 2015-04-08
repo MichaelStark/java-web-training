@@ -14,10 +14,10 @@ import by.stark.sample.datamodel.enums.RecordStatus;
 @Entity
 public class Record4Room extends AbstractEntity {
 
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Book.class)
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Userprofile.class)
 	private Userprofile userprofile;
 
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Userprofile.class)
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Libriary.class)
 	private Libriary libriary;
 
 	@Column

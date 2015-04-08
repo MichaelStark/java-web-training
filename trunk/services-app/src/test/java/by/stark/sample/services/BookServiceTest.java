@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import by.stark.sample.AbstractServiceTest;
 import by.stark.sample.datamodel.Author;
 import by.stark.sample.datamodel.Book;
+import by.stark.sample.datamodel.Book_;
 import by.stark.sample.datamodel.Genre;
 
 public class BookServiceTest extends AbstractServiceTest {
@@ -52,15 +53,18 @@ public class BookServiceTest extends AbstractServiceTest {
 		Book book = createBookComplete();
 		bookService.saveOrUpdate(book);
 
-		Book bookFromDb = bookService.get(book.getId());
+		Book bookFromDb = bookService.get(Book_.id, book.getId(),
+				Book_.picture, Book_.publisher);
 		Assert.assertNotNull(bookFromDb);
 		Assert.assertEquals(bookFromDb.getTitle(), book.getTitle());
 		Assert.assertEquals(bookFromDb.getIsbn(), book.getIsbn());
 		Assert.assertEquals(bookFromDb.getDescription(), book.getDescription());
 		Assert.assertEquals(bookFromDb.getPages(), book.getPages());
 		Assert.assertEquals(bookFromDb.getYear(), book.getYear());
-		// Assert.assertEquals(bookFromDb.getPicture(), book.getPicture());
-		// Assert.assertEquals(bookFromDb.getPublisher(), book.getPublisher());
+		Assert.assertEquals(bookFromDb.getPicture().getId(), book.getPicture()
+				.getId());
+		Assert.assertEquals(bookFromDb.getPublisher().getId(), book
+				.getPublisher().getId());
 
 		bookFromDb.setTitle("newTitle");
 		bookService.saveOrUpdate(bookFromDb);
@@ -117,13 +121,14 @@ public class BookServiceTest extends AbstractServiceTest {
 		List<Book> allBooks = bookService.getAll();
 		Assert.assertEquals(allBooks.size(), 2);
 
-		List<Book> allBooksByTitle = bookService.getAllBooksByTitle(title);
+		List<Book> allBooksByTitle = bookService.getAllByField(Book_.title,
+				title);
 		Assert.assertEquals(allBooksByTitle.size(), 1);
 		Assert.assertEquals(allBooksByTitle.get(0).getId(), book.getId());
 
 	}
 
-	// @Test
+	@Test
 	public void searchByAuthorTest() {
 		Book book = createBookComplete();
 		Author author = createAuthor();
@@ -139,14 +144,14 @@ public class BookServiceTest extends AbstractServiceTest {
 		List<Book> allBooks = bookService.getAll();
 		Assert.assertEquals(allBooks.size(), 2);
 
-		List<Book> allBooksByAuthor = bookService.getAllBooksByAuthor(author);
+		List<Book> allBooksByAuthor = bookService.getAllByAuthor(author);
 
 		Assert.assertEquals(allBooksByAuthor.size(), 1);
 		Assert.assertEquals(allBooksByAuthor.get(0).getId(), book.getId());
 
 	}
 
-	// @Test
+	@Test
 	public void searchByGenreTest() {
 		Book book = createBookComplete();
 		Genre genre = createGenre();
@@ -162,7 +167,7 @@ public class BookServiceTest extends AbstractServiceTest {
 		List<Book> allBooks = bookService.getAll();
 		Assert.assertEquals(allBooks.size(), 2);
 
-		List<Book> allBooksByGenre = bookService.getAllBooksByGenre(genre);
+		List<Book> allBooksByGenre = bookService.getAllByGenre(genre);
 
 		Assert.assertEquals(allBooksByGenre.size(), 1);
 		Assert.assertEquals(allBooksByGenre.get(0).getId(), book.getId());

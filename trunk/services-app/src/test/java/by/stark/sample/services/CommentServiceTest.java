@@ -13,8 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import by.stark.sample.AbstractServiceTest;
-import by.stark.sample.datamodel.Book;
 import by.stark.sample.datamodel.Comment;
+import by.stark.sample.datamodel.Comment_;
 
 public class CommentServiceTest extends AbstractServiceTest {
 
@@ -48,13 +48,16 @@ public class CommentServiceTest extends AbstractServiceTest {
 		Comment comment = createCommentComplete();
 		commentService.saveOrUpdate(comment);
 
-		Comment commentFromDb = commentService.get(comment.getId());
+		Comment commentFromDb = commentService.get(Comment_.id,
+				comment.getId(), Comment_.book, Comment_.userprofile);
 		Assert.assertNotNull(commentFromDb);
 		Assert.assertEquals(commentFromDb.getRating(), comment.getRating());
 		Assert.assertEquals(commentFromDb.getDescription(),
 				comment.getDescription());
-		// Assert.assertEquals(commentFromDb.getBook(), comment.getBook());
-		// Assert.assertEquals(commentFromDb.getUser(), comment.getUser());
+		Assert.assertEquals(commentFromDb.getBook().getId(), comment.getBook()
+				.getId());
+		Assert.assertEquals(commentFromDb.getUser().getId(), comment.getUser()
+				.getId());
 
 		commentFromDb.setDescription("newDescription");
 		commentService.saveOrUpdate(commentFromDb);
@@ -71,7 +74,6 @@ public class CommentServiceTest extends AbstractServiceTest {
 	@Test
 	public void searchByBookTest() {
 		Comment comment = createCommentComplete();
-		Book book = comment.getBook();
 		commentService.saveOrUpdate(comment);
 
 		Comment anotherComment = createCommentComplete();
@@ -80,8 +82,8 @@ public class CommentServiceTest extends AbstractServiceTest {
 		List<Comment> allComments = commentService.getAll();
 		Assert.assertEquals(allComments.size(), 2);
 
-		List<Comment> allCommentsByBook = commentService
-				.getAllCommentsByBook(book);
+		List<Comment> allCommentsByBook = commentService.getAllByField(
+				Comment_.book, comment.getBook());
 		Assert.assertEquals(allCommentsByBook.size(), 1);
 		Assert.assertEquals(allCommentsByBook.get(0).getId(), comment.getId());
 

@@ -23,22 +23,6 @@ public class LibriaryDaoImpl extends AbstractDaoImpl<Long, Libriary> implements
 	}
 
 	@Override
-	public List<Libriary> getAllLibriarysByBook(Book book) {
-		CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
-
-		CriteriaQuery<Libriary> root = cBuilder.createQuery(Libriary.class);
-		Root<Libriary> criteria = root.from(Libriary.class);
-
-		root.select(criteria);
-
-		root.where(cBuilder.equal(criteria.get(Libriary_.book), book));
-
-		TypedQuery<Libriary> query = getEm().createQuery(root);
-		List<Libriary> results = query.getResultList();
-		return results;
-	}
-
-	@Override
 	public List<Libriary> getAllLibriarysByBook(Book book,
 			Boolean availability, Boolean room) {
 		CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
