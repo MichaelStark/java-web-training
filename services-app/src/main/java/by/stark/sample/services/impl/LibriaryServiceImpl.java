@@ -15,7 +15,8 @@ import by.stark.sample.datamodel.Libriary;
 import by.stark.sample.services.LibriaryService;
 
 @Service
-public class LibriaryServiceImpl implements LibriaryService {
+public class LibriaryServiceImpl extends AbstractServiceImpl<Long, Libriary>
+		implements LibriaryService {
 
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(LibriaryServiceImpl.class);
@@ -32,48 +33,9 @@ public class LibriaryServiceImpl implements LibriaryService {
 	}
 
 	@Override
-	public Libriary get(Long id) {
-		Libriary entity = dao.getById(id);
-		return entity;
-	}
-
-	@Override
-	public void saveOrUpdate(Libriary libriary) {
-		if (libriary.getId() == null) {
-			LOGGER.debug("Save new: {}", libriary);
-			dao.insert(libriary);
-		} else {
-			LOGGER.debug("Update: {}", libriary);
-			dao.update(libriary);
-		}
-	}
-
-	@Override
-	public void delete(Libriary libriary) {
-		LOGGER.debug("Remove: {}", libriary);
-		dao.delete(libriary.getId());
-	}
-
-	@Override
-	public void deleteAll() {
-		LOGGER.debug("Remove all libriarys");
-		dao.deleteAll();
-	}
-
-	@Override
-	public List<Libriary> getAllLibriarysByBook(Book book) {
-		return dao.getAllLibriarysByBook(book);
-	}
-
-	@Override
 	public List<Libriary> getAllLibriarysByBook(Book book,
 			Boolean availability, Boolean room) {
 		return dao.getAllLibriarysByBook(book, availability, room);
-	}
-
-	@Override
-	public List<Libriary> getAll() {
-		return dao.getAll();
 	}
 
 }

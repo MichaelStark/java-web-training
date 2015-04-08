@@ -2,11 +2,12 @@ package by.stark.sample.dataaccess.impl;
 
 import java.util.List;
 
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.SingularAttribute;
 
+import org.apache.commons.lang3.Validate;
 import org.springframework.stereotype.Repository;
 
 import by.stark.sample.dataaccess.BookDao;
@@ -23,50 +24,39 @@ public class BookDaoImpl extends AbstractDaoImpl<Long, Book> implements BookDao 
 	}
 
 	@Override
-	public List<Book> getAllBooksByTitle(String title) {
-		CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
-
-		CriteriaQuery<Book> root = cBuilder.createQuery(Book.class);
-		Root<Book> criteria = root.from(Book.class);
-
-		root.select(criteria);
-
-		root.where(cBuilder.equal(criteria.get(Book_.title), title));
-
-		TypedQuery<Book> query = getEm().createQuery(root);
-		List<Book> results = query.getResultList();
-		return results;
+	public List<Book> getAllByGenre(Genre genre,
+			SingularAttribute<Book, ?>... fetchAttributes) {
+		Validate.notNull(genre, "Search attributes can't be empty. Attribute: "
+				+ Book_.genres.getName());
+		final CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
+		final CriteriaQuery<Book> criteria = cBuilder.createQuery(Book.class);
+		final Root<Book> root = criteria.from(Book.class);
+		criteria.select(root);
+		for (SingularAttribute<Book, ?> attr : fetchAttributes) {
+			root.fetch(attr);
+		}
+		criteria.distinct(true);
+		criteria.where(cBuilder.isMember(genre, root.get(Book_.genres)));
+		return getEm().createQuery(criteria).getResultList();
 	}
 
 	@Override
-	public List<Book> getAllBooksByAuthor(Author author) {
-		CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
-
-		CriteriaQuery<Book> root = cBuilder.createQuery(Book.class);
-		Root<Book> criteria = root.from(Book.class);
-
-		root.select(criteria);
-
-		root.where(cBuilder.equal(criteria.get(Book_.authors), author));
-
-		TypedQuery<Book> query = getEm().createQuery(root);
-		List<Book> results = query.getResultList();
-		return results;
+	public List<Book> getAllByAuthor(Author author,
+			SingularAttribute<Book, ?>... fetchAttributes) {
+		Validate.notNull(
+				author,
+				"Search attributes can't be empty. Attribute: "
+						+ Book_.authors.getName());
+		final CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
+		final CriteriaQuery<Book> criteria = cBuilder.createQuery(Book.class);
+		final Root<Book> root = criteria.from(Book.class);
+		criteria.select(root);
+		for (SingularAttribute<Book, ?> attr : fetchAttributes) {
+			root.fetch(attr);
+		}
+		criteria.distinct(true);
+		criteria.where(cBuilder.isMember(author, root.get(Book_.authors)));
+		return getEm().createQuery(criteria).getResultList();
 	}
 
-	@Override
-	public List<Book> getAllBooksByGenre(Genre genre) {
-		CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
-
-		CriteriaQuery<Book> root = cBuilder.createQuery(Book.class);
-		Root<Book> criteria = root.from(Book.class);
-
-		root.select(criteria);
-
-		root.where(cBuilder.equal(criteria.get(Book_.genres), genre));
-
-		TypedQuery<Book> query = getEm().createQuery(root);
-		List<Book> results = query.getResultList();
-		return results;
-	}
 }

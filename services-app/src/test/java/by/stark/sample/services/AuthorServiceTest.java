@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import by.stark.sample.AbstractServiceTest;
 import by.stark.sample.datamodel.Author;
+import by.stark.sample.datamodel.Author_;
 
 public class AuthorServiceTest extends AbstractServiceTest {
 
@@ -64,8 +65,8 @@ public class AuthorServiceTest extends AbstractServiceTest {
 		List<Author> allAuthors = authorService.getAll();
 		Assert.assertEquals(allAuthors.size(), 2);
 
-		List<Author> allAuthorsByFirstName = authorService
-				.getAllAuthorsByFirstName(firstName);
+		List<Author> allAuthorsByFirstName = authorService.getAllByField(
+				Author_.firstName, firstName);
 		Assert.assertEquals(allAuthorsByFirstName.size(), 1);
 		Assert.assertEquals(allAuthorsByFirstName.get(0).getId(),
 				author.getId());
@@ -84,8 +85,8 @@ public class AuthorServiceTest extends AbstractServiceTest {
 		List<Author> allAuthors = authorService.getAll();
 		Assert.assertEquals(allAuthors.size(), 2);
 
-		List<Author> allAuthorsByLastName = authorService
-				.getAllAuthorsByLastName(lastName);
+		List<Author> allAuthorsByLastName = authorService.getAllByField(
+				Author_.lastName, lastName);
 		Assert.assertEquals(allAuthorsByLastName.size(), 1);
 		Assert.assertEquals(allAuthorsByLastName.get(0).getId(), author.getId());
 

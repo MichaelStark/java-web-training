@@ -7,10 +7,6 @@ import by.stark.sample.datamodel.Libriary;
 
 public interface LibriaryService extends AbstractService<Long, Libriary> {
 
-	List<Libriary> getAll();
-
-	List<Libriary> getAllLibriarysByBook(Book book);
-
 	List<Libriary> getAllLibriarysByBook(Book book, Boolean availability,
 			Boolean room);
 

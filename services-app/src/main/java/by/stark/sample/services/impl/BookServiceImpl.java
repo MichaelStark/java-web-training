@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.persistence.metamodel.SingularAttribute;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,8 @@ import by.stark.sample.datamodel.Genre;
 import by.stark.sample.services.BookService;
 
 @Service
-public class BookServiceImpl implements BookService {
+public class BookServiceImpl extends AbstractServiceImpl<Long, Book> implements
+		BookService {
 
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(BookServiceImpl.class);
@@ -33,51 +35,15 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public Book get(Long id) {
-		Book entity = dao.getById(id);
-		return entity;
+	public List<Book> getAllByAuthor(Author author,
+			SingularAttribute<Book, ?>... fetchAttributes) {
+		return dao.getAllByAuthor(author, fetchAttributes);
 	}
 
 	@Override
-	public void saveOrUpdate(Book book) {
-		if (book.getId() == null) {
-			LOGGER.debug("Save new: {}", book);
-			dao.insert(book);
-		} else {
-			LOGGER.debug("Update: {}", book);
-			dao.update(book);
-		}
+	public List<Book> getAllByGenre(Genre genre,
+			SingularAttribute<Book, ?>... fetchAttributes) {
+		return dao.getAllByGenre(genre, fetchAttributes);
 	}
 
-	@Override
-	public void delete(Book book) {
-		LOGGER.debug("Remove: {}", book);
-		dao.delete(book.getId());
-	}
-
-	@Override
-	public void deleteAll() {
-		LOGGER.debug("Remove all books");
-		dao.deleteAll();
-	}
-
-	@Override
-	public List<Book> getAllBooksByTitle(String title) {
-		return dao.getAllBooksByTitle(title);
-	}
-
-	@Override
-	public List<Book> getAllBooksByAuthor(Author author) {
-		return dao.getAllBooksByAuthor(author);
-	}
-
-	@Override
-	public List<Book> getAllBooksByGenre(Genre genre) {
-		return dao.getAllBooksByGenre(genre);
-	}
-
-	@Override
-	public List<Book> getAll() {
-		return dao.getAll();
-	}
 }

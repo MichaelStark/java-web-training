@@ -1,13 +1,10 @@
 package by.stark.sample.services;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.inject.Inject;
 import javax.persistence.PersistenceException;
 
-import org.hibernate.LazyInitializationException;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,9 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import by.stark.sample.AbstractServiceTest;
-import by.stark.sample.datamodel.Author;
-import by.stark.sample.datamodel.Book;
-import by.stark.sample.datamodel.Genre;
+import by.stark.sample.datamodel.Record4Room;
+import by.stark.sample.datamodel.Record4Room_;
 
 public class Record4RoomServiceTest extends AbstractServiceTest {
 
@@ -26,13 +22,16 @@ public class Record4RoomServiceTest extends AbstractServiceTest {
 			.getLogger(Record4RoomServiceTest.class);
 
 	@Inject
+	private Record4RoomService recordService;
+
+	@Inject
 	private BookService bookService;
 
 	@Inject
-	private GenreService genreService;
+	private UserService userService;
 
 	@Inject
-	private AuthorService authorService;
+	private LibriaryService libriaryService;
 
 	@Inject
 	private PublisherService publisherService;
@@ -42,179 +41,204 @@ public class Record4RoomServiceTest extends AbstractServiceTest {
 
 	@Before
 	public void cleanUpData() {
-		LOGGER.info("Instance of BookService is injected. Class is: {}",
-				bookService.getClass().getName());
-		bookService.deleteAll();
+		LOGGER.info("Instance of Record4RoomService is injected. Class is: {}",
+				recordService.getClass().getName());
+		recordService.deleteAll();
 	}
 
 	@Test
 	public void basicCRUDTest() {
-		Book book = createBookComplete();
-		bookService.saveOrUpdate(book);
+		Record4Room record4Room = createRecord4RoomComplete();
+		recordService.saveOrUpdate(record4Room);
 
-		Book bookFromDb = bookService.get(book.getId());
-		Assert.assertNotNull(bookFromDb);
-		Assert.assertEquals(bookFromDb.getTitle(), book.getTitle());
-		Assert.assertEquals(bookFromDb.getIsbn(), book.getIsbn());
-		Assert.assertEquals(bookFromDb.getDescription(), book.getDescription());
-		Assert.assertEquals(bookFromDb.getPages(), book.getPages());
-		Assert.assertEquals(bookFromDb.getYear(), book.getYear());
+		Record4Room record4RoomFromDb = recordService.get(Record4Room_.id,
+				record4Room.getId(), Record4Room_.userprofile,
+				Record4Room_.libriary);
+		Assert.assertNotNull(record4RoomFromDb);
+		Assert.assertEquals(record4RoomFromDb.getStatus(),
+				record4Room.getStatus());
+		Assert.assertEquals(record4RoomFromDb.getDescription(),
+				record4Room.getDescription());
+		Assert.assertTrue(record4RoomFromDb.getTimeTake().compareTo(
+				record4Room.getTimeTake()) == 0);
+		Assert.assertTrue(record4RoomFromDb.getTimeReturn().compareTo(
+				record4Room.getTimeReturn()) == 0);
+		Assert.assertEquals(record4RoomFromDb.getUser().getId(), record4Room
+				.getUser().getId());
+		Assert.assertEquals(record4RoomFromDb.getLibriary().getId(),
+				record4Room.getLibriary().getId());
 
-		bookFromDb.setTitle("newTitle");
-		bookService.saveOrUpdate(bookFromDb);
-		Book bookFromDbUpdated = bookService.get(book.getId());
-		Assert.assertEquals(bookFromDb.getTitle(), bookFromDbUpdated.getTitle());
-		Assert.assertNotEquals(bookFromDbUpdated.getTitle(), book.getTitle());
+		record4RoomFromDb.setDescription(randomString("description-"));
+		recordService.saveOrUpdate(record4RoomFromDb);
+		Record4Room record4RoomFromDbUpdated = recordService.get(record4Room
+				.getId());
+		Assert.assertEquals(record4RoomFromDb.getDescription(),
+				record4RoomFromDbUpdated.getDescription());
+		Assert.assertNotEquals(record4RoomFromDbUpdated.getDescription(),
+				record4Room.getDescription());
 
-		bookService.delete(bookFromDbUpdated);
-		Assert.assertNull(bookService.get(book.getId()));
+		recordService.delete(record4RoomFromDbUpdated);
+		Assert.assertNull(recordService.get(record4Room.getId()));
 	}
 
 	@Test
-	public void manyToManyTest() {
-		Book book = createBookComplete();
+	public void searchByUserTest() {
+		Record4Room record4Room = createRecord4RoomComplete();
+		recordService.saveOrUpdate(record4Room);
 
-		int randomTestObjectsCount = randomTestObjectsCount();
-		HashSet<Author> authors = new HashSet<Author>();
-		HashSet<Genre> genres = new HashSet<Genre>();
-		for (int i = 0; i < randomTestObjectsCount; i++) {
-			Author author = createAuthor();
-			authorService.saveOrUpdate(author);
-			authors.add(author);
+		Record4Room anotherRecord4Room = createRecord4RoomComplete();
+		recordService.saveOrUpdate(anotherRecord4Room);
 
-			Genre genre = createGenre();
-			genreService.saveOrUpdate(genre);
-			genres.add(genre);
-		}
-		book.setAuthors(authors);
-		book.setGenres(genres);
-		bookService.saveOrUpdate(book);
+		List<Record4Room> allRecord4Room = recordService.getAll();
+		Assert.assertEquals(allRecord4Room.size(), 2);
 
-		Book bookFromDb = bookService.get(book.getId());
-		try {
-			// exception will be thrown because of lazy collection
-			Set<Author> lazyAuthorsFromBook = bookFromDb.getAuthors();
-			Set<Genre> lazyGenresFromBook = bookFromDb.getGenres();
-		} catch (LazyInitializationException e) {
-			// expected exception
-		}
-		bookFromDb.setAuthors(new HashSet<Author>());
-		bookFromDb.setGenres(new HashSet<Genre>());
-		bookService.saveOrUpdate(bookFromDb);
+		List<Record4Room> allRecord4RoomByTitle = recordService.getAllByField(
+				Record4Room_.userprofile, record4Room.getUser());
+		Assert.assertEquals(allRecord4RoomByTitle.size(), 1);
+		Assert.assertEquals(allRecord4RoomByTitle.get(0).getId(),
+				record4Room.getId());
+
 	}
 
 	@Test
-	public void searchByTitleTest() {
-		Book book = createBookComplete();
-		String title = book.getTitle();
-		bookService.saveOrUpdate(book);
+	public void searchByLibriaryTest() {
+		Record4Room record4Room = createRecord4RoomComplete();
+		recordService.saveOrUpdate(record4Room);
 
-		Book anotherBook = createBookComplete();
-		bookService.saveOrUpdate(anotherBook);
+		Record4Room anotherRecord4Room = createRecord4RoomComplete();
+		recordService.saveOrUpdate(anotherRecord4Room);
 
-		List<Book> allBooks = bookService.getAll();
-		Assert.assertEquals(allBooks.size(), 2);
+		List<Record4Room> allRecord4Room = recordService.getAll();
+		Assert.assertEquals(allRecord4Room.size(), 2);
 
-		List<Book> allBooksByTitle = bookService.getAllBooksByTitle(title);
-		Assert.assertEquals(allBooksByTitle.size(), 1);
-		Assert.assertEquals(allBooksByTitle.get(0).getId(), book.getId());
-
-	}
-
-	// @Test
-	public void searchByAuthorTest() {
-		Book book = createBookComplete();
-		Author author = createAuthor();
-		Set<Author> authors = new HashSet<Author>();
-		authors.add(author);
-		book.setAuthors(authors);
-		authorService.saveOrUpdate(author);
-		bookService.saveOrUpdate(book);
-
-		Book anotherBook = createBookComplete();
-		bookService.saveOrUpdate(anotherBook);
-
-		List<Book> allBooks = bookService.getAll();
-		Assert.assertEquals(allBooks.size(), 2);
-
-		List<Book> allBooksByAuthor = bookService.getAllBooksByAuthor(author);
-
-		Assert.assertEquals(allBooksByAuthor.size(), 1);
-		Assert.assertEquals(allBooksByAuthor.get(0).getId(), book.getId());
+		List<Record4Room> allRecord4RoomByTitle = recordService.getAllByField(
+				Record4Room_.libriary, record4Room.getLibriary());
+		Assert.assertEquals(allRecord4RoomByTitle.size(), 1);
+		Assert.assertEquals(allRecord4RoomByTitle.get(0).getId(),
+				record4Room.getId());
 
 	}
 
-	// @Test
-	public void searchByGenreTest() {
-		Book book = createBookComplete();
-		Genre genre = createGenre();
-		Set<Genre> genres = new HashSet<Genre>();
-		genres.add(genre);
-		book.setGenres(genres);
-		genreService.saveOrUpdate(genre);
-		bookService.saveOrUpdate(book);
+	@Test
+	public void searchByStatusTest() {
+		Record4Room record4Room = createRecord4RoomComplete();
+		recordService.saveOrUpdate(record4Room);
 
-		Book anotherBook = createBookComplete();
-		bookService.saveOrUpdate(anotherBook);
+		Record4Room anotherRecord4Room = createRecord4RoomComplete();
+		recordService.saveOrUpdate(anotherRecord4Room);
 
-		List<Book> allBooks = bookService.getAll();
-		Assert.assertEquals(allBooks.size(), 2);
+		List<Record4Room> allRecord4Room = recordService.getAll();
+		Assert.assertEquals(allRecord4Room.size(), 2);
 
-		List<Book> allBooksByGenre = bookService.getAllBooksByGenre(genre);
+		List<Record4Room> allRecord4RoomByTitle = recordService.getAllByField(
+				Record4Room_.status, record4Room.getStatus());
+		if (record4Room.getStatus() != anotherRecord4Room.getStatus()) {
+			Assert.assertEquals(allRecord4RoomByTitle.size(), 1);
+			Assert.assertEquals(allRecord4RoomByTitle.get(0).getId(),
+					record4Room.getId());
+		} else {
+			Assert.assertEquals(allRecord4RoomByTitle.size(), 2);
+		}
 
-		Assert.assertEquals(allBooksByGenre.size(), 1);
-		Assert.assertEquals(allBooksByGenre.get(0).getId(), book.getId());
+	}
+
+	@Test
+	public void searchByTimeTest() {
+		Record4Room record4Room = createRecord4RoomComplete();
+		recordService.saveOrUpdate(record4Room);
+
+		Record4Room anotherRecord4Room = createRecord4RoomComplete();
+		recordService.saveOrUpdate(anotherRecord4Room);
+
+		List<Record4Room> allRecord4Room = recordService.getAll();
+		Assert.assertEquals(allRecord4Room.size(), 2);
+
+		List<Record4Room> allRecord4RoomByTitle = recordService.getAllByField(
+				Record4Room_.timeTake, record4Room.getTimeTake());
+		Assert.assertEquals(allRecord4RoomByTitle.size(), 1);
+		Assert.assertEquals(allRecord4RoomByTitle.get(0).getId(),
+				record4Room.getId());
+
+		allRecord4RoomByTitle = recordService.getAllByField(
+				Record4Room_.timeReturn, record4Room.getTimeReturn());
+		Assert.assertEquals(allRecord4RoomByTitle.size(), 1);
+		Assert.assertEquals(allRecord4RoomByTitle.get(0).getId(),
+				record4Room.getId());
 
 	}
 
 	@Test
 	public void uniqueConstraintsTest() {
-		Book book = createBookComplete();
-		bookService.saveOrUpdate(book);
+		Record4Room record4Room = createRecord4RoomComplete();
+		recordService.saveOrUpdate(record4Room);
+		Record4Room record4Room2 = createRecord4RoomComplete();
 
-		Book duplicateBook = createBookComplete();
-		duplicateBook.setIsbn(book.getIsbn());
+		Record4Room duplicateRecord4Room = createRecord4RoomComplete();
+		duplicateRecord4Room.setLibriary(record4Room.getLibriary());
+		duplicateRecord4Room.setTimeTake(record4Room.getTimeTake());
 		try {
-			bookService.saveOrUpdate(duplicateBook);
-			Assert.fail("Not unique isbn can't be saved.");
+			recordService.saveOrUpdate(duplicateRecord4Room);
+			Assert.fail("Not unique libriary with date_take can't be saved.");
+		} catch (PersistenceException e) {
+			// expected
+		}
+		// should be saved now
+		duplicateRecord4Room.setLibriary(record4Room2.getLibriary());
+		duplicateRecord4Room.setTimeTake(record4Room2.getTimeTake());
+		recordService.saveOrUpdate(duplicateRecord4Room);
+
+		duplicateRecord4Room.setLibriary(record4Room.getLibriary());
+		duplicateRecord4Room.setTimeReturn(record4Room.getTimeReturn());
+		try {
+			recordService.saveOrUpdate(duplicateRecord4Room);
+			Assert.fail("Not unique libriary with date_return can't be saved.");
 		} catch (PersistenceException e) {
 			// expected
 		}
 
 		// should be saved now
-		duplicateBook.setIsbn(randomString("isbn-"));
-		bookService.saveOrUpdate(duplicateBook);
+		duplicateRecord4Room.setLibriary(record4Room2.getLibriary());
+		duplicateRecord4Room.setTimeReturn(record4Room2.getTimeReturn());
+		recordService.saveOrUpdate(duplicateRecord4Room);
 	}
 
 	@Test
 	public void searchTest() {
-		Book book = createBookComplete();
-		bookService.saveOrUpdate(book);
+		Record4Room record4Room = createRecord4RoomComplete();
+		recordService.saveOrUpdate(record4Room);
 
-		List<Book> allBooks = bookService.getAll();
-		Assert.assertEquals(allBooks.size(), 1);
+		List<Record4Room> allRecord4Room = recordService.getAll();
+		Assert.assertEquals(allRecord4Room.size(), 1);
 
 	}
 
 	@After
 	public void finishTest() {
+		recordService.deleteAll();
+		Assert.assertEquals(recordService.getAll().size(), 0);
+		libriaryService.deleteAll();
+		Assert.assertEquals(libriaryService.getAll().size(), 0);
 		bookService.deleteAll();
 		Assert.assertEquals(bookService.getAll().size(), 0);
-		genreService.deleteAll();
-		Assert.assertEquals(genreService.getAll().size(), 0);
-		authorService.deleteAll();
-		Assert.assertEquals(authorService.getAll().size(), 0);
+		userService.deleteAll();
+		Assert.assertEquals(userService.getAll().size(), 0);
 		publisherService.deleteAll();
 		Assert.assertEquals(publisherService.getAll().size(), 0);
 		pictureService.deleteAll();
 		Assert.assertEquals(pictureService.getAll().size(), 0);
 	}
 
-	private Book createBookComplete() {
-		Book book = createBook();
-		pictureService.saveOrUpdate(book.getPicture());
-		publisherService.saveOrUpdate(book.getPublisher());
-		return book;
+	private Record4Room createRecord4RoomComplete() {
+		Record4Room record4Room = createRecord4Room();
+		pictureService.saveOrUpdate(record4Room.getLibriary().getBook()
+				.getPicture());
+		publisherService.saveOrUpdate(record4Room.getLibriary().getBook()
+				.getPublisher());
+		bookService.saveOrUpdate(record4Room.getLibriary().getBook());
+		libriaryService.saveOrUpdate(record4Room.getLibriary());
+		pictureService.saveOrUpdate(record4Room.getUser().getPicture());
+		userService.saveOrUpdate(record4Room.getUser());
+		return record4Room;
 	}
 
 }

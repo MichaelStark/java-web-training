@@ -3,9 +3,14 @@ package by.stark.sample.dataaccess.impl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.SingularAttribute;
 
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
@@ -73,6 +78,75 @@ public abstract class AbstractDaoImpl<ID, Entity> implements
 		query.from(getEntityClass());
 		final List<Entity> lst = em.createQuery(query).getResultList();
 		return lst;
+	}
+
+	// custom
+
+	@Override
+	public List<Entity> getAll(SingularAttribute<Entity, ?>... fetchAttributes) {
+		final CriteriaQuery<Entity> criteria = getEm().getCriteriaBuilder()
+				.createQuery(getEntityClass());
+		final Root<Entity> root = criteria.from(getEntityClass());
+		criteria.select(root);
+		for (SingularAttribute<Entity, ?> attribute : fetchAttributes) {
+			root.fetch(attribute);
+		}
+		criteria.distinct(true);
+		final List<Entity> lst = getEm().createQuery(criteria).getResultList();
+		return lst;
+	}
+
+	@Override
+	public Entity getById(final SingularAttribute<? super Entity, ?> onAttr,
+			final ID id, SingularAttribute<Entity, ?>... fetchAttributes) {
+		Entity result = null;
+		Validate.notNull(id, "Search attributes can't be empty. Attribute: "
+				+ onAttr.getName());
+
+		final CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
+		final CriteriaQuery<Entity> criteria = cBuilder
+				.createQuery(getEntityClass());
+		final Root<Entity> root = criteria.from(getEntityClass());
+
+		criteria.select(root);
+		for (SingularAttribute<Entity, ?> attribute : fetchAttributes) {
+			root.fetch(attribute);
+		}
+		criteria.distinct(true);
+		criteria.where(cBuilder.equal(root.get(onAttr), id));
+
+		try {
+			result = getEm().createQuery(criteria).getSingleResult();
+		} catch (NoResultException e) {
+			LOGGER.debug("Search result is empty: {}", e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			LOGGER.warn(
+					"Search result is more than one. !RETURN FIRST RESULT! Maybe you use this method not for ID UNIQUE field: {}",
+					e);
+			return getEm().createQuery(criteria).getResultList().get(0);
+		}
+		return result;
+	}
+
+	@Override
+	public List<Entity> getAllByFieldRestriction(
+			final SingularAttribute<? super Entity, ?> attribute,
+			final Object value, SingularAttribute<Entity, ?>... fetchAttributes) {
+		Validate.notNull(value, "Search attributes can't be empty. Attribute: "
+				+ attribute.getName());
+		final CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
+		final CriteriaQuery<Entity> criteria = cBuilder
+				.createQuery(getEntityClass());
+		final Root<Entity> root = criteria.from(getEntityClass());
+
+		criteria.select(root);
+		for (SingularAttribute<Entity, ?> attr : fetchAttributes) {
+			root.fetch(attr);
+		}
+		criteria.distinct(true);
+		criteria.where(cBuilder.equal(root.get(attribute), value));
+		return getEm().createQuery(criteria).getResultList();
 	}
 
 	@PersistenceContext

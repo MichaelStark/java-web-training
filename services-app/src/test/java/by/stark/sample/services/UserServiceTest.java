@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import by.stark.sample.AbstractServiceTest;
 import by.stark.sample.datamodel.Picture;
 import by.stark.sample.datamodel.Userprofile;
+import by.stark.sample.datamodel.Userprofile_;
 import by.stark.sample.datamodel.enums.UserRole;
 import by.stark.sample.datamodel.enums.UserStatus;
 
@@ -41,7 +42,8 @@ public class UserServiceTest extends AbstractServiceTest {
 		Userprofile userprofile = createUserComplete();
 		userService.saveOrUpdate(userprofile);
 
-		Userprofile userFromDb = userService.get(userprofile.getId());
+		Userprofile userFromDb = userService.get(Userprofile_.id,
+				userprofile.getId(), Userprofile_.picture);
 		Assert.assertNotNull(userFromDb);
 		Assert.assertEquals(userFromDb.getRole(), userprofile.getRole());
 		Assert.assertEquals(userFromDb.getEmail(), userprofile.getEmail());
@@ -51,9 +53,10 @@ public class UserServiceTest extends AbstractServiceTest {
 		Assert.assertEquals(userFromDb.getPassword(), userprofile.getPassword());
 		Assert.assertEquals(userFromDb.getGender(), userprofile.getGender());
 		Assert.assertEquals(userFromDb.getStatus(), userprofile.getStatus());
-		// Assert.assertEquals(userFromDb.getBirthday(),
-		// userprofile.getBirthday());
-		// Assert.assertEquals(userFromDb.getPicture(), user.getPicture());
+		Assert.assertTrue(userFromDb.getBirthday().compareTo(
+				userprofile.getBirthday()) == 0);
+		Assert.assertEquals(userFromDb.getPicture().getId(), userprofile
+				.getPicture().getId());
 
 		userFromDb.setFirstName("newFirstName");
 		userService.saveOrUpdate(userFromDb);
@@ -80,12 +83,15 @@ public class UserServiceTest extends AbstractServiceTest {
 		List<Userprofile> allUsers = userService.getAll();
 		Assert.assertEquals(allUsers.size(), 2);
 
-		List<Userprofile> allUsersByRole = userService.getAllUsersByRole(role);
-		if (anotherRole != role)
+		List<Userprofile> allUsersByRole = userService.getAllByField(
+				Userprofile_.role, role);
+		if (anotherRole != role) {
 			Assert.assertEquals(allUsersByRole.size(), 1);
-		else
+			Assert.assertEquals(allUsersByRole.get(0).getId(),
+					userprofile.getId());
+		} else {
 			Assert.assertEquals(allUsersByRole.size(), 2);
-		Assert.assertEquals(allUsersByRole.get(0).getId(), userprofile.getId());
+		}
 
 	}
 
@@ -102,14 +108,16 @@ public class UserServiceTest extends AbstractServiceTest {
 		List<Userprofile> allUsers = userService.getAll();
 		Assert.assertEquals(allUsers.size(), 2);
 
-		List<Userprofile> allUsersByStatus = userService
-				.getAllUsersByStatus(status);
-		if (anotherStatus != status)
+		List<Userprofile> allUsersByStatus = userService.getAllByField(
+				Userprofile_.status, status);
+		if (anotherStatus != status) {
 			Assert.assertEquals(allUsersByStatus.size(), 1);
-		else
+			Assert.assertEquals(allUsersByStatus.get(0).getId(),
+					userprofile.getId());
+		} else {
 			Assert.assertEquals(allUsersByStatus.size(), 2);
-		Assert.assertEquals(allUsersByStatus.get(0).getId(),
-				userprofile.getId());
+		}
+
 	}
 
 	@Test
