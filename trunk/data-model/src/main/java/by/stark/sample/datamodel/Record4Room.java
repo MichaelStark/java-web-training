@@ -7,12 +7,18 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import by.stark.sample.datamodel.enums.RecordStatus;
 
 @Entity
 public class Record4Room extends AbstractEntity {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Userprofile.class)
 	private Userprofile userprofile;
@@ -32,6 +38,11 @@ public class Record4Room extends AbstractEntity {
 
 	@Column
 	private String description;
+
+	@Override
+	public Long getId() {
+		return id;
+	}
 
 	public Userprofile getUser() {
 		return userprofile;

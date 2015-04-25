@@ -5,6 +5,9 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -12,6 +15,9 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Book extends AbstractEntity {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Picture.class)
 	private Picture picture;
@@ -41,6 +47,11 @@ public class Book extends AbstractEntity {
 	@JoinTable(name = "book_2_genre", joinColumns = { @JoinColumn(name = "book_id") }, inverseJoinColumns = { @JoinColumn(name = "genre_id") })
 	@ManyToMany(targetEntity = Genre.class, fetch = FetchType.LAZY)
 	private Set<Genre> genres;
+
+	@Override
+	public Long getId() {
+		return id;
+	}
 
 	public Set<Author> getAuthors() {
 		return authors;

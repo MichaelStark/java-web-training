@@ -1,23 +1,42 @@
 package by.stark.sample.datamodel;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class AbstractEntity {
+public abstract class AbstractEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	public abstract Long getId();
 
-	public Long getId() {
-		return id;
+	@Override
+	public int hashCode() {
+		if (getId() != null) {
+			return getId().hashCode();
+		} else {
+			return super.hashCode();
+		}
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o) {
+			return true;
+		}
 
+		if ((o == null) || !(o instanceof AbstractEntity)) {
+			return false;
+		}
+		if (getClass() != o.getClass()) {
+			return false;
+		}
+
+		final AbstractEntity other = (AbstractEntity) o;
+
+		// if the id is missing, return false
+		if (getId() == null) {
+			return false;
+		}
+
+		// equivalence by id
+		return getId().equals(other.getId());
+	}
 }
