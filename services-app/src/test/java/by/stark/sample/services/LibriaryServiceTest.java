@@ -101,12 +101,6 @@ public class LibriaryServiceTest extends AbstractServiceTest {
 		List<Libriary> allLibriarysByBook = libriaryService.getAllByField(
 				Libriary_.book, book1);
 		Assert.assertEquals(allLibriarysByBook.size(), 3);
-		Assert.assertEquals(allLibriarysByBook.get(0).getId(),
-				libriary1.getId());
-		Assert.assertEquals(allLibriarysByBook.get(1).getId(),
-				libriary2.getId());
-		Assert.assertEquals(allLibriarysByBook.get(2).getId(),
-				libriary4.getId());
 
 		allLibriarysByBook = libriaryService.getAllByField(Libriary_.book,
 				book2);

@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import by.stark.sample.datamodel.enums.UserGender;
@@ -15,6 +18,9 @@ import by.stark.sample.datamodel.enums.UserStatus;
 
 @Entity
 public class Userprofile extends AbstractEntity {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Picture.class)
 	private Picture picture;
@@ -45,6 +51,11 @@ public class Userprofile extends AbstractEntity {
 	@Column
 	@Enumerated(EnumType.ORDINAL)
 	private UserStatus status;
+
+	@Override
+	public Long getId() {
+		return id;
+	}
 
 	public Picture getPicture() {
 		return picture;
