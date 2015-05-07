@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 
 import by.stark.sample.AbstractServiceTest;
 import by.stark.sample.datamodel.Record4Room;
-import by.stark.sample.datamodel.Record4Room_;
 
 public class Record4RoomServiceTest extends AbstractServiceTest {
 
@@ -51,9 +50,8 @@ public class Record4RoomServiceTest extends AbstractServiceTest {
 		Record4Room record4Room = createRecord4RoomComplete();
 		recordService.saveOrUpdate(record4Room);
 
-		Record4Room record4RoomFromDb = recordService.get(Record4Room_.id,
-				record4Room.getId(), Record4Room_.userprofile,
-				Record4Room_.libriary);
+		Record4Room record4RoomFromDb = recordService.getById(record4Room
+				.getId());
 		Assert.assertNotNull(record4RoomFromDb);
 		Assert.assertEquals(record4RoomFromDb.getStatus(),
 				record4Room.getStatus());
@@ -92,8 +90,8 @@ public class Record4RoomServiceTest extends AbstractServiceTest {
 		List<Record4Room> allRecord4Room = recordService.getAll();
 		Assert.assertEquals(allRecord4Room.size(), 2);
 
-		List<Record4Room> allRecord4RoomByTitle = recordService.getAllByField(
-				Record4Room_.userprofile, record4Room.getUser());
+		List<Record4Room> allRecord4RoomByTitle = recordService
+				.getAllByUser(record4Room.getUser());
 		Assert.assertEquals(allRecord4RoomByTitle.size(), 1);
 		Assert.assertEquals(allRecord4RoomByTitle.get(0).getId(),
 				record4Room.getId());
@@ -111,8 +109,8 @@ public class Record4RoomServiceTest extends AbstractServiceTest {
 		List<Record4Room> allRecord4Room = recordService.getAll();
 		Assert.assertEquals(allRecord4Room.size(), 2);
 
-		List<Record4Room> allRecord4RoomByTitle = recordService.getAllByField(
-				Record4Room_.libriary, record4Room.getLibriary());
+		List<Record4Room> allRecord4RoomByTitle = recordService
+				.getAllByLibriary(record4Room.getLibriary());
 		Assert.assertEquals(allRecord4RoomByTitle.size(), 1);
 		Assert.assertEquals(allRecord4RoomByTitle.get(0).getId(),
 				record4Room.getId());
@@ -130,8 +128,8 @@ public class Record4RoomServiceTest extends AbstractServiceTest {
 		List<Record4Room> allRecord4Room = recordService.getAll();
 		Assert.assertEquals(allRecord4Room.size(), 2);
 
-		List<Record4Room> allRecord4RoomByTitle = recordService.getAllByField(
-				Record4Room_.status, record4Room.getStatus());
+		List<Record4Room> allRecord4RoomByTitle = recordService
+				.getAllByStatus(record4Room.getStatus());
 		if (record4Room.getStatus() != anotherRecord4Room.getStatus()) {
 			Assert.assertEquals(allRecord4RoomByTitle.size(), 1);
 			Assert.assertEquals(allRecord4RoomByTitle.get(0).getId(),
@@ -153,14 +151,14 @@ public class Record4RoomServiceTest extends AbstractServiceTest {
 		List<Record4Room> allRecord4Room = recordService.getAll();
 		Assert.assertEquals(allRecord4Room.size(), 2);
 
-		List<Record4Room> allRecord4RoomByTitle = recordService.getAllByField(
-				Record4Room_.timeTake, record4Room.getTimeTake());
+		List<Record4Room> allRecord4RoomByTitle = recordService
+				.getAllByTimeTake(record4Room.getTimeTake());
 		Assert.assertEquals(allRecord4RoomByTitle.size(), 1);
 		Assert.assertEquals(allRecord4RoomByTitle.get(0).getId(),
 				record4Room.getId());
 
-		allRecord4RoomByTitle = recordService.getAllByField(
-				Record4Room_.timeReturn, record4Room.getTimeReturn());
+		allRecord4RoomByTitle = recordService.getAllByTimeReturn(record4Room
+				.getTimeReturn());
 		Assert.assertEquals(allRecord4RoomByTitle.size(), 1);
 		Assert.assertEquals(allRecord4RoomByTitle.get(0).getId(),
 				record4Room.getId());

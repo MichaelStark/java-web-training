@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import by.stark.sample.AbstractServiceTest;
 import by.stark.sample.datamodel.Book;
 import by.stark.sample.datamodel.Libriary;
-import by.stark.sample.datamodel.Libriary_;
 
 public class LibriaryServiceTest extends AbstractServiceTest {
 
@@ -46,16 +45,14 @@ public class LibriaryServiceTest extends AbstractServiceTest {
 		Libriary libriary = createLibriaryComplete();
 		libriaryService.saveOrUpdate(libriary);
 
-		Libriary libriaryFromDb = libriaryService.get(Libriary_.id,
-				libriary.getId(), Libriary_.book);
+		Libriary libriaryFromDb = libriaryService.getById(libriary.getId());
 		Assert.assertNotNull(libriaryFromDb);
 		Assert.assertEquals(libriaryFromDb.getUin(), libriary.getUin());
 		Assert.assertEquals(libriaryFromDb.getAvailability(),
 				libriary.getAvailability());
 		Assert.assertEquals(libriaryFromDb.getReadingRoom(),
 				libriary.getReadingRoom());
-		Assert.assertEquals(libriaryFromDb.getBook().getId(), libriary
-				.getBook().getId());
+		Assert.assertEquals(libriaryFromDb.getBook(), libriary.getBook());
 
 		libriaryFromDb.setUin(randomLong());
 		libriaryService.saveOrUpdate(libriaryFromDb);
@@ -98,12 +95,10 @@ public class LibriaryServiceTest extends AbstractServiceTest {
 		List<Libriary> allLibriarys = libriaryService.getAll();
 		Assert.assertEquals(allLibriarys.size(), 4);
 
-		List<Libriary> allLibriarysByBook = libriaryService.getAllByField(
-				Libriary_.book, book1);
+		List<Libriary> allLibriarysByBook = libriaryService.getAllByBook(book1);
 		Assert.assertEquals(allLibriarysByBook.size(), 3);
 
-		allLibriarysByBook = libriaryService.getAllByField(Libriary_.book,
-				book2);
+		allLibriarysByBook = libriaryService.getAllByBook(book2);
 		Assert.assertEquals(allLibriarysByBook.size(), 1);
 		Assert.assertEquals(allLibriarysByBook.get(0).getId(),
 				libriary3.getId());

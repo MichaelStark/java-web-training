@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 
 import by.stark.sample.AbstractServiceTest;
 import by.stark.sample.datamodel.Ebook;
-import by.stark.sample.datamodel.Ebook_;
 
 public class EbookServiceTest extends AbstractServiceTest {
 
@@ -45,8 +44,7 @@ public class EbookServiceTest extends AbstractServiceTest {
 		Ebook ebook = createEbookComplete();
 		ebookService.saveOrUpdate(ebook);
 
-		Ebook ebookFromDb = ebookService.get(Ebook_.id, ebook.getId(),
-				Ebook_.book);
+		Ebook ebookFromDb = ebookService.getById(ebook.getId());
 		Assert.assertNotNull(ebookFromDb);
 		Assert.assertEquals(ebookFromDb.getName(), ebook.getName());
 		Assert.assertEquals(ebookFromDb.getBook().getId(), ebook.getBook()
@@ -73,8 +71,8 @@ public class EbookServiceTest extends AbstractServiceTest {
 		List<Ebook> allEbooks = ebookService.getAll();
 		Assert.assertEquals(allEbooks.size(), 2);
 
-		List<Ebook> allEbooksByBook = ebookService.getAllByField(Ebook_.book,
-				ebook.getBook());
+		List<Ebook> allEbooksByBook = ebookService
+				.getAllByBook(ebook.getBook());
 		Assert.assertEquals(allEbooksByBook.size(), 1);
 		Assert.assertEquals(allEbooksByBook.get(0).getId(), ebook.getId());
 

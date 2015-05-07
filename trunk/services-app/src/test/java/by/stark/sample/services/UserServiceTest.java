@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import by.stark.sample.AbstractServiceTest;
 import by.stark.sample.datamodel.Picture;
 import by.stark.sample.datamodel.Userprofile;
-import by.stark.sample.datamodel.Userprofile_;
 import by.stark.sample.datamodel.enums.UserRole;
 import by.stark.sample.datamodel.enums.UserStatus;
 
@@ -42,8 +41,7 @@ public class UserServiceTest extends AbstractServiceTest {
 		Userprofile userprofile = createUserComplete();
 		userService.saveOrUpdate(userprofile);
 
-		Userprofile userFromDb = userService.get(Userprofile_.id,
-				userprofile.getId(), Userprofile_.picture);
+		Userprofile userFromDb = userService.getById(userprofile.getId());
 		Assert.assertNotNull(userFromDb);
 		Assert.assertEquals(userFromDb.getRole(), userprofile.getRole());
 		Assert.assertEquals(userFromDb.getEmail(), userprofile.getEmail());
@@ -83,8 +81,7 @@ public class UserServiceTest extends AbstractServiceTest {
 		List<Userprofile> allUsers = userService.getAll();
 		Assert.assertEquals(allUsers.size(), 2);
 
-		List<Userprofile> allUsersByRole = userService.getAllByField(
-				Userprofile_.role, role);
+		List<Userprofile> allUsersByRole = userService.getAllByRole(role);
 		if (anotherRole != role) {
 			Assert.assertEquals(allUsersByRole.size(), 1);
 			Assert.assertEquals(allUsersByRole.get(0).getId(),
@@ -108,8 +105,7 @@ public class UserServiceTest extends AbstractServiceTest {
 		List<Userprofile> allUsers = userService.getAll();
 		Assert.assertEquals(allUsers.size(), 2);
 
-		List<Userprofile> allUsersByStatus = userService.getAllByField(
-				Userprofile_.status, status);
+		List<Userprofile> allUsersByStatus = userService.getAllByStatus(status);
 		if (anotherStatus != status) {
 			Assert.assertEquals(allUsersByStatus.size(), 1);
 			Assert.assertEquals(allUsersByStatus.get(0).getId(),
@@ -117,6 +113,29 @@ public class UserServiceTest extends AbstractServiceTest {
 		} else {
 			Assert.assertEquals(allUsersByStatus.size(), 2);
 		}
+
+	}
+
+	@Test
+	public void searchByEmailTest() {
+		Userprofile userprofile = createUserComplete();
+		String email = userprofile.getEmail();
+		userService.saveOrUpdate(userprofile);
+
+		Userprofile anotherUser = createUserComplete();
+		String anotherEmail = anotherUser.getEmail();
+		userService.saveOrUpdate(anotherUser);
+
+		List<Userprofile> allUsers = userService.getAll();
+		Assert.assertEquals(allUsers.size(), 2);
+
+		Userprofile UserByEmail = userService.getByEmail(email);
+
+		Assert.assertEquals(UserByEmail.getId(), userprofile.getId());
+
+		UserByEmail = userService.getByEmail(anotherEmail);
+
+		Assert.assertEquals(UserByEmail.getId(), anotherUser.getId());
 
 	}
 

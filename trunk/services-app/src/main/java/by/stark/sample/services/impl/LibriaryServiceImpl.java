@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import by.stark.sample.dataaccess.LibriaryDao;
 import by.stark.sample.datamodel.Book;
 import by.stark.sample.datamodel.Libriary;
+import by.stark.sample.datamodel.Libriary_;
 import by.stark.sample.services.LibriaryService;
 
 @Service
@@ -36,6 +37,16 @@ public class LibriaryServiceImpl extends AbstractServiceImpl<Long, Libriary>
 	public List<Libriary> getAllLibriarysByBook(Book book,
 			Boolean availability, Boolean room) {
 		return dao.getAllLibriarysByBook(book, availability, room);
+	}
+
+	@Override
+	public List<Libriary> getAllByBook(Book book) {
+		return dao.getAllByFieldRestriction(Libriary_.book, book);
+	}
+
+	@Override
+	public Libriary getById(Long id) {
+		return dao.getById(Libriary_.id, id, Libriary_.book);
 	}
 
 }

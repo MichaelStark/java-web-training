@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 
 import by.stark.sample.AbstractServiceTest;
 import by.stark.sample.datamodel.Record4Hands;
-import by.stark.sample.datamodel.Record4Hands_;
 
 public class Record4HandsServiceTest extends AbstractServiceTest {
 
@@ -52,9 +51,8 @@ public class Record4HandsServiceTest extends AbstractServiceTest {
 		Record4Hands record4Hands = createRecord4HandsComplete();
 		recordService.saveOrUpdate(record4Hands);
 
-		Record4Hands record4HandsFromDb = recordService.get(Record4Hands_.id,
-				record4Hands.getId(), Record4Hands_.userprofile,
-				Record4Hands_.libriary);
+		Record4Hands record4HandsFromDb = recordService.getById(record4Hands
+				.getId());
 		Assert.assertNotNull(record4HandsFromDb);
 		Assert.assertEquals(record4HandsFromDb.getStatus(),
 				record4Hands.getStatus());
@@ -94,8 +92,7 @@ public class Record4HandsServiceTest extends AbstractServiceTest {
 		Assert.assertEquals(allRecord4Hands.size(), 2);
 
 		List<Record4Hands> allRecord4HandsByTitle = recordService
-				.getAllByField(Record4Hands_.userprofile,
-						record4Hands.getUser());
+				.getAllByUser(record4Hands.getUser());
 		Assert.assertEquals(allRecord4HandsByTitle.size(), 1);
 		Assert.assertEquals(allRecord4HandsByTitle.get(0).getId(),
 				record4Hands.getId());
@@ -114,8 +111,7 @@ public class Record4HandsServiceTest extends AbstractServiceTest {
 		Assert.assertEquals(allRecord4Hands.size(), 2);
 
 		List<Record4Hands> allRecord4HandsByTitle = recordService
-				.getAllByField(Record4Hands_.libriary,
-						record4Hands.getLibriary());
+				.getAllByLibriary(record4Hands.getLibriary());
 		Assert.assertEquals(allRecord4HandsByTitle.size(), 1);
 		Assert.assertEquals(allRecord4HandsByTitle.get(0).getId(),
 				record4Hands.getId());
@@ -134,7 +130,7 @@ public class Record4HandsServiceTest extends AbstractServiceTest {
 		Assert.assertEquals(allRecord4Hands.size(), 2);
 
 		List<Record4Hands> allRecord4HandsByTitle = recordService
-				.getAllByField(Record4Hands_.status, record4Hands.getStatus());
+				.getAllByStatus(record4Hands.getStatus());
 		if (record4Hands.getStatus() != anotherRecord4Hands.getStatus()) {
 			Assert.assertEquals(allRecord4HandsByTitle.size(), 1);
 			Assert.assertEquals(allRecord4HandsByTitle.get(0).getId(),
@@ -157,14 +153,13 @@ public class Record4HandsServiceTest extends AbstractServiceTest {
 		Assert.assertEquals(allRecord4Hands.size(), 2);
 
 		List<Record4Hands> allRecord4HandsByTitle = recordService
-				.getAllByField(Record4Hands_.dateTake,
-						record4Hands.getDateTake());
+				.getAllByDateTake(record4Hands.getDateTake());
 		Assert.assertEquals(allRecord4HandsByTitle.size(), 1);
 		Assert.assertEquals(allRecord4HandsByTitle.get(0).getId(),
 				record4Hands.getId());
 
-		allRecord4HandsByTitle = recordService.getAllByField(
-				Record4Hands_.dateReturn, record4Hands.getDateReturn());
+		allRecord4HandsByTitle = recordService.getAllByDateReturn(record4Hands
+				.getDateReturn());
 		Assert.assertEquals(allRecord4HandsByTitle.size(), 1);
 		Assert.assertEquals(allRecord4HandsByTitle.get(0).getId(),
 				record4Hands.getId());

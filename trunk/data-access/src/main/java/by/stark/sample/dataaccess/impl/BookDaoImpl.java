@@ -2,12 +2,17 @@ package by.stark.sample.dataaccess.impl;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.SingularAttribute;
 
 import org.apache.commons.lang3.Validate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import by.stark.sample.dataaccess.BookDao;
@@ -18,6 +23,9 @@ import by.stark.sample.datamodel.Genre;
 
 @Repository
 public class BookDaoImpl extends AbstractDaoImpl<Long, Book> implements BookDao {
+
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(BookDaoImpl.class);
 
 	protected BookDaoImpl() {
 		super(Book.class);
@@ -35,6 +43,8 @@ public class BookDaoImpl extends AbstractDaoImpl<Long, Book> implements BookDao 
 		for (SingularAttribute<Book, ?> attr : fetchAttributes) {
 			root.fetch(attr);
 		}
+		root.fetch(Book_.genres, JoinType.LEFT);
+		root.fetch(Book_.authors, JoinType.LEFT);
 		criteria.distinct(true);
 		criteria.where(cBuilder.isMember(genre, root.get(Book_.genres)));
 		return getEm().createQuery(criteria).getResultList();
@@ -54,9 +64,77 @@ public class BookDaoImpl extends AbstractDaoImpl<Long, Book> implements BookDao 
 		for (SingularAttribute<Book, ?> attr : fetchAttributes) {
 			root.fetch(attr);
 		}
+		root.fetch(Book_.authors, JoinType.LEFT);
+		root.fetch(Book_.genres, JoinType.LEFT);
 		criteria.distinct(true);
 		criteria.where(cBuilder.isMember(author, root.get(Book_.authors)));
 		return getEm().createQuery(criteria).getResultList();
 	}
 
+	@Override
+	public List<Book> getAllByTitle(String title,
+			SingularAttribute<Book, ?>... fetchAttributes) {
+		Validate.notNull(title, "Search attributes can't be empty. Attribute: "
+				+ Book_.title.getName());
+		final CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
+		final CriteriaQuery<Book> criteria = cBuilder.createQuery(Book.class);
+		final Root<Book> root = criteria.from(Book.class);
+		criteria.select(root);
+		for (SingularAttribute<Book, ?> attr : fetchAttributes) {
+			root.fetch(attr);
+		}
+		root.fetch(Book_.authors, JoinType.LEFT);
+		root.fetch(Book_.genres, JoinType.LEFT);
+		criteria.distinct(true);
+		criteria.where(cBuilder.equal(root.get(Book_.title), title));
+		return getEm().createQuery(criteria).getResultList();
+	}
+
+	@Override
+	public List<Book> getAll(SingularAttribute<Book, ?>... fetchAttributes) {
+		final CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
+		final CriteriaQuery<Book> criteria = cBuilder.createQuery(Book.class);
+		final Root<Book> root = criteria.from(Book.class);
+		criteria.select(root);
+		for (SingularAttribute<Book, ?> attr : fetchAttributes) {
+			root.fetch(attr);
+		}
+		root.fetch(Book_.authors, JoinType.LEFT);
+		root.fetch(Book_.genres, JoinType.LEFT);
+		criteria.distinct(true);
+		return getEm().createQuery(criteria).getResultList();
+	}
+
+	@Override
+	public Book getById(Long id, SingularAttribute<Book, ?>... fetchAttributes) {
+		Book result = null;
+		Validate.notNull(id, "Search attributes can't be empty. Attribute: "
+				+ Book_.id.getName());
+
+		final CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
+		final CriteriaQuery<Book> criteria = cBuilder.createQuery(Book.class);
+		final Root<Book> root = criteria.from(Book.class);
+
+		criteria.select(root);
+		for (SingularAttribute<Book, ?> attribute : fetchAttributes) {
+			root.fetch(attribute);
+		}
+		root.fetch(Book_.authors, JoinType.LEFT);
+		root.fetch(Book_.genres, JoinType.LEFT);
+		criteria.distinct(true);
+		criteria.where(cBuilder.equal(root.get(Book_.id), id));
+
+		try {
+			result = getEm().createQuery(criteria).getSingleResult();
+		} catch (NoResultException e) {
+			LOGGER.debug("Search result is empty: {}", e);
+			return null;
+		} catch (NonUniqueResultException e) {
+			LOGGER.warn(
+					"Search result is more than one. !RETURN FIRST RESULT! Maybe you use this method not for ID UNIQUE field: {}",
+					e);
+			return getEm().createQuery(criteria).getResultList().get(0);
+		}
+		return result;
+	}
 }
