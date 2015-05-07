@@ -8,7 +8,7 @@
 	         <New class="org.postgresql.ds.PGSimpleDataSource">
 	           <Set name="User">test</Set>
 	           <Set name="Password">test</Set>
-	           <Set name="DatabaseName">online-libriary</Set>
+	           <Set name="DatabaseName">online_libriary</Set>
 	           <Set name="ServerName">localhost</Set>
 	           <Set name="PortNumber">5432</Set>
 	        </New>

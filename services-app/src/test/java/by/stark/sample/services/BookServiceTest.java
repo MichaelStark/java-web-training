@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
 import by.stark.sample.AbstractServiceTest;
 import by.stark.sample.datamodel.Author;
 import by.stark.sample.datamodel.Book;
-import by.stark.sample.datamodel.Book_;
 import by.stark.sample.datamodel.Genre;
 
 public class BookServiceTest extends AbstractServiceTest {
@@ -53,18 +52,15 @@ public class BookServiceTest extends AbstractServiceTest {
 		Book book = createBookComplete();
 		bookService.saveOrUpdate(book);
 
-		Book bookFromDb = bookService.get(Book_.id, book.getId(),
-				Book_.picture, Book_.publisher);
+		Book bookFromDb = bookService.getById(book.getId());
 		Assert.assertNotNull(bookFromDb);
 		Assert.assertEquals(bookFromDb.getTitle(), book.getTitle());
 		Assert.assertEquals(bookFromDb.getIsbn(), book.getIsbn());
 		Assert.assertEquals(bookFromDb.getDescription(), book.getDescription());
 		Assert.assertEquals(bookFromDb.getPages(), book.getPages());
 		Assert.assertEquals(bookFromDb.getYear(), book.getYear());
-		Assert.assertEquals(bookFromDb.getPicture().getId(), book.getPicture()
-				.getId());
-		Assert.assertEquals(bookFromDb.getPublisher().getId(), book
-				.getPublisher().getId());
+		Assert.assertEquals(bookFromDb.getPicture(), book.getPicture());
+		Assert.assertEquals(bookFromDb.getPublisher(), book.getPublisher());
 
 		bookFromDb.setTitle("newTitle");
 		bookService.saveOrUpdate(bookFromDb);
@@ -121,8 +117,7 @@ public class BookServiceTest extends AbstractServiceTest {
 		List<Book> allBooks = bookService.getAll();
 		Assert.assertEquals(allBooks.size(), 2);
 
-		List<Book> allBooksByTitle = bookService.getAllByField(Book_.title,
-				title);
+		List<Book> allBooksByTitle = bookService.getAllByTitle(title);
 		Assert.assertEquals(allBooksByTitle.size(), 1);
 		Assert.assertEquals(allBooksByTitle.get(0).getId(), book.getId());
 
@@ -131,11 +126,13 @@ public class BookServiceTest extends AbstractServiceTest {
 	@Test
 	public void searchByAuthorTest() {
 		Book book = createBookComplete();
+
 		Author author = createAuthor();
 		Set<Author> authors = new HashSet<Author>();
 		authors.add(author);
 		book.setAuthors(authors);
 		authorService.saveOrUpdate(author);
+
 		bookService.saveOrUpdate(book);
 
 		Book anotherBook = createBookComplete();
@@ -154,11 +151,13 @@ public class BookServiceTest extends AbstractServiceTest {
 	@Test
 	public void searchByGenreTest() {
 		Book book = createBookComplete();
+
 		Genre genre = createGenre();
 		Set<Genre> genres = new HashSet<Genre>();
 		genres.add(genre);
 		book.setGenres(genres);
 		genreService.saveOrUpdate(genre);
+
 		bookService.saveOrUpdate(book);
 
 		Book anotherBook = createBookComplete();

@@ -14,10 +14,9 @@
 	    http://www.springframework.org/schema/task
 	    http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
-
-	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/trainingDS" />
-
+    <jee:jndi-lookup id="dataSource" jndi-name="jdbc/trainingDS" />
     <import resource="classpath:spring-context.xml" />
+    
 	<context:component-scan base-package="by.stark.sample.webapp.app" />
 
 </beans>

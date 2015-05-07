@@ -13,7 +13,7 @@
 
 	<context:property-placeholder
 		ignore-unresolvable="true"
-		location="classpath:application.properties,classpath:testing-application.properties" />
+		location="classpath:application.properties,classpath:db-schema-override.properties" />
 
 
 	<bean id="dataSource"

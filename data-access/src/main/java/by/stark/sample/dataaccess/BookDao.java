@@ -16,4 +16,12 @@ public interface BookDao extends AbstractDao<Long, Book> {
 	List<Book> getAllByGenre(Genre genre,
 			SingularAttribute<Book, ?>... fetchAttributes);
 
+	@Override
+	List<Book> getAll(SingularAttribute<Book, ?>... fetchAttributes);
+
+	Book getById(Long id, SingularAttribute<Book, ?>... fetchAttributes);
+
+	List<Book> getAllByTitle(String title,
+			SingularAttribute<Book, ?>... fetchAttributes);
+
 }

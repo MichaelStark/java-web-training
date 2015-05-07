@@ -3,7 +3,6 @@ package by.stark.sample.services.impl;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.persistence.metamodel.SingularAttribute;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,22 +55,4 @@ public abstract class AbstractServiceImpl<ID, Entity> implements
 		return dao.getAll();
 	}
 
-	// custom
-
-	@Override
-	public List<Entity> getAll(SingularAttribute<Entity, ?>... fetchAttributes) {
-		return dao.getAll(fetchAttributes);
-	}
-
-	@Override
-	public List<Entity> getAllByField(SingularAttribute<Entity, ?> attribute,
-			Object value, SingularAttribute<Entity, ?>... fetchAttributes) {
-		return dao.getAllByFieldRestriction(attribute, value, fetchAttributes);
-	}
-
-	@Override
-	public Entity get(SingularAttribute<? super Entity, ?> onAttr, ID id,
-			SingularAttribute<Entity, ?>... fetchAttributes) {
-		return dao.getById(onAttr, id, fetchAttributes);
-	}
 }

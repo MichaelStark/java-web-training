@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 
 import by.stark.sample.AbstractServiceTest;
 import by.stark.sample.datamodel.Author;
-import by.stark.sample.datamodel.Author_;
 
 public class AuthorServiceTest extends AbstractServiceTest {
 
@@ -65,8 +64,8 @@ public class AuthorServiceTest extends AbstractServiceTest {
 		List<Author> allAuthors = authorService.getAll();
 		Assert.assertEquals(allAuthors.size(), 2);
 
-		List<Author> allAuthorsByFirstName = authorService.getAllByField(
-				Author_.firstName, firstName);
+		List<Author> allAuthorsByFirstName = authorService
+				.getAllByName(firstName);
 		Assert.assertEquals(allAuthorsByFirstName.size(), 1);
 		Assert.assertEquals(allAuthorsByFirstName.get(0).getId(),
 				author.getId());
@@ -74,22 +73,32 @@ public class AuthorServiceTest extends AbstractServiceTest {
 	}
 
 	@Test
-	public void searchByLastNameTest() {
-		Author author = createAuthor();
-		String lastName = author.getLastName();
-		authorService.saveOrUpdate(author);
+	public void searchingByName() {
+		Author author1 = new Author();
+		author1.setFirstName("1");
+		author1.setLastName("4");
+		authorService.saveOrUpdate(author1);
 
-		Author anotherAuthor = createAuthor();
-		authorService.saveOrUpdate(anotherAuthor);
+		Author author2 = new Author();
+		author2.setFirstName("1");
+		author2.setLastName("5");
+		authorService.saveOrUpdate(author2);
 
-		List<Author> allAuthors = authorService.getAll();
-		Assert.assertEquals(allAuthors.size(), 2);
+		Author author3 = new Author();
+		author3.setFirstName("2");
+		author3.setLastName("4");
+		authorService.saveOrUpdate(author3);
 
-		List<Author> allAuthorsByLastName = authorService.getAllByField(
-				Author_.lastName, lastName);
-		Assert.assertEquals(allAuthorsByLastName.size(), 1);
-		Assert.assertEquals(allAuthorsByLastName.get(0).getId(), author.getId());
+		Author author4 = new Author();
+		author4.setFirstName("4");
+		author4.setLastName("1");
+		authorService.saveOrUpdate(author4);
 
+		List<Author> authors = authorService.getAllByName("1");
+		Assert.assertEquals(authors.size(), 3);
+
+		authors = authorService.getAllByName("1", "4");
+		Assert.assertEquals(authors.size(), 2);
 	}
 
 	@Test

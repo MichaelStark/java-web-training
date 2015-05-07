@@ -14,77 +14,80 @@ import org.eclipse.jetty.webapp.WebXmlConfiguration;
 
 public class WicketJettyRunner {
 
-    public static void main(String[] args) throws Exception {
-        new WicketJettyRunner().startServer();
-    }
+	public static void main(String[] args) throws Exception {
+		new WicketJettyRunner().startServer();
+	}
 
-    public static void startServer() throws Exception {
-        final int timeout = (int) Duration.ONE_HOUR.getMilliseconds();
+	public static void startServer() throws Exception {
+		final int timeout = (int) Duration.ONE_HOUR.getMilliseconds();
 
-        final Server server = new Server();
-        final SocketConnector connector = new SocketConnector();
+		final Server server = new Server();
+		final SocketConnector connector = new SocketConnector();
 
-        // Set some timeout options to make debugging easier.
-        connector.setMaxIdleTime(timeout);
-        connector.setSoLingerTime(-1);
-        connector.setPort(8081);
-        server.addConnector(connector);
+		// Set some timeout options to make debugging easier.
+		connector.setMaxIdleTime(timeout);
+		connector.setSoLingerTime(-1);
+		connector.setPort(8081);
+		server.addConnector(connector);
 
-        /*
-         * final Resource keystore = Resource.newClassPathResource("/keystore");
-         * if (keystore != null && keystore.exists()) { // if a keystore for a
-         * SSL certificate is available, start a SSL // connector on port 8443.
-         * // By default, the quickstart comes with a Apache Wicket Quickstart
-         * // Certificate that expires about half way september 2021. Do not //
-         * use this certificate anywhere important as the passwords are //
-         * available in the source.
-         * 
-         * connector.setConfidentialPort(8443);
-         * 
-         * final SslContextFactory factory = new SslContextFactory();
-         * factory.setKeyStoreResource(keystore);
-         * factory.setKeyStorePassword("wicket");
-         * factory.setTrustStoreResource(keystore);
-         * factory.setKeyManagerPassword("wicket"); final SslSocketConnector
-         * sslConnector = new SslSocketConnector(factory);
-         * sslConnector.setMaxIdleTime(timeout); sslConnector.setPort(8443);
-         * sslConnector.setAcceptors(4); server.addConnector(sslConnector);
-         * 
-         * System.out.println(
-         * "SSL access to the quickstart has been enabled on port 8443");
-         * System.out.println(
-         * "You can access the application using SSL on https://localhost:8443"
-         * ); System.out.println(); }
-         */
-        final WebAppContext bb = new WebAppContext();
-        bb.setServer(server);
-        bb.setContextPath("/");
-        bb.setWar("src/main/webapp");
+		/*
+		 * final Resource keystore = Resource.newClassPathResource("/keystore");
+		 * if (keystore != null && keystore.exists()) { // if a keystore for a
+		 * SSL certificate is available, start a SSL // connector on port 8443.
+		 * // By default, the quickstart comes with a Apache Wicket Quickstart
+		 * // Certificate that expires about half way september 2021. Do not //
+		 * use this certificate anywhere important as the passwords are //
+		 * available in the source.
+		 * 
+		 * connector.setConfidentialPort(8443);
+		 * 
+		 * final SslContextFactory factory = new SslContextFactory();
+		 * factory.setKeyStoreResource(keystore);
+		 * factory.setKeyStorePassword("wicket");
+		 * factory.setTrustStoreResource(keystore);
+		 * factory.setKeyManagerPassword("wicket"); final SslSocketConnector
+		 * sslConnector = new SslSocketConnector(factory);
+		 * sslConnector.setMaxIdleTime(timeout); sslConnector.setPort(8443);
+		 * sslConnector.setAcceptors(4); server.addConnector(sslConnector);
+		 * 
+		 * System.out.println(
+		 * "SSL access to the quickstart has been enabled on port 8443");
+		 * System.out.println(
+		 * "You can access the application using SSL on https://localhost:8443"
+		 * ); System.out.println(); }
+		 */
+		final WebAppContext bb = new WebAppContext();
+		bb.setServer(server);
+		bb.setContextPath("/");
+		bb.setWar("src/main/webapp");
 
-        // START JMX SERVER
-        // MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
-        // MBeanContainer mBeanContainer = new MBeanContainer(mBeanServer);
-        // server.getContainer().addEventListener(mBeanContainer);
-        // mBeanContainer.start();
+		// START JMX SERVER
+		// MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
+		// MBeanContainer mBeanContainer = new MBeanContainer(mBeanServer);
+		// server.getContainer().addEventListener(mBeanContainer);
+		// mBeanContainer.start();
 
-        server.setHandler(bb);
+		server.setHandler(bb);
 
-        // setup JNDI
-        final EnvConfiguration envConfiguration = new EnvConfiguration();
-        final URL url = new File("src/main/webapp/WEB-INF/jetty-env.xml").toURI().toURL();
-        envConfiguration.setJettyEnvXml(url);
-        bb.setConfigurations(new Configuration[] { new WebInfConfiguration(), envConfiguration, new WebXmlConfiguration() });
+		// setup JNDI
+		final EnvConfiguration envConfiguration = new EnvConfiguration();
+		final URL url = new File("src/main/webapp/WEB-INF/jetty-env.xml")
+				.toURI().toURL();
+		envConfiguration.setJettyEnvXml(url);
+		bb.setConfigurations(new Configuration[] { new WebInfConfiguration(),
+				envConfiguration, new WebXmlConfiguration() });
 
-        try {
-            System.out.println(">>> STARTING EMBEDDED JETTY SERVER, PRESS ANY KEY TO STOP");
-            server.start();
-            System.in.read();
-            System.out.println(">>> STOPPING EMBEDDED JETTY SERVER");
-            server.stop();
-            server.join();
-        } catch (final Exception e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
-    }
+		try {
+			System.out
+					.println(">>> STARTING EMBEDDED JETTY SERVER, PRESS ANY KEY TO STOP");
+			server.start();
+			System.in.read();
+			System.out.println(">>> STOPPING EMBEDDED JETTY SERVER");
+			server.stop();
+			server.join();
+		} catch (final Exception e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+	}
 }
