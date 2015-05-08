@@ -7,13 +7,6 @@
 
 <link rel="stylesheet" type="text/css" href="css/main.css" />
 <link href="./images/apply.png" type="image/vnd.microsoft.icon" rel="icon" />
-<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-<script type="text/javascript" src="js/jquery.selectBox.js"></script>
-<script type="text/javascript">
- $(document).ready(function() {
-     $("select").selectBox();
- });
- </script>
 <wicket:header-items />
 </head>
 
@@ -27,13 +20,20 @@
         </div>
 
         <div class="aut">
-            <p>User</p>
             <a href="#">Выход</a>
+            <p>User</p>
         </div>
+        
+        <a id="topButton" href="#">Читальный зал<p></p></a>
+        <a id="topButton" href="#">Абонементы<p></p></a>
     </div>
 </div>
 
 <div id="wrap">
+	<div class="logo">
+		<a wicket:id="linkToHome"><img src="images/logo.png" width="211" height="46"
+			alt="" /></a>
+	</div>
 
 	<wicket:child/>
 	
