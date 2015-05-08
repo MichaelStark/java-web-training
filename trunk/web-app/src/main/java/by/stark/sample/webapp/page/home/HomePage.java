@@ -5,38 +5,25 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
 
-import by.stark.sample.datamodel.Book;
 import by.stark.sample.datamodel.Genre;
-import by.stark.sample.services.BookService;
 import by.stark.sample.services.GenreService;
 import by.stark.sample.webapp.page.BaseLayout;
-import by.stark.sample.webapp.page.home.panel.BooksPanel;
+import by.stark.sample.webapp.page.home.book.BookPage;
 
 public class HomePage extends BaseLayout {
 
 	@Inject
 	private GenreService genreService;
-	@Inject
-	private BookService bookService;
 
 	@Override
 	protected void onInitialize() {
 		super.onInitialize();
-
-		final List<Book> allBooks = bookService.getAll();
-
-		add(new ListView<Book>("books-panel", allBooks) {
-			@Override
-			protected void populateItem(ListItem<Book> item) {
-				Book book = item.getModelObject();
-				item.add((new BooksPanel("book-details", book)));
-			}
-		});
 
 		final List<Genre> allGenres = genreService.getAll();
 
@@ -44,13 +31,20 @@ public class HomePage extends BaseLayout {
 			@Override
 			protected void populateItem(ListItem<Genre> item) {
 				Genre genre = item.getModelObject();
-				item.add(new Label("genre", genre.getName()));
+
+				Link<Void> Link = new Link<Void>("linkToGenre") {
+
+					@Override
+					public void onClick() {
+						setResponsePage(new BookPage(genre));
+					}
+				};
+
+				item.add(Link);
+				Link.add(new Label("genre", genre.getName()));
 
 			}
 		});
-
-		add(new Label("books-count", allBooks.size()));
-
 	}
 
 	@Override

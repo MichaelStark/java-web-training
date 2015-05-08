@@ -1,0 +1,33 @@
+<wicket:extend xmlns="http://www.w3.org/1999/xhtml" lang="ru"
+	xmlns:wicket="http://wicket.apache.org">
+
+	<div class="box-sh">
+		<h1>
+			Найдено книг:
+			<wicket:container wicket:id="books-count" />
+		</h1>
+		<a href="#"><p>Добавить книгу</p></a>
+	</div>
+
+	<wicket:container wicket:id="books-panel">
+		<div class="item">
+			<wicket:container wicket:id="book-details" />
+		</div>
+	</wicket:container>
+
+	<div class="clear"></div>
+
+	<div class="pagination">
+		<ul>
+			<li><a class="active" href="#">1</a></li>
+			<li><a href="#">2</a></li>
+			<li><a href="#">3</a></li>
+			<li><a href="#">4</a></li>
+			<li><a href="#">5</a></li>
+			<li><a href="#">6</a></li>
+			<li><a href="#">...</a></li>
+			<li><a href="#">Последняя страница</a></li>
+		</ul>
+	</div>
+
+</wicket:extend>

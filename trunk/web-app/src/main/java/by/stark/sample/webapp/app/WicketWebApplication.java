@@ -15,7 +15,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import by.stark.sample.webapp.page.LoginPage;
-import by.stark.sample.webapp.page.home.HomePage;
+import by.stark.sample.webapp.page.home.book.BookPage;
 
 @Component("wicketWebApplicationBean")
 public class WicketWebApplication extends AuthenticatedWebApplication {
@@ -72,7 +72,7 @@ public class WicketWebApplication extends AuthenticatedWebApplication {
 
 	@Override
 	public final Class<? extends WebPage> getHomePage() {
-		return HomePage.class;
+		return BookPage.class;
 	}
 
 	public ApplicationContext getApplicationContext() {
