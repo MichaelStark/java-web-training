@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import by.stark.sample.datamodel.enums.CommentRating;
 
@@ -18,13 +19,16 @@ public class Comment extends AbstractEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Book.class)
 	private Book book;
 
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Userprofile.class)
 	private Userprofile userprofile;
 
 	@Column
+	@NotNull
 	@Enumerated(EnumType.ORDINAL)
 	private CommentRating rating;
 

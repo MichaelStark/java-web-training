@@ -7,6 +7,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.jpa.criteria.OrderImpl;
 import org.springframework.stereotype.Repository;
 
 import by.stark.sample.dataaccess.AuthorDao;
@@ -22,7 +23,7 @@ public class AuthorDaoImpl extends AbstractDaoImpl<Long, Author> implements
 	}
 
 	@Override
-	public List<Author> getAllByName(String firstName, String lastName) {
+	public List<Author> getAllByName(String name, boolean byFirstName) {
 		CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
 
 		CriteriaQuery<Author> root = cBuilder.createQuery(Author.class);
@@ -30,13 +31,51 @@ public class AuthorDaoImpl extends AbstractDaoImpl<Long, Author> implements
 
 		root.select(criteria);
 
-		root.where(cBuilder.and(
-				cBuilder.equal(criteria.get(Author_.firstName), firstName),
-				cBuilder.equal(criteria.get(Author_.lastName), lastName)));
+		if (byFirstName) {
+			root.where(cBuilder.like(
+					cBuilder.lower(criteria.get(Author_.firstName)),
+					"%" + name.toLowerCase() + "%"));
+		} else {
+			root.where(cBuilder.like(
+					cBuilder.lower(criteria.get(Author_.lastName)),
+					"%" + name.toLowerCase() + "%"));
+		}
+
+		root.orderBy(new OrderImpl(criteria.get(Author_.lastName), true));
 
 		TypedQuery<Author> query = getEm().createQuery(root);
 		List<Author> results = query.getResultList();
 		return results;
 	}
 
+	@Override
+	public List<Author> getAllByName(String name1, String name2,
+			boolean byFirstName) {
+		CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
+
+		CriteriaQuery<Author> root = cBuilder.createQuery(Author.class);
+		Root<Author> criteria = root.from(Author.class);
+
+		root.select(criteria);
+
+		if (byFirstName) {
+			root.where(cBuilder.and(cBuilder.like(
+					cBuilder.lower(criteria.get(Author_.lastName)),
+					"%" + name2.toLowerCase() + "%")), cBuilder.like(
+					cBuilder.lower(criteria.get(Author_.firstName)),
+					name1.toLowerCase()));
+		} else {
+			root.where(cBuilder.and(cBuilder.like(
+					cBuilder.lower(criteria.get(Author_.firstName)), "%"
+							+ name2.toLowerCase() + "%")), cBuilder.like(
+					cBuilder.lower(criteria.get(Author_.lastName)),
+					name1.toLowerCase()));
+		}
+
+		root.orderBy(new OrderImpl(criteria.get(Author_.lastName), true));
+
+		TypedQuery<Author> query = getEm().createQuery(root);
+		List<Author> results = query.getResultList();
+		return results;
+	}
 }

@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import by.stark.sample.AbstractServiceTest;
 import by.stark.sample.datamodel.Author;
 import by.stark.sample.datamodel.Book;
+import by.stark.sample.datamodel.Comment;
 import by.stark.sample.datamodel.Genre;
 
 public class BookServiceTest extends AbstractServiceTest {
@@ -39,6 +40,12 @@ public class BookServiceTest extends AbstractServiceTest {
 
 	@Inject
 	private PictureService pictureService;
+
+	@Inject
+	private UserService userService;
+
+	@Inject
+	private CommentService commentService;
 
 	@Before
 	public void cleanUpData() {
@@ -174,6 +181,18 @@ public class BookServiceTest extends AbstractServiceTest {
 	}
 
 	@Test
+	public void getRatingTest() {
+		Book book = createBookComplete();
+		bookService.saveOrUpdate(book);
+		Comment comment = createCommentForGetResult(book);
+		Comment comment1 = createCommentForGetResult(book);
+		float rating = bookService.getRating(book);
+		Assert.assertTrue(((comment.getRating().ordinal() + comment1
+				.getRating().ordinal()) / 2) == rating);
+
+	}
+
+	@Test
 	public void uniqueConstraintsTest() {
 		Book book = createBookComplete();
 		bookService.saveOrUpdate(book);
@@ -204,6 +223,10 @@ public class BookServiceTest extends AbstractServiceTest {
 
 	@After
 	public void finishTest() {
+		commentService.deleteAll();
+		Assert.assertEquals(commentService.getAll().size(), 0);
+		userService.deleteAll();
+		Assert.assertEquals(userService.getAll().size(), 0);
 		bookService.deleteAll();
 		Assert.assertEquals(bookService.getAll().size(), 0);
 		genreService.deleteAll();
@@ -223,4 +246,13 @@ public class BookServiceTest extends AbstractServiceTest {
 		return book;
 	}
 
+	private Comment createCommentForGetResult(Book book) {
+		Comment comment = createComment();
+		comment.setBook(book);
+		bookService.saveOrUpdate(book);
+		pictureService.saveOrUpdate(comment.getUser().getPicture());
+		userService.saveOrUpdate(comment.getUser());
+		commentService.saveOrUpdate(comment);
+		return comment;
+	}
 }

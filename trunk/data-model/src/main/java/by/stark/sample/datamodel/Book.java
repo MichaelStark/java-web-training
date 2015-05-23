@@ -12,6 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Book extends AbstractEntity {
@@ -22,22 +26,34 @@ public class Book extends AbstractEntity {
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Picture.class)
 	private Picture picture;
 
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Publisher.class)
 	private Publisher publisher;
 
 	@Column
+	@NotNull
+	@Size(max = 100)
 	private String isbn;
 
 	@Column
+	@NotNull
+	@Size(max = 100)
 	private String title;
 
 	@Column
+	@NotNull
+	@Max(value = 2999)
+	@Min(value = 1)
 	private Long year;
 
 	@Column
+	@NotNull
+	@Max(value = 9999)
+	@Min(value = 1)
 	private Long pages;
 
 	@Column
+	@NotNull
 	private String description;
 
 	@JoinTable(name = "book_2_author", joinColumns = { @JoinColumn(name = "book_id") }, inverseJoinColumns = { @JoinColumn(name = "author_id") })

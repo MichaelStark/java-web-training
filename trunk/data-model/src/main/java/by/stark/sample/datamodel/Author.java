@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Author extends AbstractEntity {
@@ -13,18 +15,14 @@ public class Author extends AbstractEntity {
 	private Long id;
 
 	@Column
+	@NotNull
+	@Size(max = 20)
 	private String firstName;
 
 	@Column
+	@NotNull
+	@Size(max = 20)
 	private String lastName;
-
-	/*
-	 * @JoinTable(name = "book_2_author", joinColumns = { @JoinColumn(name =
-	 * "author_id") }, inverseJoinColumns = { @JoinColumn(name = "book_id") })
-	 * 
-	 * @ManyToMany(targetEntity = Author.class, fetch = FetchType.LAZY) private
-	 * Set<Book> book;
-	 */
 
 	@Override
 	public Long getId() {

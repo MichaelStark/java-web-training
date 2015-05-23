@@ -5,7 +5,7 @@ public enum UserGender {
 	// ADD ITEMS TO THE END OF LIST ONLY
 	// DON'T REMOVE
 
-	usergender_male,
+	male,
 
-	usergender_female;
+	female;
 }

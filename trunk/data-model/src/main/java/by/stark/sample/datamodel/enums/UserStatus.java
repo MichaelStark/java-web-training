@@ -5,9 +5,9 @@ public enum UserStatus {
 	// ADD ITEMS TO THE END OF LIST ONLY
 	// DON'T REMOVE
 
-	userstatus_active,
+	active,
 
-	userstatus_inactive,
+	inactive,
 
-	userstatus_locked;
+	locked;
 }

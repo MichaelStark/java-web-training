@@ -19,4 +19,19 @@ public interface BookService extends AbstractService<Long, Book> {
 
 	Book getById(Long id);
 
+	float getRating(Book book);
+
+	List<Book> getAllByAuthorWithSortAndPagging(Author author, int startRecord,
+			int pageSize);
+
+	List<Book> getAllByGenreWithSortAndPagging(Genre genre, int startRecord,
+			int pageSize);
+
+	List<Book> getAllWithSortAndPagging(int startRecord, int pageSize);
+
+	List<Book> getAllByTitleWithSortAndPagging(String title, int startRecord,
+			int pageSize);
+
+	int getAllByTitleCount(String title);
+
 }

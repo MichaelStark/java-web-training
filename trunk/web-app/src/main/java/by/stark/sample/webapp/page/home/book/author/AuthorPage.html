@@ -1,0 +1,13 @@
+<wicket:extend xmlns="http://www.w3.org/1999/xhtml" lang="ru"
+	xmlns:wicket="http://wicket.apache.org">
+
+	<div class="box-sh">
+		<h1>
+			<wicket:message key="p.home.book.author.authorsCount" />
+			<wicket:container wicket:id="author-count" />
+		</h1>
+	</div>
+<wicket:container wicket:id="authors-list">
+	<a id="linkToAuthor" wicket:id="linkToAuthor"><span><wicket:container wicket:id="author"/></span></a>
+</wicket:container>
+</wicket:extend>

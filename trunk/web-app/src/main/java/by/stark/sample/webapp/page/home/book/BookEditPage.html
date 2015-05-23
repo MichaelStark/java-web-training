@@ -1,33 +1,104 @@
 <wicket:extend xmlns="http://www.w3.org/1999/xhtml" lang="ru"
 	xmlns:wicket="http://wicket.apache.org">
 
-	<div class="box-sh">
-		<h1>
-			Найдено книг:
-			<wicket:container wicket:id="books-count" />
-		</h1>
-		<a href="#"><p>Добавить книгу</p></a>
-	</div>
+	<form id="formEditBook" wicket:id="form">
+		<div class="popup-info">
+		
+			<div class="avatar-box">
+				<img width="110" height="150" alt="" id="bookImage" wicket:id="image"/>
+				<input type="file" wicket:id="imageUpload"/>
+			</div>
 
-	<wicket:container wicket:id="books-panel">
-		<div class="item">
-			<wicket:container wicket:id="book-details" />
+			<div class="ava-info">
+				<div class="loaded">
+					<a  class="name" wicket:id="downloadLink"><wicket:container wicket:id="uploaded"/></a>
+					<input type="file" wicket:id="fileUpload"/>
+				</div>
+			
+				<div class="block">
+					<p><wicket:message key="p.home.book.title" /></p>
+					<div class="ava-form">
+						<p>
+							<input type="text" id="inputBookName" wicket:id="title"/>
+						</p>	
+					</div>
+				</div>
+
+				<div class="block">
+					<p><wicket:message key="p.home.book.genre" /></p>
+					<div class="ava-form">
+						<select wicket:id="genres" style="width: 269px">
+						</select> 
+					</div>
+				</div>
+
+				<div class="block">
+					<p><wicket:message key="p.home.book.author" /></p>
+					<div class="ava-form">
+						<select wicket:id="authors" style="width: 269px">
+						</select> 
+					</div>
+				</div>
+
+				<div class="block">
+					<p><wicket:message key="p.home.book.publisher" /></p>
+					<div class="ava-form">
+						<p>
+							<select wicket:id="publisher">
+							</select>
+						</p>
+					</div>
+				</div>
+
+				<div class="block">
+					<p><wicket:message key="p.home.book.isbn" /></p>
+					<div class="ava-form">
+						<p>
+							<input type="text" id="inputIsbn" wicket:id="isbn"/>
+						</p>	
+					</div>
+				</div>
+
+				<div class="block">
+					<p><wicket:message key="p.home.book.year" /></p>
+					<div class="ava-form">
+						<p>
+							<input type="text" id="inputPublishYear" wicket:id="year"/>
+						</p>	
+					</div>
+				</div>
+
+				<div class="block">
+					<p><wicket:message key="p.home.book.pages" /></p>
+					<div class="ava-form">
+						<p>
+							<input type="text" id="inputPageCount" wicket:id="pages"/>
+						</p>	
+					</div>
+				</div>
+
+				<div class="block">
+					<p><wicket:message key="p.home.book.description" /></p>
+					<div class="ava-form">
+						<p>
+							<textarea id="inputDescr" wicket:id="description"/>
+						</p>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="bottom-info">
+				<div class="button-right">
+					<p>
+						<input type="submit" id="saveButton" wicket:id="submit"/>
+					</p>
+					<p>
+						<input type="submit" id="cancel" wicket:id="cancel"/>
+					</p>
+				</div>
+			</div>
+
 		</div>
-	</wicket:container>
-
-	<div class="clear"></div>
-
-	<div class="pagination">
-		<ul>
-			<li><a class="active" href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">4</a></li>
-			<li><a href="#">5</a></li>
-			<li><a href="#">6</a></li>
-			<li><a href="#">...</a></li>
-			<li><a href="#">Последняя страница</a></li>
-		</ul>
-	</div>
-
+	</form>
 </wicket:extend>

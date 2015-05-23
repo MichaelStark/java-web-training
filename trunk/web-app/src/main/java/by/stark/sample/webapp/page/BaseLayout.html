@@ -4,9 +4,12 @@
 
 <head>
 <title wicket:id="headerTitle">[Page title]</title>
-
 <link rel="stylesheet" type="text/css" href="css/main.css" />
-<link href="./images/apply.png" type="image/vnd.microsoft.icon" rel="icon" />
+<link rel="stylesheet" type="text/css" href="css/dialog.css" />
+<link rel="stylesheet" type="text/css" href="css/authorization.css" />
+<link href="./images/library.png" type="image/vnd.microsoft.icon" rel="icon" />
+
+<script src="js/kendo.all.min.js"></script>
 <wicket:header-items />
 </head>
 
@@ -15,23 +18,24 @@
 <div class="header">
     <div class="header-wrap">
         <div class="language">
-            <a href="#"><img src="images/rus.png" width="16" height="13" alt="" /></a>
-            <a href="#"><img src="images/usa.png" width="16" height="13" alt="" /></a>
+            <a wicket:id="ru"><img src="images/rus.png" width="16" height="13" alt="" /></a>
+            <a wicket:id="en"><img src="images/usa.png" width="16" height="13" alt="" /></a>
         </div>
 
         <div class="aut">
-            <a href="#">Выход</a>
+            <a href="#"><wicket:message key="p.home.logoutLink" /></a>
             <p>User</p>
         </div>
         
-        <a id="topButton" href="#">Читальный зал<p></p></a>
-        <a id="topButton" href="#">Абонементы<p></p></a>
+        <a id="topButton" href="#"><wicket:message key="p.home.readingRoomLink" /><p></p></a>
+        <a id="topButton" href="#"><wicket:message key="p.home.abonementLink" /><p></p></a>
+        <a id="topButton" wicket:id="linkToAdmin"><wicket:message key="p.home.adminLink" /><p></p></a>
     </div>
 </div>
 
 <div id="wrap">
 	<div class="logo">
-		<a wicket:id="linkToHome"><img src="images/logo.png" width="211" height="46"
+		<a wicket:id="linkToHome"><img wicket:id="logo" width="211" height="46"
 			alt="" /></a>
 	</div>
 
@@ -43,7 +47,7 @@
 
 <div id="footer">
     <div class="footer-wrap">
-        <p>&#169; 2015 &#171;Онлайн библиотека&#187;</p>
+        <p><wicket:message key="p.home.footer" /></p>
     </div>
 </div>
 

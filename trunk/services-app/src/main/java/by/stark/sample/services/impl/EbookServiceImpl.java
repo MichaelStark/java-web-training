@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import by.stark.sample.dataaccess.EbookDao;
@@ -25,6 +26,9 @@ public class EbookServiceImpl extends AbstractServiceImpl<Long, Ebook>
 	@Inject
 	private EbookDao dao;
 
+	@Value(value = "${rootEbooksFolfer}")
+	private String rootFolder;
+
 	@PostConstruct
 	private void init() {
 		// this method will be called by Spring after bean instantiation. Can be
@@ -41,6 +45,10 @@ public class EbookServiceImpl extends AbstractServiceImpl<Long, Ebook>
 	@Override
 	public Ebook getById(Long id) {
 		return dao.getById(Ebook_.id, id, Ebook_.book);
+	}
+
+	public String getRootFolder() {
+		return rootFolder;
 	}
 
 }
