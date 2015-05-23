@@ -1,6 +1,8 @@
 package by.stark.sample.services.impl;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -11,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import by.stark.sample.dataaccess.AuthorDao;
 import by.stark.sample.datamodel.Author;
-import by.stark.sample.datamodel.Author_;
 import by.stark.sample.services.AuthorService;
 
 @Service
@@ -33,30 +34,28 @@ public class AuthorServiceImpl extends AbstractServiceImpl<Long, Author>
 	}
 
 	@Override
-	public List<Author> getAllByName(String name) {
-		List<Author> authorsByFirstName = dao.getAllByFieldRestriction(
-				Author_.firstName, name);
-		List<Author> authorsByLastName = dao.getAllByFieldRestriction(
-				Author_.lastName, name);
+	public List<Author> getAllByName(String input) {
 
-		if (authorsByFirstName.size() == 0) {
-			if (authorsByLastName.size() == 0) {
-				return null;
-			}
+		input = input.trim();
+		input = input.replaceAll("[\\s]{2,}", " ");
+
+		List<Author> authorsList;
+
+		int i = input.indexOf(" ", 1);
+		if (i > 0) {
+			String first = input.substring(0, i);
+			String last = input.substring(i + 1);
+			authorsList = dao.getAllByName(first, last, true);
+			authorsList.addAll(dao.getAllByName(first, last, false));
 		} else {
-			if (authorsByLastName.size() == 0) {
-				return authorsByFirstName;
-			} else {
-				authorsByLastName.addAll(authorsByFirstName);
-			}
+			authorsList = dao.getAllByName(input, true);
+			authorsList.addAll(dao.getAllByName(input, false));
 		}
-		return authorsByLastName;
-	}
 
-	@Override
-	public List<Author> getAllByName(String firstName, String lastName) {
-		List<Author> author = dao.getAllByName(firstName, lastName);
-		author.addAll(dao.getAllByName(lastName, firstName));
-		return author;
+		Set<Author> authors = new HashSet<Author>();
+		authors.addAll(authorsList);
+		authorsList.clear();
+		authorsList.addAll(authors);
+		return authorsList;
 	}
 }

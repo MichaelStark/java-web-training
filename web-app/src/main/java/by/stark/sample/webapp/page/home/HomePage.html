@@ -2,27 +2,27 @@
 	
 	<div class="menu">
 		<ul>
-			<li><a href="#">О компании</a></li>
-			<li><a href="#">Контакты</a></li>
+			<li><a href="#"><wicket:message key="p.home.aboutLink" /></a></li>
+			<li><a href="#"><wicket:message key="p.home.contactsLink" /></a></li>
 		</ul>
 	</div>
 
-	<a class="feedback" href="#">Обратная связь</a>
 	<div class="clear"></div>
 
 	<div class="search">
-		<form>
-			<input type="text" class="search-text" placeholder="Поиск по книгам" />
-			<input type="submit" class="button-text" /> 
+		<form wicket:id="searchForm">
+			<input type="text" class="search-text" wicket:id="searchTextTitle" />
+			<input type="text" class="search-text" wicket:id="searchTextAuthor" />
+			<input class="button-text" /> 
 			
-			<input type="submit" class="button" value="Найти" />
+			<input type="submit" class="button" wicket:id="searchSubmit"/>
 			<div  class="dropdown">
-			<select>
-				<option>По названию</option>
-				<option>По автору</option>
+			<select wicket:id="searchSelect">
 			</select>
-			</div> 
-		</form>
+			</div>
+			<div class="clear"></div>
+		</form>	
+		<div wicket:id="notification"></div>
 	</div>
 	<div class="clear"></div>
 

@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import by.stark.sample.datamodel.enums.UserGender;
 import by.stark.sample.datamodel.enums.UserRole;
@@ -26,19 +28,26 @@ public class Userprofile extends AbstractEntity {
 	private Picture picture;
 
 	@Column
+	@NotNull
 	@Enumerated(EnumType.ORDINAL)
 	private UserRole role;
 
 	@Column(updatable = true)
+	@NotNull
+	@Size(max = 100)
 	private String email;
 
 	@Column
+	@NotNull
+	@Size(max = 20)
 	private String password;
 
 	@Column
+	@Size(max = 20)
 	private String firstName;
 
 	@Column
+	@Size(max = 20)
 	private String lastName;
 
 	@Column

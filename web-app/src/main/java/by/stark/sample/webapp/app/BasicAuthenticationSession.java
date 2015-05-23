@@ -1,5 +1,7 @@
 package by.stark.sample.webapp.app;
 
+import java.util.Locale;
+
 import javax.inject.Inject;
 
 import org.apache.wicket.Session;
@@ -60,6 +62,19 @@ public class BasicAuthenticationSession extends AuthenticatedWebSession {
 	public void signOut() {
 		super.signOut();
 		userId = null;
+	}
+
+	@Override
+	public void setLocale(Locale locale) {
+		super.setLocale(locale);
+		System.out.println(locale == null ? "set locale to NULL" : locale
+				.toString());
+
+	}
+
+	@Override
+	public Locale getLocale() {
+		return super.getLocale();
 	}
 
 }

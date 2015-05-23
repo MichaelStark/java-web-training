@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
@@ -11,6 +12,7 @@ import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.SingularAttribute;
 
 import org.apache.commons.lang3.Validate;
+import org.hibernate.jpa.criteria.OrderImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -136,5 +138,98 @@ public class BookDaoImpl extends AbstractDaoImpl<Long, Book> implements BookDao 
 			return getEm().createQuery(criteria).getResultList().get(0);
 		}
 		return result;
+	}
+
+	@Override
+	public List<Book> getAllByTitleWithSortAndPagging(String title,
+			int startRecord, int pageSize) {
+		CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
+
+		CriteriaQuery<Book> criteria = cBuilder.createQuery(Book.class);
+		Root<Book> root = criteria.from(Book.class);
+
+		criteria.select(root);
+
+		criteria.where(cBuilder.like(cBuilder.lower(root.get(Book_.title)), "%"
+				+ title.toLowerCase() + "%"));
+
+		criteria.orderBy(new OrderImpl(root.get(Book_.title), true));
+		TypedQuery<Book> query = getEm().createQuery(criteria);
+		query.setFirstResult(startRecord);
+		query.setMaxResults(pageSize);
+
+		List<Book> results = query.getResultList();
+		return results;
+	}
+
+	@Override
+	public List<Book> getAllWithSortAndPagging(int startRecord, int pageSize) {
+		CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
+
+		CriteriaQuery<Book> criteria = cBuilder.createQuery(Book.class);
+		Root<Book> root = criteria.from(Book.class);
+
+		criteria.select(root);
+		criteria.orderBy(new OrderImpl(root.get(Book_.id), false));
+		TypedQuery<Book> query = getEm().createQuery(criteria);
+		query.setFirstResult(startRecord);
+		query.setMaxResults(pageSize);
+
+		List<Book> results = query.getResultList();
+		return results;
+	}
+
+	@Override
+	public List<Book> getAllByGenreWithSortAndPagging(Genre genre,
+			int startRecord, int pageSize) {
+		CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
+
+		CriteriaQuery<Book> criteria = cBuilder.createQuery(Book.class);
+		Root<Book> root = criteria.from(Book.class);
+
+		criteria.select(root);
+		criteria.where(cBuilder.isMember(genre, root.get(Book_.genres)));
+		criteria.orderBy(new OrderImpl(root.get(Book_.title), true));
+		TypedQuery<Book> query = getEm().createQuery(criteria);
+		query.setFirstResult(startRecord);
+		query.setMaxResults(pageSize);
+
+		List<Book> results = query.getResultList();
+		return results;
+	}
+
+	@Override
+	public List<Book> getAllByAuthorWithSortAndPagging(Author author,
+			int startRecord, int pageSize) {
+		CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
+
+		CriteriaQuery<Book> criteria = cBuilder.createQuery(Book.class);
+		Root<Book> root = criteria.from(Book.class);
+
+		criteria.select(root);
+		criteria.where(cBuilder.isMember(author, root.get(Book_.authors)));
+		criteria.orderBy(new OrderImpl(root.get(Book_.title), true));
+		TypedQuery<Book> query = getEm().createQuery(criteria);
+		query.setFirstResult(startRecord);
+		query.setMaxResults(pageSize);
+
+		List<Book> results = query.getResultList();
+		return results;
+	}
+
+	@Override
+	public int getAllByTitleCount(String title) {
+		CriteriaBuilder cBuilder = getEm().getCriteriaBuilder();
+
+		CriteriaQuery<Book> criteria = cBuilder.createQuery(Book.class);
+		Root<Book> root = criteria.from(Book.class);
+
+		criteria.select(root);
+		criteria.where(cBuilder.like(cBuilder.lower(root.get(Book_.title)), "%"
+				+ title.toLowerCase() + "%"));
+
+		TypedQuery<Book> query = getEm().createQuery(criteria);
+		List<Book> result = query.getResultList();
+		return result.size();
 	}
 }

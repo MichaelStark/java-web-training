@@ -11,4 +11,6 @@ public interface EbookService extends AbstractService<Long, Ebook> {
 
 	Ebook getById(Long id);
 
+	String getRootFolder();
+
 }

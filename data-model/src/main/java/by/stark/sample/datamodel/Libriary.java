@@ -7,6 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Libriary extends AbstractEntity {
@@ -14,16 +17,22 @@ public class Libriary extends AbstractEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Book.class)
 	private Book book;
 
 	@Column
+	@NotNull
+	@Max(value = 9999999)
+	@Min(value = 1)
 	private Long uin;
 
 	@Column
+	@NotNull
 	private Boolean availability;
 
 	@Column
+	@NotNull
 	private Boolean readingRoom;
 
 	@Override

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key = "p.home.adminLink">Administration</entry>
+
+	<entry key = "p.home.logoutLink">Sign out</entry>
+	<entry key = "p.home.loginLink">Sign in</entry>
+
+	<entry key = "p.home.readingRoomLink">Reading room</entry>
+	<entry key = "p.home.abonementLink">Subscriptions</entry>
+
+
+	<entry key = "p.home.title">Online library</entry>
+
+	<entry key = "p.home.feedbackLink">Feedback</entry>
+	<entry key = "p.home.aboutLink">About</entry>
+	<entry key = "p.home.contactsLink">Contacts</entry>
+	
+	<entry key = "p.home.searchLink">Find</entry>
+	<entry key = "p.home.searchPlaceholder">Search</entry>
+	<entry key = "p.home.searchSelectTitle">By title</entry>
+	<entry key = "p.home.searchSelectAuthor">By author</entry>
+	<entry key = "p.home.searchNotification">Enter the details in the search box</entry>
+	
+	<entry key = "p.home.book.booksCount">Books found: </entry>
+	<entry key = "p.home.book.addBook">Add book</entry>
+	<entry key = "p.home.book.title">Title</entry>
+	<entry key = "p.home.book.author">Author</entry>
+	<entry key = "p.home.book.genre">Genre</entry>
+	<entry key = "p.home.book.publisher">Publisher</entry>
+	<entry key = "p.home.book.pages">Pages</entry>
+	<entry key = "p.home.book.year">Year</entry>
+	<entry key = "p.home.book.isbn">ISBN</entry>
+	<entry key = "p.home.book.description">Description</entry>
+	<entry key = "p.home.book.orderLink">Order</entry>
+	<entry key = "p.home.book.downloadLink">Download</entry>
+	<entry key = "p.home.book.editLink">Edit</entry>
+	<entry key = "p.home.book.deleteLink">Delete</entry>
+	
+	<entry key = "p.home.book.saveLink">Save</entry>
+	<entry key = "p.home.book.cancelLink">Cancel</entry>
+	
+	<entry key = "p.home.book.author.authorsCount">The authors found: </entry>
+	
+	<entry key = "p.home.book.pagingFirst">To first page</entry>
+	<entry key = "p.home.book.pagingPrev">Previous</entry>
+	<entry key = "p.home.book.pagingNext">Next</entry>
+	<entry key = "p.home.book.pagingLast">To last page</entry>
+	
+	<entry key = "p.home.footer">© 2015 "Online library"</entry>
+	
+	<entry key = "p.admin.usersMenu">Users</entry>
+	<entry key = "p.admin.authorsMenu">Authors</entry>
+	<entry key = "p.admin.genresMenu">Genres</entry>
+	<entry key = "p.admin.publishersMenu">Publishers</entry>
+	<entry key = "p.admin.librarysMenu">Library</entry>
+
+		
+	<entry key = "p.admin.id">ID</entry>
+	<entry key = "p.admin.firstName">First name</entry>
+	<entry key = "p.admin.lastName">Last name</entry>
+	<entry key = "p.admin.name">Name</entry>
+	
+	<entry key = "p.admin.users.role">Role</entry>
+	<entry key = "p.admin.users.email">Email</entry>
+	<entry key = "p.admin.users.gender">Gender</entry>
+	<entry key = "p.admin.users.birtday">Birthday</entry>
+	<entry key = "p.admin.users.status">Status</entry>
+	
+	<entry key = "p.admin.library.uin">UIN</entry>
+	<entry key = "p.admin.library.availability">Availability</entry>
+	<entry key = "p.admin.library.forReadingRoom">For reading room</entry>
+
+	<entry key = "p.admin.createButton">Add</entry>
+	<entry key = "p.admin.deleteButton">Delete</entry>
+	<entry key = "p.admin.editButton">Edit</entry>
+	
+	<entry key = "p.admin.deleteWarning">Warning!</entry>
+	<entry key = "p.admin.deleteDialog">Are you sure you want to DELETE?</entry>
+
+	<entry key = "p.admin.dialog.save">Save</entry>
+	<entry key = "p.admin.dialog.cancel">Cancel</entry>
+	
+	<entry key = "p.admin.dialog.addNewGenre">Add a new genre</entry>
+	<entry key = "p.admin.dialog.editGenre">Change Genre</entry>
+	
+	<entry key = "p.admin.dialog.addNewAuthor">Add new author</entry>
+	<entry key = "p.admin.dialog.editAuthor">Change author</entry>
+
+	<entry key = "p.admin.dialog.addNewPublisher">Add a new publisher</entry>
+	<entry key = "p.admin.dialog.editPublisher">Change the publisher</entry>
+
+	<entry key = "p.admin.dialog.addNewUser">Add a new user</entry>
+	<entry key = "p.admin.dialog.editUser">Edit User</entry>
+	
+	<entry key = "p.admin.dialog.addNewLibrary">Add a new copy of the book</entry>
+	<entry key = "p.admin.dialog.editLibrary">Edit a copy of the book</entry>
+	
+</properties>

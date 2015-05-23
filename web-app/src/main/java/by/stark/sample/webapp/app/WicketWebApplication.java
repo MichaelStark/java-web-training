@@ -58,6 +58,8 @@ public class WicketWebApplication extends AuthenticatedWebApplication {
 			getMarkupSettings().setStripWicketTags(true);
 		}
 
+		mountResource("/pictures/${name}", new ImageResourceReference());
+
 	}
 
 	@Override

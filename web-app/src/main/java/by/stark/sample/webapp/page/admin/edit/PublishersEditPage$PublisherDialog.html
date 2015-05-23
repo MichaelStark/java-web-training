@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru"
+	xmlns:wicket="http://wicket.apache.org">
+<head>
+	<wicket:head>
+		<style type="text/css">
+			table#dialog-table {
+				width: 100%;
+				border-spacing: 0;
+				border-collapse: collapse;
+			}
+			th, td {
+				padding: 5px;
+			}
+		</style>
+	</wicket:head>
+</head>
+<body>
+	<wicket:panel>
+		<form wicket:id="form">
+			<table id="dialog-table">
+				<tr>
+					<td width="30%">
+						<wicket:message key="p.admin.name"/>:
+					</td>
+					<td width="70%">
+						<input wicket:id="name" type="text" style="width: 100%;"></input>
+					</td>
+				</tr>
+			</table>
+			<div wicket:id="feedback"></div>
+		</form>
+	</wicket:panel>
+</body>
+</html>

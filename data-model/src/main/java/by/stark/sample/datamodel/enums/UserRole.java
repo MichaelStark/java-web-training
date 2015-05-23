@@ -5,9 +5,9 @@ public enum UserRole {
 	// ADD ITEMS TO THE END OF LIST ONLY
 	// DON'T REMOVE
 
-	userrole_administrator,
+	admin,
 
-	userrole_librarian,
+	librarian,
 
-	userrole_reader;
+	reader;
 }

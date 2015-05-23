@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import by.stark.sample.datamodel.enums.RecordStatus;
 
@@ -20,20 +21,25 @@ public class Record4Hands extends AbstractEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Userprofile.class)
 	private Userprofile userprofile;
 
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Libriary.class)
 	private Libriary libriary;
 
 	@Column
+	@NotNull
 	@Enumerated(EnumType.ORDINAL)
 	private RecordStatus status;
 
 	@Column
+	@NotNull
 	private Date dateTake;
 
 	@Column
+	@NotNull
 	private Date dateReturn;
 
 	@Column

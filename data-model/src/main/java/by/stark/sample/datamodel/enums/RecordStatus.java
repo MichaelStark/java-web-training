@@ -5,13 +5,13 @@ public enum RecordStatus {
 	// ADD ITEMS TO THE END OF LIST ONLY
 	// DON'T REMOVE
 
-	recordstatus_pending,
+	pending,
 
-	recordstatus_taken,
+	taken,
 
-	recordstatus_returned,
+	returned,
 
-	recordstatus_completed,
+	completed,
 
-	recordstatus_debt;
+	debt;
 }

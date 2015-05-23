@@ -5,13 +5,13 @@ public enum CommentRating {
 	// ADD ITEMS TO THE END OF LIST ONLY
 	// DON'T REMOVE
 
-	commentrating_terribly,
+	bad,
 
-	commentrating_poorly,
+	boring,
 
-	commentrating_normally,
+	ok,
 
-	commentrating_perfectly,
+	good,
 
-	commentrating_amazingly;
+	excellent;
 }

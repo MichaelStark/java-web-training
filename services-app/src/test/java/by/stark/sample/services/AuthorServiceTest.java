@@ -96,9 +96,6 @@ public class AuthorServiceTest extends AbstractServiceTest {
 
 		List<Author> authors = authorService.getAllByName("1");
 		Assert.assertEquals(authors.size(), 3);
-
-		authors = authorService.getAllByName("1", "4");
-		Assert.assertEquals(authors.size(), 2);
 	}
 
 	@Test

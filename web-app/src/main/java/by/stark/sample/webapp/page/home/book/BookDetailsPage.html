@@ -5,51 +5,50 @@
 		<h1>
 			<wicket:container wicket:id="title" />
 		</h1>
-		<a wicket:id="back-link"><p>Назад</p></a>
+		<a wicket:id="linkToAddBook"><p><wicket:message key="p.home.book.addBook" /></p></a>
 	</div>
 <div id="itemDetails" class="item">
 	<img width="100" height="147" alt="" wicket:id="image" />
 
 	<div class="info">
 		<p>
-			Автор: 
+			<wicket:message key="p.home.book.author" />
 			<wicket:container wicket:id="authors-list">
 				<a wicket:id="linkToAuthor"><span><wicket:container wicket:id="author"/></span></a>
 			</wicket:container>
 		</p>
 		<p>
-			Жанр: 
+			<wicket:message key="p.home.book.genre" />
 			<wicket:container wicket:id="genres-list">
 				<a wicket:id="linkToGenre"><span><wicket:container wicket:id="genre"/></span></a>
 			</wicket:container>
 		</p>
 		<p>
+			<wicket:message key="p.home.book.pages" />
 			<wicket:container wicket:id="pages" />
-			страниц
 		</p>
 		<p>
-			Издательство: <wicket:container wicket:id="publisher" />
+			<wicket:message key="p.home.book.publisher" /><wicket:container wicket:id="publisher" />
 		</p>
 		<p>
-			Год издания:
+			<wicket:message key="p.home.book.year" />
 			<wicket:container wicket:id="year" />
-			г.
 		</p>
 		<p>
-			ISBN:
+			<wicket:message key="p.home.book.isbn" />
 			<wicket:container wicket:id="isbn" />
 		</p>
 		<p>
-			Описание:
+			<wicket:message key="p.home.book.description" />
 			<wicket:container wicket:id="description" />
 		</p>
 	</div>
 	<div class="clear"></div>
 
-	<a class="mr" href="#"><p class="read">Заказать</p></a>
-	<a class="mr" href="#"><p class="download">Скачать</p></a>
-	<a class="mr" href="#"><p class="edit">Изменить</p></a>
-	<a class="delete-button" href="#"><p class="delete">Удалить</p></a>
+	<a class="mr" href="#"><p class="read"><wicket:message key="p.home.book.orderLink" /></p></a>
+	<a class="mr" wicket:id="linkToDownload"><p class="download"><wicket:message key="p.home.book.downloadLink" /></p></a>
+	<a class="mr" wicket:id="linkToEdit"><p class="edit"><wicket:message key="p.home.book.editLink" /></p></a>
+	<a class="delete-button" wicket:id="linkToDelete"><p class="delete"><wicket:message key="p.home.book.deleteLink" /></p></a>
 
 </div>
 	<div class="clear"></div>
