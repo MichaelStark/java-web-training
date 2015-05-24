@@ -23,8 +23,9 @@
         </div>
 
         <div class="aut">
-            <a href="#"><wicket:message key="p.home.logoutLink" /></a>
-            <p>User</p>
+            <a wicket:id="linkToLogin"><wicket:message key="p.home.loginLink" /></a>
+            <a wicket:id="linkToLogout"><wicket:message key="p.home.logoutLink" /></a>
+            <p wicket:id="userName"></p>
         </div>
         
         <a id="topButton" href="#"><wicket:message key="p.home.readingRoomLink" /><p></p></a>

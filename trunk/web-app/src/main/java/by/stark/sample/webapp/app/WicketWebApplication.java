@@ -14,8 +14,8 @@ import org.apache.wicket.util.lang.Bytes;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import by.stark.sample.webapp.page.LoginPage;
 import by.stark.sample.webapp.page.home.book.BookPage;
+import by.stark.sample.webapp.page.login.LoginPage;
 
 @Component("wicketWebApplicationBean")
 public class WicketWebApplication extends AuthenticatedWebApplication {
