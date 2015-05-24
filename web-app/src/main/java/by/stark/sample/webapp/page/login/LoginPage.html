@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><wicket:message key="p.home.loginLink" /></title>
+<link rel="stylesheet" type="text/css" href="css/authorization.css" />
+</head>
+<body>
+
+    <div class="authorization">
+        <div class="lg">
+            <a wicket:id="linkToHome"><img wicket:id="logo" width="211" height="46" alt="" /></a>
+        </div>
+
+        <div class="lang">
+            <a wicket:id="ru"><img src="images/rus.jpg" width="14" height="11" alt="" /></a><br />
+            <a wicket:id="en"><img src="images/usa.jpg" width="14" height="11" alt="" /></a>
+        </div>
+        <div class="clear"></div>
+        <form wicket:id="form">
+            <input type="email" class="aut-text" wicket:id="signinEmail"/>
+            <input type="password" class="aut-text" wicket:id="signinPassword"/>
+
+            <input type="submit" class="butt" wicket:id="signinSubmit"/>
+        </form>
+        <button wicket:id="linkToRegistration" id="registrationButton" class="butt"><wicket:message key="p.login.registration"/></button>
+    </div>
+
+</body>
+</html>

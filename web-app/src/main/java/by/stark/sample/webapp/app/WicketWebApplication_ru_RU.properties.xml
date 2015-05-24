@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
+
+	<entry key="p.login.registration">Зарегистрироваться</entry>
+	<entry key="p.login.rememberMe">Запомнить меня</entry>
+	<entry key="p.login.forgotPassword">Вспомнить пароль</entry>
+
 	<entry key="p.home.adminLink">Администрирование</entry>
 	
 	<entry key="p.home.logoutLink">Выход</entry>
@@ -61,8 +66,9 @@
 	<entry key="p.admin.lastName">Фамилия</entry>
 	<entry key="p.admin.name">Название</entry>
 	
+	<entry key="p.admin.users.password">Пароль</entry>
 	<entry key="p.admin.users.role">Роль</entry>
-	<entry key="p.admin.users.email">Почта</entry>
+	<entry key="p.admin.users.email">Email</entry>
 	<entry key="p.admin.users.gender">Пол</entry>
 	<entry key="p.admin.users.birtday">День рождения</entry>
 	<entry key="p.admin.users.status">Статус</entry>

@@ -13,6 +13,7 @@ import org.apache.wicket.model.Model;
 
 import by.stark.sample.webapp.page.admin.AdminPage;
 import by.stark.sample.webapp.page.home.book.BookPage;
+import by.stark.sample.webapp.page.login.LoginPage;
 
 public abstract class BaseLayout extends WebPage {
 
@@ -21,6 +22,25 @@ public abstract class BaseLayout extends WebPage {
 		super.onInitialize();
 
 		Session session = getSession();
+
+		add(new Link<Void>("linkToLogin") {
+
+			@Override
+			public void onClick() {
+				setResponsePage(new LoginPage());
+			}
+		});
+
+		add(new Link<Void>("linkToLogout") {
+
+			@Override
+			public void onClick() {
+				setResponsePage(new LoginPage());
+			}
+		});
+
+		add(new Label("userName", "USER"));
+
 		add(new Link("ru") {
 
 			@Override
