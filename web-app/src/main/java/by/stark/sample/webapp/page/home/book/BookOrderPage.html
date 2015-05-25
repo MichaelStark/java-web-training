@@ -1,0 +1,24 @@
+<wicket:extend xmlns="http://www.w3.org/1999/xhtml" lang="ru"
+	xmlns:wicket="http://wicket.apache.org">
+
+	<div class="box-sh">
+		<h1>
+			<wicket:container wicket:id="title" />
+		</h1>
+		<a wicket:id="linkToHands"><p><wicket:message key="p.home.book.order.handsLink" /></p></a>
+		<a wicket:id="linkToRoom"><p><wicket:message key="p.home.book.order.roomLink" /></p></a>
+	</div>
+	
+	<div wicket:id="feedback"></div>
+	
+	<form wicket:id="roomForm">
+		<div id="itemDetails" class="item">
+			<a class="mr" href="#" style="background-color: #57A874;"><p class="read"><wicket:message key="p.home.book.orderLink" /></p></a>
+		</div>
+	</form>
+	<form  wicket:id="handsForm">
+		<div id="itemDetails" class="item">
+			<a class="mr" href="#"><p class="read"><wicket:message key="p.home.book.orderLink" /></p></a>
+		</div>
+	</form>
+</wicket:extend>

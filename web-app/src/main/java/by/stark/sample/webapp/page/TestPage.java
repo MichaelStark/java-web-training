@@ -1,80 +1,95 @@
 package by.stark.sample.webapp.page;
 
-import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.upload.FileUpload;
-import org.apache.wicket.markup.html.form.upload.FileUploadField;
-import org.apache.wicket.util.file.Files;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.Model;
 
-import by.stark.sample.datamodel.Ebook;
-import by.stark.sample.services.BookService;
-import by.stark.sample.services.EbookService;
+import com.googlecode.wicket.jquery.ui.form.autocomplete.AutoCompleteTextField;
+import com.googlecode.wicket.jquery.ui.panel.JQueryFeedbackPanel;
 
 public class TestPage extends WebPage {
-	@Inject
-	private BookService bookService;
-	@Inject
-	private EbookService ebookService;
+	private static final long serialVersionUID = 1L;
+	private static final List<String> CHOICES = Arrays.asList("Acid rock",
+			"Alternative metal", "Alternative rock", "Anarcho punk",
+			"Art punk", "Art rock", "Beat music", "Black metal", "Blues-rock",
+			"Britpop", "Canterbury scene", "Chinese rock", "Christian metal",
+			"Crossover Thrash Metal", "Crust punk", "Crustgrind",
+			"Dark cabaret", "Death metal", "Deathcore", "Deathrock",
+			"Desert rock", "Djent", "Doom metal", "Dream pop", "Drone metal",
+			"Dunedin Sound", "Electronic rock", "Emo", "Experimental rock",
+			"Folk metal", "Folk rock", "Freakbeat", "Funk metal",
+			"Garage punk", "Garage rock", "Glam metal", "Glam rock",
+			"Goregrind", "Gothic metal", "Gothic rock", "Grindcore",
+			"Groove metal", "Grunge", "Hard rock", "Hardcore punk",
+			"Heavy metal", "Indie pop", "Indie rock", "Industrial metal",
+			"Industrial rock", "J-Rock", "Jazz-Rock", "Krautrock", "Math rock",
+			"Mathcore", "Melodic Death Metal", "Melodic metalcore",
+			"Metalcore", "Neo-psychedelia", "New Prog", "New Wave", "No Wave",
+			"Noise pop", "Noise rock", "Noisegrind", "Nu metal",
+			"Paisley Underground", "Pop punk", "Pop rock", "Pornogrind",
+			"Post-Britpop", "Post-grunge", "Post-hardcore", "Post-metal",
+			"Post-punk", "Post-punk revival", "Post-rock", "Power metal",
+			"Power pop", "Progressive metal", "Progressive rock",
+			"Psychedelic rock", "Psychobilly", "Punk rock", "Raga rock",
+			"Rap metal", "Rap rock", "Rapcore", "Riot grrrl", "Rock and roll",
+			"Rock en Español", "Rock in Opposition", "Sadcore", "Screamo",
+			"Shoegazer", "Slowcore", "Sludge metal", "Soft rock",
+			"Southern rock", "Space Rock", "Speed metal", "Stoner rock",
+			"Sufi rock", "Surf rock", "Symphonic metal",
+			"Technical Death Metal", "Thrash metal", "Thrashcore", "Twee Pop",
+			"Unblack metal", "World Fusion");
 
-	@Override
-	protected void onInitialize() {
-		super.onInitialize();
+	public TestPage() {
+		// Form //
+		final Form<Void> form = new Form<Void>("form");
+		this.add(form);
 
-		Form form = new Form("form");
+		// FeedbackPanel //
+		final FeedbackPanel feedback = new JQueryFeedbackPanel("feedback");
+		form.add(feedback.setOutputMarkupId(true));
 
-		add(form);
+		// Auto-complete //
+		form.add(new AutoCompleteTextField<String>("autocomplete",
+				new Model<String>()) {
 
-		FileUploadField fileUploadField;
-
-		List<FileUpload> fileUpload = new ArrayList<FileUpload>();
-
-		form.add(fileUploadField = new FileUploadField("fileUpload"));
-
-		AjaxButton save = new AjaxButton("submit") {
+			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form) {
-			}
+			protected List<String> getChoices(String input) {
+				List<String> choices = new ArrayList<String>();
+				String inputLowerCase = input.toLowerCase();
 
-			@Override
-			protected void onSubmit(AjaxRequestTarget target, Form<?> unused) {
-				Ebook ebook = new Ebook();
+				int count = 0;
+				for (String choice : CHOICES) {
+					if (choice.toLowerCase().startsWith(inputLowerCase)) {
+						choices.add(choice);
 
-				final List<FileUpload> uploads = fileUploadField
-						.getFileUploads();
-				if (uploads != null) {
-					for (FileUpload upload : uploads) {
-						// Create a new file
-						File newFile = new File(ebookService.getRootFolder(),
-								upload.getClientFileName());
-
-						// Check new file, delete if it already existed
-						if (newFile.exists()) {
-							Files.remove(newFile);
-						}
-						try {
-							// Save to new file
-							newFile.createNewFile();
-							upload.writeTo(newFile);
-							ebook.setBook(bookService.get((long) 17));
-							ebook.setName(upload.getClientFileName());
-							ebookService.saveOrUpdate(ebook);
-						} catch (Exception e) {
-							throw new IllegalStateException(
-									"Unable to write file", e);
+						// limits the number of results
+						if (++count == 20) {
+							break;
 						}
 					}
 				}
+
+				return choices;
+
+				//
+				// Equivalent to:
+				// return ListUtils.startsWith(input, CHOICES);
+				//
 			}
-		};
-		form.add(save);
+
+			@Override
+			protected void onSelected(AjaxRequestTarget target) {
+				info("Your favorite rock genre is: " + this.getModelObject());
+				target.add(feedback);
+			}
+		});
 	}
 }

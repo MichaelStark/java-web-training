@@ -51,8 +51,8 @@ body {
 .language img { float: left; margin-right: 10px; }
 .social { float: left; margin-top: 10px; margin-left: 79px; }
 .social img { float: left; margin-right: 8px; }
-.aut { float: right; width: 200px; font-size: 14px; }
-.aut p { float: left; background:url(../images/user.jpg) no-repeat; padding-left: 25px; color: #fff; margin-top: 10px;}
+.aut { float: right; width: 300px; font-size: 14px; }
+.aut p { float: right; background:url(../images/user.jpg) no-repeat; padding-left: 25px; color: #fff; margin-top: 10px; margin-right: 25px;}
 .aut a { float: right; color: #fff; margin-top: 10px; margin-right: 0px; }
 .aut a:hover {text-decoration: none;}
 

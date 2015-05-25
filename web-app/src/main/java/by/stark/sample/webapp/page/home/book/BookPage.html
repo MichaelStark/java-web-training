@@ -1,6 +1,8 @@
 <wicket:extend xmlns="http://www.w3.org/1999/xhtml" lang="ru"
 	xmlns:wicket="http://wicket.apache.org">
-
+	
+	<div wicket:id="warningDialog">[warning]</div>
+	
 	<div class="box-sh">
 		<h1>
 			<wicket:message key="p.home.book.booksCount" />
@@ -43,7 +45,7 @@
 			</div>
 			<div class="clear"></div>
 
-			<a class="mr" href="#"><p class="read">
+			<a class="mr" wicket:id="linkToOrder"><p class="read">
 					<wicket:message key="p.home.book.orderLink" />
 				</p></a> <a class="mr" wicket:id="linkToDownload"><p class="download">
 					<wicket:message key="p.home.book.downloadLink" />

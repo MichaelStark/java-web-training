@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xmlns:wicket="http://wicket.apache.org">
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title><wicket:message key="p.home.loginLink" /></title>
 <link rel="stylesheet" type="text/css" href="css/authorization.css" />
+<link rel="stylesheet" type="text/css" href="./wicket/resource/com.googlecode.wicket.jquery.ui.theme.Initializer/jquery-ui-ver-1431686973400.css">
+<wicket:header-items />
 </head>
+
 <body>
 
     <div class="authorization">
@@ -19,13 +22,14 @@
         </div>
         <div class="clear"></div>
         <form wicket:id="form">
-            <input type="email" class="aut-text" wicket:id="signinEmail"/>
-            <input type="password" class="aut-text" wicket:id="signinPassword"/>
+            <input type="email" class="aut-text" wicket:id="email"/>
+            <input type="password" class="aut-text" wicket:id="password"/>
+            <div wicket:id="feedback"></div>
 
             <input type="submit" class="butt" wicket:id="signinSubmit"/>
+            
+            <button wicket:id="linkToRegistration" id="registrationButton" class="butt"><wicket:message key="p.login.registration"/></button>
         </form>
-        <button wicket:id="linkToRegistration" id="registrationButton" class="butt"><wicket:message key="p.login.registration"/></button>
     </div>
-
 </body>
 </html>

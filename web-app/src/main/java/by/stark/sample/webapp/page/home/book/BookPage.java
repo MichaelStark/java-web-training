@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.persistence.metamodel.SingularAttribute;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.image.Image;
@@ -30,12 +31,19 @@ import by.stark.sample.datamodel.Author;
 import by.stark.sample.datamodel.Book;
 import by.stark.sample.datamodel.Ebook;
 import by.stark.sample.datamodel.Genre;
+import by.stark.sample.datamodel.Libriary;
 import by.stark.sample.services.BookService;
 import by.stark.sample.services.EbookService;
+import by.stark.sample.services.LibriaryService;
 import by.stark.sample.services.PictureService;
 import by.stark.sample.webapp.app.ImageResourceReference;
 import by.stark.sample.webapp.page.home.HomePage;
 import by.stark.sample.webapp.page.home.book.panel.MyPagingNavigator;
+
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButtons;
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogIcon;
+import com.googlecode.wicket.jquery.ui.widget.dialog.MessageDialog;
 
 public class BookPage extends HomePage {
 
@@ -45,6 +53,8 @@ public class BookPage extends HomePage {
 	private EbookService ebookService;
 	@Inject
 	private PictureService pictureService;
+	@Inject
+	private LibriaryService libraryService;
 
 	int typeOfSearch = 0;
 	final int size;
@@ -52,6 +62,8 @@ public class BookPage extends HomePage {
 	String title;
 	Author author;
 	Genre genre;
+
+	Book selectedBook;
 
 	public BookPage() {
 		size = bookService.getAll().size();
@@ -82,6 +94,59 @@ public class BookPage extends HomePage {
 	@Override
 	protected void onInitialize() {
 		super.onInitialize();
+
+		final MessageDialog deleteDialog = new MessageDialog("warningDialog",
+				new ResourceModel("p.admin.deleteWarning").getObject(),
+				new ResourceModel("p.admin.deleteDialog").getObject(),
+				DialogButtons.YES_NO, DialogIcon.WARN) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClose(AjaxRequestTarget target, DialogButton button) {
+				if (button != null && button.match(LBL_YES)) {
+					if (ebookService.getAllByBook(selectedBook).size() > 0) {
+						Ebook ebook = ebookService.getAllByBook(selectedBook)
+								.get(0);
+						File oldFile = new File(ebookService.getRootFolder(),
+								ebook.getName());
+						oldFile.delete();
+						ebookService.delete(ebook);
+					}
+					File oldFile = new File(pictureService.getRootFolder(),
+							selectedBook.getPicture().getName());
+					oldFile.delete();
+
+					List<Libriary> librarys = libraryService
+							.getAllByBook(selectedBook);
+					for (Libriary library : librarys) {
+						libraryService.delete(library);
+					}
+					bookService.delete(selectedBook);
+					pictureService.delete(selectedBook.getPicture());
+
+					switch (typeOfSearch) {
+					case 0:
+						setResponsePage(new BookPage());
+						break;
+					case 1:
+						setResponsePage(new BookPage(author));
+						break;
+					case 2:
+						setResponsePage(new BookPage(genre));
+						break;
+					case 3:
+						setResponsePage(new BookPage(title));
+						break;
+					default:
+						setResponsePage(new BookPage());
+						break;
+					}
+				}
+				selectedBook = null;
+			}
+		};
+		add(deleteDialog);
 
 		final ResourceReference imagesResourceReference = new ImageResourceReference();
 
@@ -135,16 +200,26 @@ public class BookPage extends HomePage {
 				item.add(new Label("year"));
 				item.add(new Label("isbn"));
 
-				Link<Void> Link = new Link<Void>("linkToDetails") {
+				Link<Void> Details = new Link<Void>("linkToDetails") {
 
 					@Override
 					public void onClick() {
 						setResponsePage(new BookDetailsPage(book));
 					}
 				};
-				item.add(Link);
-				Link.add(new Label("title"));
-				Link<Void> Edit = new Link<Void>("linkToEdit") {
+				item.add(Details);
+				Details.add(new Label("title"));
+
+				Link Order = new Link("linkToOrder") {
+					@Override
+					public void onClick() {
+						setResponsePage(new BookOrderPage(book));
+
+					}
+				};
+				item.add(Order);
+
+				SecuredLinkForAdmin Edit = new SecuredLinkForAdmin("linkToEdit") {
 
 					@Override
 					public void onClick() {
@@ -153,43 +228,14 @@ public class BookPage extends HomePage {
 				};
 				item.add(Edit);
 
-				Link<Void> Delete = new Link<Void>("linkToDelete") {
+				SecuredAjaxLinkForAdmin Delete = new SecuredAjaxLinkForAdmin(
+						"linkToDelete") {
 
 					@Override
-					public void onClick() {
-						if (ebookService.getAllByBook(book).size() > 0) {
-							Ebook ebook = ebookService.getAllByBook(book)
-									.get(0);
-							File oldFile = new File(
-									ebookService.getRootFolder(),
-									ebook.getName());
-							oldFile.delete();
-							ebookService.delete(ebook);
-						}
-						File oldFile = new File(pictureService.getRootFolder(),
-								book.getPicture().getName());
-						oldFile.delete();
+					public void onClick(AjaxRequestTarget target) {
+						selectedBook = book;
+						deleteDialog.open(target);
 
-						bookService.delete(book);
-						pictureService.delete(book.getPicture());
-
-						switch (typeOfSearch) {
-						case 0:
-							setResponsePage(new BookPage());
-							break;
-						case 1:
-							setResponsePage(new BookPage(author));
-							break;
-						case 2:
-							setResponsePage(new BookPage(genre));
-							break;
-						case 3:
-							setResponsePage(new BookPage(title));
-							break;
-						default:
-							setResponsePage(new BookPage());
-							break;
-						}
 					}
 				};
 				item.add(Delete);
@@ -221,7 +267,7 @@ public class BookPage extends HomePage {
 		add(dataView);
 		add(new MyPagingNavigator("paging", dataView));
 		add(new Label("books-count", size));
-		add(new Link<Void>("linkToAddBook") {
+		add(new SecuredLinkForAdmin("linkToAddBook") {
 			@Override
 			public void onClick() {
 				setResponsePage(new BookEditPage(new Book()));
@@ -263,10 +309,4 @@ public class BookPage extends HomePage {
 			return new CompoundPropertyModel<Book>(book);
 		}
 	}
-
-	@Override
-	protected IModel<String> getPageTitle() {
-		return new ResourceModel("p.home.title");
-	}
-
 }

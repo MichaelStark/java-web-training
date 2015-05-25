@@ -16,6 +16,6 @@ public interface UserService extends AbstractService<Long, Userprofile> {
 
 	List<Userprofile> getAllByStatus(UserStatus status);
 
-	List<String> getRoles(Long userId);
+	List<UserRole> getRoles(Long userId);
 
 }

@@ -1,5 +1,7 @@
 <wicket:extend xmlns="http://www.w3.org/1999/xhtml" lang="ru"
 	xmlns:wicket="http://wicket.apache.org">
+	
+	<div wicket:id="warningDialog">[warning]</div>
 
 	<div class="box-sh">
 		<h1>
@@ -45,7 +47,7 @@
 	</div>
 	<div class="clear"></div>
 
-	<a class="mr" href="#"><p class="read"><wicket:message key="p.home.book.orderLink" /></p></a>
+	<a class="mr" wicket:id="linkToOrder"><p class="read"><wicket:message key="p.home.book.orderLink" /></p></a>
 	<a class="mr" wicket:id="linkToDownload"><p class="download"><wicket:message key="p.home.book.downloadLink" /></p></a>
 	<a class="mr" wicket:id="linkToEdit"><p class="edit"><wicket:message key="p.home.book.editLink" /></p></a>
 	<a class="delete-button" wicket:id="linkToDelete"><p class="delete"><wicket:message key="p.home.book.deleteLink" /></p></a>

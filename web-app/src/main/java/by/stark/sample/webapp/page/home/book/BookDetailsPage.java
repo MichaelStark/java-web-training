@@ -7,6 +7,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.link.DownloadLink;
@@ -24,11 +25,18 @@ import by.stark.sample.datamodel.Author;
 import by.stark.sample.datamodel.Book;
 import by.stark.sample.datamodel.Ebook;
 import by.stark.sample.datamodel.Genre;
+import by.stark.sample.datamodel.Libriary;
 import by.stark.sample.services.BookService;
 import by.stark.sample.services.EbookService;
+import by.stark.sample.services.LibriaryService;
 import by.stark.sample.services.PictureService;
 import by.stark.sample.webapp.app.ImageResourceReference;
 import by.stark.sample.webapp.page.home.HomePage;
+
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButtons;
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogIcon;
+import com.googlecode.wicket.jquery.ui.widget.dialog.MessageDialog;
 
 public class BookDetailsPage extends HomePage {
 
@@ -38,6 +46,8 @@ public class BookDetailsPage extends HomePage {
 	private EbookService ebookService;
 	@Inject
 	private PictureService pictureService;
+	@Inject
+	private LibriaryService libraryService;
 
 	Book book;
 
@@ -49,6 +59,40 @@ public class BookDetailsPage extends HomePage {
 	@Override
 	protected void onInitialize() {
 		super.onInitialize();
+
+		final MessageDialog deleteDialog = new MessageDialog("warningDialog",
+				new ResourceModel("p.admin.deleteWarning").getObject(),
+				new ResourceModel("p.admin.deleteDialog").getObject(),
+				DialogButtons.YES_NO, DialogIcon.WARN) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onClose(AjaxRequestTarget target, DialogButton button) {
+				if (button != null && button.match(LBL_YES)) {
+					if (ebookService.getAllByBook(book).size() > 0) {
+						Ebook ebook = ebookService.getAllByBook(book).get(0);
+						File oldFile = new File(ebookService.getRootFolder(),
+								ebook.getName());
+						oldFile.delete();
+						ebookService.delete(ebook);
+					}
+					File oldFile = new File(pictureService.getRootFolder(),
+							book.getPicture().getName());
+					oldFile.delete();
+
+					List<Libriary> librarys = libraryService.getAllByBook(book);
+					for (Libriary library : librarys) {
+						libraryService.delete(library);
+					}
+					bookService.delete(book);
+					pictureService.delete(book.getPicture());
+
+					setResponsePage(new BookPage());
+				}
+			}
+		};
+		add(deleteDialog);
 
 		final ResourceReference imagesResourceReference = new ImageResourceReference();
 		final PageParameters imageParameters = new PageParameters();
@@ -116,7 +160,16 @@ public class BookDetailsPage extends HomePage {
 		add(new Label("isbn", new Model<String>(book.getIsbn())));
 		add(new Label("description", new Model<String>(book.getDescription())));
 
-		Link<Void> Edit = new Link<Void>("linkToEdit") {
+		Link<Void> Order = new Link<Void>("linkToOrder") {
+
+			@Override
+			public void onClick() {
+				setResponsePage(new BookOrderPage(book));
+			}
+		};
+		add(Order);
+
+		SecuredLinkForAdmin Edit = new SecuredLinkForAdmin("linkToEdit") {
 
 			@Override
 			public void onClick() {
@@ -125,29 +178,16 @@ public class BookDetailsPage extends HomePage {
 		};
 		add(Edit);
 
-		Link<Void> Delete = new Link<Void>("linkToDelete") {
+		SecuredAjaxLinkForAdmin Delete = new SecuredAjaxLinkForAdmin(
+				"linkToDelete") {
 
 			@Override
-			public void onClick() {
-				if (ebookService.getAllByBook(book).size() > 0) {
-					Ebook ebook = ebookService.getAllByBook(book).get(0);
-					File oldFile = new File(ebookService.getRootFolder(),
-							ebook.getName());
-					oldFile.delete();
-					ebookService.delete(ebook);
-				}
-				File oldFile = new File(pictureService.getRootFolder(), book
-						.getPicture().getName());
-				oldFile.delete();
-
-				bookService.delete(book);
-				pictureService.delete(book.getPicture());
-
-				setResponsePage(new BookPage());
+			public void onClick(AjaxRequestTarget target) {
+				deleteDialog.open(target);
 			}
 		};
 		add(Delete);
-		add(new Link<Void>("linkToAddBook") {
+		add(new SecuredLinkForAdmin("linkToAddBook") {
 			@Override
 			public void onClick() {
 				setResponsePage(new BookEditPage(new Book()));

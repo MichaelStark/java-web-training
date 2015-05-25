@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -20,6 +21,7 @@ import by.stark.sample.webapp.page.admin.edit.UsersEditPage;
 
 import com.googlecode.wicket.kendo.ui.widget.notification.Notification;
 
+@AuthorizeInstantiation({ "admin" })
 public class AdminPage extends BaseLayout {
 
 	public final static Notification notification = new Notification(

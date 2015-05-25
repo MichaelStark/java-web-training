@@ -5,6 +5,9 @@
 	<entry key="p.login.registration">Registration</entry>
 	<entry key="p.login.rememberMe">Remember me</entry>
 	<entry key="p.login.forgotPassword">Forgot your password</entry>
+	<entry key="p.login.authorizationError">Not a valid email or password!</entry>
+	<entry key="p.login.registrationError">This user already exists!</entry>
+	<entry key="p.login.passwordLimitError">The password must not exceed 20 characters!</entry>
 	
 	<entry key = "p.home.adminLink">Administration</entry>
 
@@ -27,6 +30,7 @@
 	<entry key = "p.home.searchSelectAuthor">By author</entry>
 	<entry key = "p.home.searchNotification">Enter the details in the search box</entry>
 	
+	<entry key="p.home.book.editError">Enter all the data correctly!</entry>
 	<entry key = "p.home.book.booksCount">Books found: </entry>
 	<entry key = "p.home.book.addBook">Add book</entry>
 	<entry key = "p.home.book.title">Title</entry>
@@ -44,6 +48,18 @@
 	
 	<entry key = "p.home.book.saveLink">Save</entry>
 	<entry key = "p.home.book.cancelLink">Cancel</entry>
+	
+	<entry key="p.home.book.order.choiceTitle">Select an order method</entry>
+	<entry key="p.home.book.order.info4Room">We are sorry, but at the moment the book is only available for the reading room!</entry>
+	<entry key="p.home.book.order.info4Hands">We are sorry, but at the moment the book is only available on a subscription!</entry>
+	<entry key="p.home.book.order.infoNot4Order">Sorry, but the book is not currently available for order! Try again later.</entry>
+	<entry key="p.home.book.order.days">How many days</entry>
+	<entry key="p.home.book.order.timePick">At what time you want to borrow a book</entry>
+	<entry key="p.home.book.order.time">How many hours</entry>
+	<entry key="p.home.book.order.timeError">Unfortunately, your request is no free books</entry>
+	<entry key="p.home.book.order.orderComplete">Book awaits you in the library</entry>
+	<entry key="p.home.book.order.handsLink">On hand</entry>
+	<entry key="p.home.book.order.roomLink">In reading room</entry>
 	
 	<entry key = "p.home.book.author.authorsCount">The authors found: </entry>
 	

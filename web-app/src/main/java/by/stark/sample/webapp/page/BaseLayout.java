@@ -2,15 +2,24 @@ package by.stark.sample.webapp.page;
 
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Session;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.authorization.Action;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeAction;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.http.handler.RedirectRequestHandler;
 
+import by.stark.sample.datamodel.Userprofile;
+import by.stark.sample.webapp.app.BasicAuthenticationSession;
+import by.stark.sample.webapp.app.WicketWebApplication;
 import by.stark.sample.webapp.page.admin.AdminPage;
 import by.stark.sample.webapp.page.home.book.BookPage;
 import by.stark.sample.webapp.page.login.LoginPage;
@@ -23,7 +32,15 @@ public abstract class BaseLayout extends WebPage {
 
 		Session session = getSession();
 
-		add(new Link<Void>("linkToLogin") {
+		add(new Link("linkToLogin") {
+			@Override
+			protected void onConfigure() {
+				super.onConfigure();
+				boolean isLogged = BasicAuthenticationSession.get()
+						.isSignedIn();
+
+				setVisible(!isLogged);
+			}
 
 			@Override
 			public void onClick() {
@@ -31,15 +48,28 @@ public abstract class BaseLayout extends WebPage {
 			}
 		});
 
-		add(new Link<Void>("linkToLogout") {
+		add(new Link("linkToLogout") {
+			@Override
+			protected void onConfigure() {
+				super.onConfigure();
+				setVisible(BasicAuthenticationSession.get().isSignedIn());
+			}
 
 			@Override
 			public void onClick() {
-				setResponsePage(new LoginPage());
+				final HttpServletRequest servletReq = (HttpServletRequest) getRequest()
+						.getContainerRequest();
+				servletReq.getSession().invalidate();
+				getSession().invalidate();
+				getRequestCycle().scheduleRequestHandlerAfterCurrent(
+						new RedirectRequestHandler(
+								WicketWebApplication.LOGIN_URL));
+
 			}
 		});
-
-		add(new Label("userName", "USER"));
+		Userprofile user = BasicAuthenticationSession.get().getUser();
+		add(new Label("userName", new Model(user != null ? user.getEmail()
+				: null)));
 
 		add(new Link("ru") {
 
@@ -61,7 +91,7 @@ public abstract class BaseLayout extends WebPage {
 
 		add(new Label("headerTitle", getPageTitle()));
 
-		add(new Link<Void>("linkToAdmin") {
+		add(new SecuredLinkForAdmin("linkToAdmin") {
 
 			@Override
 			public void onClick() {
@@ -87,6 +117,30 @@ public abstract class BaseLayout extends WebPage {
 			logoI.add(new AttributeModifier("src", "../images/logo.png"));
 		}
 
+	}
+
+	@AuthorizeAction(action = Action.RENDER, roles = { "librarian" })
+	protected abstract class SecuredLinkForLibrarian extends Link<Void> {
+
+		public SecuredLinkForLibrarian(String id) {
+			super(id);
+		}
+	}
+
+	@AuthorizeAction(action = Action.RENDER, roles = { "admin" })
+	protected abstract class SecuredLinkForAdmin extends Link<Void> {
+
+		public SecuredLinkForAdmin(String id) {
+			super(id);
+		}
+	}
+
+	@AuthorizeAction(action = Action.RENDER, roles = { "admin" })
+	protected abstract class SecuredAjaxLinkForAdmin extends AjaxLink<Void> {
+
+		public SecuredAjaxLinkForAdmin(String id) {
+			super(id);
+		}
 	}
 
 	protected IModel<String> getPageTitle() {
