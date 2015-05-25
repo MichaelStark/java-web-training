@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.bean.validation.PropertyValidator;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
@@ -50,6 +51,7 @@ import by.stark.sample.webapp.page.home.HomePage;
 
 import com.googlecode.wicket.kendo.ui.form.multiselect.MultiSelect;
 
+@AuthorizeInstantiation({ "admin" })
 public class BookEditPage extends HomePage {
 
 	@Inject
@@ -197,7 +199,8 @@ public class BookEditPage extends HomePage {
 
 			@Override
 			protected void onError(AjaxRequestTarget target, Form<?> form) {
-				notification.error(target, "ERROR");
+				notification.error(target, new ResourceModel(
+						"p.home.book.editError").getObject());
 			}
 
 			@Override
@@ -291,7 +294,7 @@ public class BookEditPage extends HomePage {
 
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> unused) {
-				setResponsePage(new BookPage());
+				setResponsePage(new BookEditPage(book));
 			}
 		};
 		save.add(new AttributeModifier("value", new ResourceModel(

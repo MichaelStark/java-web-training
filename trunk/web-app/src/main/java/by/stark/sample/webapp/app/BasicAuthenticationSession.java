@@ -1,5 +1,6 @@
 package by.stark.sample.webapp.app;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import by.stark.sample.datamodel.Userprofile;
+import by.stark.sample.datamodel.enums.UserRole;
 import by.stark.sample.services.UserService;
 
 public class BasicAuthenticationSession extends AuthenticatedWebSession {
@@ -21,7 +23,7 @@ public class BasicAuthenticationSession extends AuthenticatedWebSession {
 			.getLogger(BasicAuthenticationSession.class);
 
 	public static final String ROLE_SIGNED_IN = "SIGNED_IN";
-	private Long userId;
+	private Userprofile user;
 
 	private Roles resultRoles;
 
@@ -42,7 +44,7 @@ public class BasicAuthenticationSession extends AuthenticatedWebSession {
 		boolean authenticationResult = false;
 		final Userprofile user = userService.getByEmail(userName);
 		if (user != null && user.getPassword().equals(password)) {
-			this.userId = user.getId();
+			this.user = user;
 			authenticationResult = true;
 		}
 		return authenticationResult;
@@ -52,8 +54,10 @@ public class BasicAuthenticationSession extends AuthenticatedWebSession {
 	public Roles getRoles() {
 		if (isSignedIn() && (resultRoles == null)) {
 			resultRoles = new Roles();
-			resultRoles.add(ROLE_SIGNED_IN);
-			resultRoles.addAll(userService.getRoles(userId));
+			List<UserRole> roles = userService.getRoles(user.getId());
+			for (UserRole role : roles) {
+				resultRoles.add(role.name());
+			}
 		}
 		return resultRoles;
 	}
@@ -61,7 +65,11 @@ public class BasicAuthenticationSession extends AuthenticatedWebSession {
 	@Override
 	public void signOut() {
 		super.signOut();
-		userId = null;
+		user = null;
+	}
+
+	public Userprofile getUser() {
+		return user;
 	}
 
 	@Override

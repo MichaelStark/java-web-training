@@ -20,6 +20,8 @@ import by.stark.sample.webapp.page.login.LoginPage;
 @Component("wicketWebApplicationBean")
 public class WicketWebApplication extends AuthenticatedWebApplication {
 
+	public static final String LOGIN_URL = "/login";
+
 	@Inject
 	private ApplicationContext applicationContext;
 
@@ -58,8 +60,9 @@ public class WicketWebApplication extends AuthenticatedWebApplication {
 			getMarkupSettings().setStripWicketTags(true);
 		}
 
-		mountResource("/pictures/${name}", new ImageResourceReference());
+		mountPage(LOGIN_URL, LoginPage.class);
 
+		mountResource("/pictures/${name}", new ImageResourceReference());
 	}
 
 	@Override

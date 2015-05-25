@@ -5,6 +5,9 @@
 	<entry key="p.login.registration">Зарегистрироваться</entry>
 	<entry key="p.login.rememberMe">Запомнить меня</entry>
 	<entry key="p.login.forgotPassword">Вспомнить пароль</entry>
+	<entry key="p.login.authorizationError">Не верный email или пароль!</entry>
+	<entry key="p.login.registrationError">Такой пользователь уже существует!</entry>
+	<entry key="p.login.passwordLimitError">Длина пароля не должна превышать 20 символов!</entry>
 
 	<entry key="p.home.adminLink">Администрирование</entry>
 	
@@ -27,6 +30,7 @@
 	<entry key="p.home.searchSelectAuthor">По автору</entry>
 	<entry key="p.home.searchNotification">Введите данные в поле поиска</entry>
 	
+	<entry key="p.home.book.editError">Заполните все поля правильно!</entry>
 	<entry key="p.home.book.booksCount">Книг найдено: </entry>
 	<entry key="p.home.book.addBook">Добавить книгу</entry>
 	<entry key="p.home.book.title">Название</entry>
@@ -44,6 +48,18 @@
 	
 	<entry key="p.home.book.saveLink">Сохранить</entry>
 	<entry key="p.home.book.cancelLink">Отмена</entry>
+	
+	<entry key="p.home.book.order.choiceTitle">Выберите способ заказа</entry>
+	<entry key="p.home.book.order.info4Room">Извините, но в данный момент книга доступна только для читального зала!</entry>
+	<entry key="p.home.book.order.info4Hands">Извините, но в данный момент книга доступна только на абонемент!</entry>
+	<entry key="p.home.book.order.infoNot4Order">Извините, но в данный момент книга не доступна для заказа! Попробуйте позднее.</entry>
+	<entry key="p.home.book.order.days">На сколько дней</entry>
+	<entry key="p.home.book.order.timePick">В какое время Вы хотите взять книгу</entry>
+	<entry key="p.home.book.order.time">На сколько часов</entry>
+	<entry key="p.home.book.order.timeError">К сожалению, по Вашему запросу нет свободных книг</entry>
+	<entry key="p.home.book.order.orderComplete">Книга ожидает Вас в библиотеке</entry>
+	<entry key="p.home.book.order.handsLink">На руки</entry>
+	<entry key="p.home.book.order.roomLink">В читальный зал</entry>
 	
 	<entry key="p.home.book.author.authorsCount">Авторов найдено: </entry>
 	

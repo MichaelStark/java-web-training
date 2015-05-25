@@ -1,5 +1,6 @@
 package by.stark.sample.services.impl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -37,8 +38,7 @@ public class UserServiceImpl extends AbstractServiceImpl<Long, Userprofile>
 	@Override
 	public Userprofile getByEmail(String email) {
 		final List<Userprofile> allByFieldRestriction = dao
-				.getAllByFieldRestriction(Userprofile_.email, email,
-						Userprofile_.picture);
+				.getAllByFieldRestriction(Userprofile_.email, email);
 		return !allByFieldRestriction.isEmpty() ? allByFieldRestriction.get(0)
 				: null;
 	}
@@ -56,8 +56,8 @@ public class UserServiceImpl extends AbstractServiceImpl<Long, Userprofile>
 	}
 
 	@Override
-	public List<String> getRoles(Long userId) {
-		throw new RuntimeException("not implemented");
+	public List<UserRole> getRoles(Long userId) {
+		return Arrays.asList(dao.getById(userId).getRole());
 	}
 
 	@Override

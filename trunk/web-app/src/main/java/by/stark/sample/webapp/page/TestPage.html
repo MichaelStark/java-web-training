@@ -1,10 +1,14 @@
+<!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
 <head>
 </head>
 <body>
-	<form wicket:id="form">
-		<input type="file" wicket:id="fileUpload"/>
-		<input type="submit" id="saveButton" wicket:id="submit"/>
-	</form>
+		<form wicket:id="form">
+			<div>Choose your favorite rock genre: (that starts with your criteria)</div>
+			<br/>
+			<input wicket:id="autocomplete" type="text" size="30" title="enter your criteria here"></input><br/>
+			<br/>
+			<div wicket:id="feedback"></div>
+		</form>
 </body>
 </html>

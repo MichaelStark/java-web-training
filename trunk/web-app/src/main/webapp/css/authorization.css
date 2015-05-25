@@ -44,6 +44,5 @@ body {
 .clear { clear: both; }
 #registrationButton {
   float: right;
-  margin-right: 50px;
   width: auto;
 }
