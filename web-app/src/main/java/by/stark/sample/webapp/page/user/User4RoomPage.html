@@ -1,0 +1,23 @@
+<wicket:extend xmlns="http://www.w3.org/1999/xhtml" lang="ru" xmlns:wicket="http://wicket.apache.org">
+
+<script src="js/kendo.all.min.js"></script>
+
+	<div class="box-sh">
+		<a wicket:id="linkToHands"><p>
+				<wicket:message key="p.user.linkToHands" />
+		</p></a>
+	</div>
+	
+	<div class="clear"></div>
+
+	<!-- content -->
+	<div class="content">
+
+		<div class="right-content" style="width:100%;">
+			<div wicket:id="datatable">[datatable]</div>
+		</div>
+	</div>
+	
+	<div wicket:id="warningDialog">[warning]</div>
+
+</wicket:extend>

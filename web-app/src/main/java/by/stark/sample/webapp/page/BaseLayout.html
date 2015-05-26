@@ -25,11 +25,11 @@
         <div class="aut">
             <a wicket:id="linkToLogin"><wicket:message key="p.home.loginLink" /></a>
             <a wicket:id="linkToLogout"><wicket:message key="p.home.logoutLink" /></a>
-            <p wicket:id="userName"></p>
+            <a wicket:id="userProfile" style="margin-top: auto;"><p wicket:id="userName"></p></a>
         </div>
         
-        <a id="topButton" href="#"><wicket:message key="p.home.readingRoomLink" /><p></p></a>
-        <a id="topButton" href="#"><wicket:message key="p.home.abonementLink" /><p></p></a>
+        <a id="topButton" wicket:id="linkToRoomWork"><wicket:message key="p.home.readingRoomLink" /><p></p></a>
+        <a id="topButton" wicket:id="linkToHandsWork"><wicket:message key="p.home.abonementLink" /><p></p></a>
         <a id="topButton" wicket:id="linkToAdmin"><wicket:message key="p.home.adminLink" /><p></p></a>
     </div>
 </div>

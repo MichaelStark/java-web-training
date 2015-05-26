@@ -72,4 +72,16 @@ public class Record4RoomServiceImpl extends
 				Record4Room_.userprofile);
 	}
 
+	@Override
+	public List<Record4Room> getAllByDateTake(Date date, Date nextDay) {
+		return dao.getAllByDateTake(date, nextDay, Record4Room_.libriary,
+				Record4Room_.userprofile);
+	}
+
+	@Override
+	public List<Record4Room> getAllByDateReturn(Date date, Date nextDay) {
+		return dao.getAllByDateReturn(date, nextDay, Record4Room_.libriary,
+				Record4Room_.userprofile);
+	}
+
 }

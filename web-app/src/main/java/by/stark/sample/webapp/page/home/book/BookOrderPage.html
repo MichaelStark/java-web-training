@@ -13,12 +13,28 @@
 	
 	<form wicket:id="roomForm">
 		<div id="itemDetails" class="item">
-			<a class="mr" href="#" style="background-color: #57A874;"><p class="read"><wicket:message key="p.home.book.orderLink" /></p></a>
+			<p><wicket:message key="p.home.book.order.timePick" /></p>
+			<p>
+			<select wicket:id="time"></select>
+			</p>
+			<p><wicket:message key="p.home.book.order.time" /></p>
+			<p>
+			<select wicket:id="hours"></select>
+			</p>
+			<p>
+			<button type="submit" class="mr" wicket:id="submitRoom" style="background-color: #57A874; width:auto;"><p class="read"><wicket:message key="p.home.book.orderLink" /></p></button>
+			</p>
 		</div>
 	</form>
 	<form  wicket:id="handsForm">
 		<div id="itemDetails" class="item">
-			<a class="mr" href="#"><p class="read"><wicket:message key="p.home.book.orderLink" /></p></a>
+			<p><wicket:message key="p.home.book.order.days" /></p>
+			<p>
+			<select wicket:id="days"></select>
+			</p>
+			<p>
+			<button type="submit" class="mr" wicket:id="submitHands" style="background-color: #57A874; width:auto;"><p class="read"><wicket:message key="p.home.book.orderLink" /></p></button>
+			</p>
 		</div>
 	</form>
 </wicket:extend>

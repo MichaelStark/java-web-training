@@ -118,4 +118,28 @@
 	<entry key = "p.admin.dialog.addNewLibrary">Add a new copy of the book</entry>
 	<entry key = "p.admin.dialog.editLibrary">Edit a copy of the book</entry>
 	
+	<entry key="p.user.dialog.warning">Are you sure you want to cancel?</entry>
+	<entry key="p.user.dialog.error">Now you can not cancel the order!</entry>
+	<entry key="p.user.dialog.title">Warning!</entry>
+	<entry key="p.user.cancel">Cancel</entry>
+	<entry key="p.user.view">View</entry>
+	<entry key="p.user.title">Title</entry>
+	<entry key="p.user.take">From</entry>
+	<entry key="p.user.return">To</entry>
+	<entry key="p.user.status">Status</entry>
+	<entry key="p.user.linkToHands">To orders on subscription</entry>
+	<entry key="p.user.linkToRoom">To orders in the reading room</entry>
+	
+	<entry key="p.librarian.dialog.title">Change order status</entry>
+	<entry key="p.librarian.complete">Completed</entry>
+	<entry key="p.librarian.edit">Edit</entry>
+	<entry key="p.librarian.view">View</entry>
+	<entry key="p.librarian.user">User</entry>
+	<entry key="p.librarian.title">Title</entry>
+	<entry key="p.librarian.take">From</entry>
+	<entry key="p.librarian.return">To</entry>
+	<entry key="p.librarian.status">Status</entry>
+	<entry key="p.librarian.linkToAll">To order today</entry>
+	<entry key="p.librarian.linkToDebt">To the debtors</entry>
+	
 </properties>

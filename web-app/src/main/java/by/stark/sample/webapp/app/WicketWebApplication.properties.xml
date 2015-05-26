@@ -118,4 +118,28 @@
 	<entry key="p.admin.dialog.addNewLibrary">Добавить новый экземпляр книги</entry>
 	<entry key="p.admin.dialog.editLibrary">Изменить экземпляр книги</entry>
 	
+	<entry key="p.user.dialog.warning">Вы уверены что хотите отменить заказ?</entry>
+	<entry key="p.user.dialog.error">Сейчас Вы не можете отменить заказ!</entry>
+	<entry key="p.user.dialog.title">Внимание!</entry>
+	<entry key="p.user.cancel">Отменить</entry>
+	<entry key="p.user.view">Посмотреть</entry>
+	<entry key="p.user.title">Название</entry>
+	<entry key="p.user.take">От</entry>
+	<entry key="p.user.return">До</entry>
+	<entry key="p.user.status">Статус</entry>
+	<entry key="p.user.linkToHands">К заказам на абонемент</entry>
+	<entry key="p.user.linkToRoom">К заказам в читальный зал</entry>
+	
+	<entry key="p.librarian.dialog.title">Изменить статус заказа</entry>
+	<entry key="p.librarian.complete">Завершить</entry>
+	<entry key="p.librarian.edit">Изменить</entry>
+	<entry key="p.librarian.view">Посмотреть</entry>
+	<entry key="p.librarian.user">Пользователь</entry>
+	<entry key="p.librarian.title">Название</entry>
+	<entry key="p.librarian.take">От</entry>
+	<entry key="p.librarian.return">До</entry>
+	<entry key="p.librarian.status">Статус</entry>
+	<entry key="p.librarian.linkToAll">К заказам на сегодня</entry>
+	<entry key="p.librarian.linkToDebt">К должникам</entry>
+	
 </properties>

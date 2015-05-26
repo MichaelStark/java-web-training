@@ -22,9 +22,23 @@ import by.stark.sample.webapp.app.BasicAuthenticationSession;
 import by.stark.sample.webapp.app.WicketWebApplication;
 import by.stark.sample.webapp.page.admin.AdminPage;
 import by.stark.sample.webapp.page.home.book.BookPage;
+import by.stark.sample.webapp.page.librarian.Librarian4HandsPage;
+import by.stark.sample.webapp.page.librarian.Librarian4RoomPage;
 import by.stark.sample.webapp.page.login.LoginPage;
+import by.stark.sample.webapp.page.user.User4RoomPage;
 
 public abstract class BaseLayout extends WebPage {
+
+	static final private int workStart = 9;
+	static final private int workFinish = 21;
+
+	public static int getWorkstart() {
+		return workStart;
+	}
+
+	public static int getWorkfinish() {
+		return workFinish;
+	}
 
 	@Override
 	protected void onInitialize() {
@@ -68,8 +82,19 @@ public abstract class BaseLayout extends WebPage {
 			}
 		});
 		Userprofile user = BasicAuthenticationSession.get().getUser();
-		add(new Label("userName", new Model(user != null ? user.getEmail()
-				: null)));
+		Link userProfileLink = new Link("userProfile") {
+
+			@Override
+			public void onClick() {
+				if (user != null) {
+					setResponsePage(new User4RoomPage());
+				}
+			}
+
+		};
+		add(userProfileLink);
+		userProfileLink.add(new Label("userName", new Model(user != null ? user
+				.getEmail() : null)));
 
 		add(new Link("ru") {
 
@@ -96,6 +121,20 @@ public abstract class BaseLayout extends WebPage {
 			@Override
 			public void onClick() {
 				setResponsePage(new AdminPage());
+			}
+		});
+		add(new SecuredLinkForLibrarian("linkToRoomWork") {
+
+			@Override
+			public void onClick() {
+				setResponsePage(new Librarian4RoomPage());
+			}
+		});
+		add(new SecuredLinkForLibrarian("linkToHandsWork") {
+
+			@Override
+			public void onClick() {
+				setResponsePage(new Librarian4HandsPage());
 			}
 		});
 
