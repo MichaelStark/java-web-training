@@ -11,7 +11,9 @@ public enum RecordStatus {
 
 	returned,
 
+	debt,
+
 	completed,
 
-	debt;
+	canceled;
 }

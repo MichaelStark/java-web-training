@@ -22,4 +22,8 @@ public interface Record4RoomService extends AbstractService<Long, Record4Room> {
 
 	Record4Room getById(Long id);
 
+	List<Record4Room> getAllByDateTake(Date date, Date nextDay);
+
+	List<Record4Room> getAllByDateReturn(Date date, Date nextDay);
+
 }
