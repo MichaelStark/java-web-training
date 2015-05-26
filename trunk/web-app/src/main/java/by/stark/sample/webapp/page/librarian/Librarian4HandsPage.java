@@ -124,6 +124,13 @@ public class Librarian4HandsPage extends BaseLayout {
 			rec.setLibriary(lib);
 			records2.add(rec);
 		}
+		for (Record4Hands record : record4HandsService
+				.getAllByStatus(RecordStatus.taken)) {
+			Record4Hands rec = record4HandsService.getById(record.getId());
+			Libriary lib = libraryService.getById(rec.getLibriary().getId());
+			rec.setLibriary(lib);
+			records2.add(rec);
+		}
 
 		IDataProvider<Record4Hands> provider2 = new ProfileDataProviderHands(
 				records2);
