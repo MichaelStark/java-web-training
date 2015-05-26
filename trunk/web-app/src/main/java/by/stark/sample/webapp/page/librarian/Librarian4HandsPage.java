@@ -2,6 +2,8 @@ package by.stark.sample.webapp.page.librarian;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -116,13 +118,24 @@ public class Librarian4HandsPage extends BaseLayout {
 
 		List<IColumn> columns2 = newColumnListHands();
 
+		Date curDate = new Date();
+		Calendar c = Calendar.getInstance();
+		c.set(c.HOUR_OF_DAY, 0);
+		c.set(c.MINUTE, 0);
+		c.set(c.SECOND, 0);
+		c.set(c.MILLISECOND, 0);
+		curDate = c.getTime();
+
 		List<Record4Hands> records2 = new ArrayList<Record4Hands>();
 		for (Record4Hands record : record4HandsService
 				.getAllByStatus(RecordStatus.pending)) {
-			Record4Hands rec = record4HandsService.getById(record.getId());
-			Libriary lib = libraryService.getById(rec.getLibriary().getId());
-			rec.setLibriary(lib);
-			records2.add(rec);
+			if (record.getDateTake().compareTo(curDate) <= 0) {
+				Record4Hands rec = record4HandsService.getById(record.getId());
+				Libriary lib = libraryService
+						.getById(rec.getLibriary().getId());
+				rec.setLibriary(lib);
+				records2.add(rec);
+			}
 		}
 		for (Record4Hands record : record4HandsService
 				.getAllByStatus(RecordStatus.taken)) {

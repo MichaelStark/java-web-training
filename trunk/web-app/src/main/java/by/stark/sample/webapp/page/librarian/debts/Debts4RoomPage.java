@@ -13,7 +13,6 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
-import org.joda.time.DateTime;
 
 import by.stark.sample.datamodel.Book;
 import by.stark.sample.datamodel.Libriary;
@@ -107,14 +106,6 @@ public class Debts4RoomPage extends BaseLayout {
 				+ new ResourceModel("p.librarian.complete").getObject()
 				+ "' } ]");
 
-		Date curDate = new Date();
-		Calendar c = Calendar.getInstance();
-		c.set(c.HOUR_OF_DAY, 0);
-		c.set(c.MINUTE, 0);
-		c.set(c.SECOND, 0);
-		c.set(c.MILLISECOND, 0);
-		curDate = c.getTime();
-		Date nextDay = new DateTime(curDate).plusDays(1).toDate();
 		Date curTime = Calendar.getInstance().getTime();
 
 		List<Record4Room> records = new ArrayList<Record4Room>();
